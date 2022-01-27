@@ -142,11 +142,11 @@ theme.bg_volatile = theme.cyan_A700
 -- ------------------------------------------------------------------------
 -- https://awesomewm.org/doc/api/libraries/beautiful.html
 theme.font        = "FiraCode Nerd Font 11"
-theme.useless_gap = dpi(3)
+theme.useless_gap = dpi(5)
 
 -- Border variables
 -- ------------------------------------------------------------------------
-theme.border_width  = dpi(5)
+theme.border_width  = dpi(3)
 theme.border_normal = theme.gray_A700
 theme.border_focus  = theme.green_A700
 theme.border_urgent = theme.red_A700
@@ -224,17 +224,17 @@ theme.tasklist_maximized                    = " "
 -- ------------------------------------------------------------------------
 -- https://awesomewm.org/apidoc/popups_and_bars/awful.hotkeys_popup.widget.html
 
-theme.hotkeys_bg                = theme.gray_A700
-theme.hotkeys_fg                = theme.gray_A100
---beautiful.hotkeys_border_width      int                                  Hotkeys widget border width.
---beautiful.hotkeys_border_color      color                                Hotkeys widget border color.
---beautiful.hotkeys_shape             gears.shape                          Hotkeys widget shape.
-theme.hotkeys_modifiers_fg      = theme.yellow_A700
---beautiful.hotkeys_label_bg          color                                Background color used for miscellaneous labels of hotkeys widget.
-theme.hotkeys_label_fg          = theme.green_A700
---beautiful.hotkeys_font              string or lgi.Pango.FontDescription  Main hotkeys widget font.
---beautiful.hotkeys_description_font  string or lgi.Pango.FontDescription  Font used for hotkeys' descriptions.
---beautiful.hotkeys_group_margin      int                                  Margin between hotkeys groups.
+theme.hotkeys_bg               = theme.gray_A700
+theme.hotkeys_fg               = theme.gray_A100
+theme.hotkeys_border_width     = 5
+theme.hotkeys_border_color     = theme.green_A700
+theme.hotkeys_shape            = gears.shape.rect
+theme.hotkeys_modifiers_fg     = theme.yellow_A700
+theme.hotkeys_label_bg         = theme.black
+theme.hotkeys_label_fg         = theme.black
+theme.hotkeys_font             = "FiraCode Nerd Font 11"
+theme.hotkeys_description_font = "FiraCode Nerd Font 11"
+theme.hotkeys_group_margin     = 10
 
 -- Naughty notification beautiful variables
 -- ------------------------------------------------------------------------
@@ -247,7 +247,6 @@ theme.notification_border_color = theme.focus
 theme.notification_shape        = rounded_shape
 theme.notification_opacity      = 90
 theme.notification_margin       = 50
-
 
 -- Systray widget variables
 -- ------------------------------------------------------------------------
