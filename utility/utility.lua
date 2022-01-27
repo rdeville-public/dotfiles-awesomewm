@@ -11,6 +11,7 @@ function hide()
         notification = nil
     end
 end
+
 -- | Show notification | FOR DEBUG PURPOSE
 function show(t_out, text_out)
     hide()
@@ -21,11 +22,13 @@ function show(t_out, text_out)
       screen     = mouse.screen,
     })
 end
+
 -- | Check file | FOR DEBUG PURPOSE
 function file_exists(name)
      local f=io.open(name,"r")
      if f~=nil then io.close(f) return true else return false end
 end
+
 -- | Autostart Application
 function run_once(cmd_arr)
   for _, cmd in ipairs(cmd_arr) do
@@ -37,6 +40,7 @@ function run_once(cmd_arr)
     awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
     end
 end
+
 -- | Round function for display
 function round(num)
     under = math.floor(num)
@@ -48,6 +52,14 @@ function round(num)
     else
         return upper
     end
+end
+
+-- | On the fly useless gaps change
+function useless_gaps_resize(thatmuch, s, t)
+    local scr = s or awful.screen.focused()
+    local tag = t or scr.selected_tag
+    tag.gap = tag.gap + tonumber(thatmuch)
+    awful.layout.arrange(scr)
 end
 
 -- | Gradient color
@@ -99,6 +111,7 @@ function gradient(min, max, val)
 
   return string.format("#%02x%02x00", red, green)
 end
+
 -- | Get CPU/HDD/GPU Temperature
 local function getTemp()
     temp = {}
