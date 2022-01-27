@@ -16,7 +16,6 @@ local awful   = require("awful")
 local gears   = require("gears")
 local shape   = require("gears.shape")
 local wibox   = require("wibox")
-local vicious = require("vicious")
 local dpi     = require("beautiful.xresources").apply_dpi
 
 --  UTILITY METHODS
@@ -142,7 +141,7 @@ theme.bg_volatile = theme.cyan_A700
 -- Base beautiful variables
 -- ------------------------------------------------------------------------
 -- https://awesomewm.org/doc/api/libraries/beautiful.html
-theme.font        = "FiraCode Nerd Font 10"
+theme.font        = "FiraCode Nerd Font 11"
 theme.useless_gap = dpi(3)
 
 -- Border variables
@@ -220,6 +219,22 @@ theme.tasklist_sticky                       = " "
 theme.tasklist_ontop                        = "ﱓ "
 theme.tasklist_floating                     = " "
 theme.tasklist_maximized                    = " "
+
+-- Hotkeys
+-- ------------------------------------------------------------------------
+-- https://awesomewm.org/apidoc/popups_and_bars/awful.hotkeys_popup.widget.html
+
+theme.hotkeys_bg                = theme.gray_A700
+theme.hotkeys_fg                = theme.gray_A100
+--beautiful.hotkeys_border_width      int                                  Hotkeys widget border width.
+--beautiful.hotkeys_border_color      color                                Hotkeys widget border color.
+--beautiful.hotkeys_shape             gears.shape                          Hotkeys widget shape.
+theme.hotkeys_modifiers_fg      = theme.yellow_A700
+--beautiful.hotkeys_label_bg          color                                Background color used for miscellaneous labels of hotkeys widget.
+theme.hotkeys_label_fg          = theme.green_A700
+--beautiful.hotkeys_font              string or lgi.Pango.FontDescription  Main hotkeys widget font.
+--beautiful.hotkeys_description_font  string or lgi.Pango.FontDescription  Font used for hotkeys' descriptions.
+--beautiful.hotkeys_group_margin      int                                  Margin between hotkeys groups.
 
 -- Naughty notification beautiful variables
 -- ------------------------------------------------------------------------

@@ -50,7 +50,7 @@
   <defs
      id="defs4">
     <style
-       id="style2">.cls-1{fill:none;stroke:#33ff00;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;}</style>
+       id="style2">.cls-1{fill:none;stroke:#14ff00;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;}</style>
   </defs>
   <title
      id="title6">Asset 58</title>
@@ -67,12 +67,12 @@
          x2="46.73"
          y2="2.01"
          id="line8"
-         style="fill:none;stroke:#33ff00;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round" />
+         style="fill:none;stroke:#14ff00;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round" />
       <polyline
          class="cls-1"
          points="21.48 27.22 46.73 2 71.98 27.22"
          id="polyline10"
-         style="fill:none;stroke:#33ff00;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round" />
+         style="fill:none;stroke:#14ff00;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round" />
       <rect
          class="cls-1"
          x="2"
@@ -80,7 +80,7 @@
          width="89.459999"
          height="24.719999"
          id="rect12"
-         style="fill:#33ff00;stroke:#33ff00;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round" />
+         style="fill:#14ff00;stroke:#14ff00;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round" />
     </g>
   </g>
 </svg>
