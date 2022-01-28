@@ -379,7 +379,6 @@ local function factory(args)
   }
 
   local update_widget_used = function (widget, stdout, stderr, exitcode, exitreason)
-
     widget:set_cpu_used(stdout)
   end
 

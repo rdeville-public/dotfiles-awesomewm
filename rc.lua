@@ -93,7 +93,7 @@ local browser    = os.getenv("BROWSER") or "firefox" or "chromium-browser"
 local explorer   = "pcmanfm" or "thunar"
 
 local dpi                 = require("beautiful.xresources").apply_dpi
-local theme_name          = "powerarrow-dark"
+local theme_name          = "powerdark"
 local mouse_raise_windows = false
 
 -- GLOBAL CONFIGURATION
@@ -129,10 +129,28 @@ local layouts = {
   awful.layout.suit.fair.horizontal,
 }
 
+
+local tag_terminal=" "
+local tag_browser="爵"
+local tag_mail=" "
+local tag_pass=" "
+local tag_monitor=" "
+local tag_filemanager=" "
+local tag_steam=" "
+local tag_inkscape="縉"
+local tag_gimp=" "
+local tags = {
+  tag_terminal,
+  tag_browser,
+  tag_mail,
+  tag_pass,
+  tag_monitor,
+}
+
 -- Tag
 -- ------------------------------------------------------------------------
 -- Set awful taglist
-awful.util.tagnames = { " ", "爵", " ", " ", " " }
+awful.util.tagnames = tags
 awful.layout.layouts = layouts
 
 -- Tasklist mouse button management
@@ -206,13 +224,13 @@ local globalkeys = gears.table.join(
     }),
 
   -- Tag browsing
-  awful.key({ modkey, shiftkey }, "l",
+  awful.key({ modkey, shiftkey }, "h",
     awful.tag.viewprev,
     {
       description = "\t\tView previous tag",
       group = "Tag"
     }),
-  awful.key({ modkey, shiftkey }, "h",
+  awful.key({ modkey, shiftkey }, "l",
     awful.tag.viewnext,
     {
       description = "\t\tView next tag",
@@ -516,7 +534,41 @@ local clientkeys = awful.util.table.join(
       group = "Client"
     }),
   awful.key({ modkey }, "o",
-    function (c) c:move_to_screen() end,
+    function (c, t)
+      -- Get idx of current tag of client
+      local stop = false
+      local idx = 1
+      local tag = c.screen.tags[c.first_tag.index]
+      -- Restore last tag visited
+      awful.tag.history.restore()
+      -- Move client to next screen
+      c:move_to_screen()
+      while idx < #c.screen.tags and not stop
+      do
+        if c.screen.tags[idx].name == tag.name
+        then
+          stop = true
+        else
+          idx = idx + 1
+        end
+      end
+      if not stop
+      then
+        awful.tag.add(
+          tag.name,
+          {
+            volatile = true,
+            screen = c.screen,
+            layout = awful.layout.suit.tile
+          }
+        )
+        idx = idx + 1
+      end
+      tag = c.screen.tags[idx]
+      c:move_to_tag(tag)
+      c:jump_to()
+      awful.tag.history.update(c.screen)
+    end,
     {
       description = "\t\tMove to screen",
       group = "Client"
@@ -614,7 +666,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
   -- All clients will match this rule.
   {
-    rule = { },
+    rule = {},
     properties =
     {
       border_width     = beautiful.border_width,
@@ -627,6 +679,76 @@ awful.rules.rules = {
       placement        = awful.placement.no_overlap+awful.placement.no_offscreen,
       size_hints_honor = false
    }
+  },
+  {
+    rule_any = { class = { "st", "terminator", "xterm" } },
+    properties = { tag = tag_terminal, switch_to_tags = true }
+  },
+  {
+    rule_any = { class = { "firefox", "chromium-browser" } },
+    properties = { tag = tag_browser, switch_to_tags = true }
+  },
+  {
+    rule = { class = "thunderbird" },
+    properties = { tag = tag_mail, switch_to_tags = true }
+  },
+  {
+    rule = { class = "keepass" },
+    properties = { tag = tag_pass, switch_to_tags = true }
+  },
+  --[[
+  {
+    rule_any = { TODO Monitor},
+    properties = { tag = tag_monitor, switch_to_tags = true }
+  },
+  --]]
+  {
+    rule_any = { class = { "explorer" }, instance = { "Thunar", "pcmanfm" } },
+    properties = {
+      tag = tag_filemanager,
+      switch_to_tags = true ,
+      new_tag = {
+        name = tag_filemanager,
+        layout = awful.layout.suit.tile,
+        volatile = true,
+      },
+    }
+  },
+  {
+    rule_any = { class = { "Steam" } },
+    properties = {
+      tag = tag_steam,
+      switch_to_tags = true,
+      new_tag = {
+        name = tag_steam,
+        layout = awful.layout.suit.tile,
+        volatile = true,
+      },
+    },
+  },
+  {
+    rule_any = { class = { "Inkscape" } },
+    properties = {
+      tag = tag_inkscape,
+      new_tag = {
+        name = tag_inkscape,
+        layout = awful.layout.suit.tile,
+        volatile = true,
+      },
+      switch_to_tags = true
+    },
+  },
+  {
+    rule_any = { class = { "Gimp" } },
+    properties = {
+      tag = tag_gimp,
+      new_tag = {
+        name = tag_gimp,
+        layout = awful.layout.suit.tile,
+        volatile = true,
+      },
+      switch_to_tags = true
+    },
   },
 }
 
