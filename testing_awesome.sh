@@ -88,7 +88,7 @@ fi
 
 case "$1" in
   start)
-    $XEPHYR -ac -br -noreset -screen 1880x1040 :1 &
+    $XEPHYR -ac -br -noreset -screen 1900x1080 :1 &
     sleep 1
     DISPLAY=:1.0 $AWESOME -c $RC_LUA & >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
     sleep 1
