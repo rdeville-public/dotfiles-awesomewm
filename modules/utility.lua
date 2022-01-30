@@ -128,3 +128,27 @@ local function getTemp()
     return temp
 end
 
+-- OS command method
+function os.capture( cmd, raw)
+  local f = assert(io.popen(cmd,'r'))
+  local s = assert(f:read('*a'))
+  f:close()
+  if raw then return s end
+    s = string.gsub(s, '^%s+', '')
+    s = string.gsub(s, '%s+$', '')
+    s = string.gsub(s, '[\n\r]+', '')
+  return s
+end
+
+local function split(string_to_split, separator)
+    if separator == nil then separator = "%s" end
+    local t = {}
+
+    for str in string.gmatch(string_to_split, "([^".. separator .."]+)") do
+        table.insert(t, str)
+    end
+
+    return t
+  end
+
+

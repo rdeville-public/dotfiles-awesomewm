@@ -47,7 +47,7 @@ package.path        = config_path .. "?/?.lua;"   .. package.path
 package.path        = config_path .. "?/?/?.lua;" .. package.path
 
 -- Personal tools, mainly for run_once method
-require("utility")
+require("modules.utility")
 
 -- FUNCTIONS
 -- ========================================================================
@@ -94,7 +94,7 @@ os.setlocale(os.getenv("LANG"))
 -- Initialize theme variables
 beautiful.init(string.format("%s/.config/awesome/theme/%s/theme.lua", os.getenv("HOME"), theme_name))
 -- Initialize notification center // From https://github.com/raven2cz/awesomewm-config.git
-local popup = require("notifs.notif-center.notif_popup")
+local popup = require("modules.notifs.notif-center.notif_popup")
 
 -- STARTUP RUN ONCE
 -- ========================================================================
@@ -791,7 +791,7 @@ end)
 
 -- Store notifications to the file
 naughty.connect_signal("added", function(n)
-    local file = io.open(os.getenv("HOME") .. "/.config/awesome/naughty_history", "a")
+    local file = io.open(os.getenv("HOME") .. "/.cache/awesome/naughty_history", "a")
     file:write(n.title .. ": " .. n.message .. "\n")
     file:close()
 end)

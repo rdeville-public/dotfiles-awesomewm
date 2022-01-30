@@ -16,7 +16,6 @@ local cairo     = require("lgi").cairo
 local dpi                 = require("beautiful.xresources").apply_dpi
 -- Directory
 local systray_dir = awful.util.getdir("config") .. "widgets/systray"
-local systray_img = systray_dir .. "/img/systray.svg"
 local systray = {}
 
 -- WIDGET
@@ -63,16 +62,7 @@ local function factory(args)
   end
 
   local systray = wibox.widget{
-    {
-      image = left_img(beautiful.wibar_height),
-      widget = wibox.widget.imagebox,
-    },
     wibox.container.place(wibox.widget.systray(true)),
-    {
-      image = right_img(beautiful.wibar_height),
-      widget = wibox.widget.imagebox,
-    },
-    layout = wibox.layout.align.horizontal,
   }
 
   return systray

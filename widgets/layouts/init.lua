@@ -19,15 +19,6 @@ local layout_dir = awful.util.getdir("config") .. "widgets/layouts"
 local layout_img_dir = layout_dir .. "/img/"
 local layout = {}
 
--- METHODS
--- ========================================================================
-local parallelogram_left = function(cr, width, height)
-  gears.shape.transform(gears.shape.parallelogram)
-    :scale(1,-1)
-    :translate(0,-height)(cr, dpi(width), dpi(height), dpi(width-height/2))
-end
-
-
 -- WIDGET
 -- ========================================================================
 local function factory(s,t, args)
@@ -35,12 +26,13 @@ local function factory(s,t, args)
   args.bg      = args.layout_bg           or beautiful.layout_bg    or "#000000"
   args.fg      = args.layout_fg           or beautiful.layout_fg    or "#ffffff"
   args.timeout = args.timeout             or beautiful.layout_timeout  or 1
-  args.shape   = args.layout_shape        or beautiful.layout_shape or parallelogram_left
+  args.shape   = args.layout_shape        or beautiful.layout_shape or gears.shape.rect
   args.layout  = awful.layout.get(s).name
 
   layout = wibox.widget {
     {
       awful.widget.layoutbox(s),
+      left = beautiful.wibar_height,
       widget = wibox.container.margin,
     },
     shape = args.shape,

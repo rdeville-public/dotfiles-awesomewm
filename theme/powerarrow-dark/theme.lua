@@ -117,6 +117,8 @@ theme.taglist_fg_empty    = theme.fg_normal
 theme.taglist_bg_empty    = theme.bg_normal
 theme.taglist_fg_volatile = theme.fg_volatile
 theme.taglist_bg_volatile = theme.bg_volatile
+theme.taglist_shape       = gears.shape.powerline
+theme.taglist_spacing     = dpi(0)
 
 -- Tasklist
 -- ------------------------------------------------------------------------

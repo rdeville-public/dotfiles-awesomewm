@@ -14,25 +14,11 @@ local tonumber = tonumber
 -- ------------------------------------------------------------------------
 local awful   = require("awful")
 local gears   = require("gears")
-local shape   = require("gears.shape")
 local wibox   = require("wibox")
 local dpi     = require("beautiful.xresources").apply_dpi
 local colors  = require("widgets.colors")
 local theme_assets = require("beautiful.theme_assets")
 
---  UTILITY METHODS
--- ========================================================================
--- OS command method
-function os.capture( cmd, raw)
-  local f = assert(io.popen(cmd,'r'))
-  local s = assert(f:read('*a'))
-  f:close()
-  if raw then return s end
-    s = string.gsub(s, '^%s+', '')
-    s = string.gsub(s, '%s+$', '')
-    s = string.gsub(s, '[\n\r]+', '')
-  return s
-end
 
 -- THEME VARIABLES
 -- ========================================================================
@@ -60,6 +46,9 @@ theme.fg_focus    = colors.black
 theme.bg_focus    = colors.light_green_a400
 theme.fg_volatile = colors.black
 theme.bg_volatile = colors.cyan_a400
+theme.bg_darkest  = colors.grey_900 .. "44"
+theme.bg_darker   = colors.grey_800 .. "44"
+theme.bg_dark     = colors.grey_700 .. "44"
 
 -- Base beautiful variables
 -- ------------------------------------------------------------------------
@@ -73,13 +62,6 @@ theme.border_width  = dpi(2)
 theme.border_normal = colors.grey_900
 theme.border_focus  = theme.bg_focus
 theme.border_urgent = theme.bg_urgent
-
--- Default Wibar
--- ------------------------------------------------------------------------
-theme.wibar_height = 18
---theme.
-theme.wibar_fg     = colors.fg_normal
-theme.wibar_bg     = colors.bg_normal
 
 -- Wallpaper configuration
 -- ------------------------------------------------------------------------
@@ -103,45 +85,6 @@ local function time_based_wallpaper()
   end
 end
 -- theme.wallpaper     = themes_dir .. "/wallpapers/XXXX.png"
-
--- Taglist
--- ------------------------------------------------------------------------
--- https://awesomewm.org/doc/api/classes/awful.widget.taglist.html
-theme.taglist_font        = theme.font
-theme.taglist_fg_focus    = theme.fg_focus
-theme.taglist_bg_focus    = theme.bg_focus
-theme.taglist_fg_urgent   = theme.fg_urgent
-theme.taglist_bg_urgent   = theme.bg_urgent
-theme.taglist_fg_occupied = theme.fg_occupied
-theme.taglist_bg_occupied = theme.bg_occupied
-theme.taglist_fg_empty    = theme.fg_normal
-theme.taglist_bg_empty    = theme.bg_normal
-theme.taglist_fg_volatile = theme.fg_volatile
-theme.taglist_bg_volatile = theme.bg_volatile
-
--- Tasklist
--- ------------------------------------------------------------------------
--- https://awesomewm.org/doc/api/classes/awful.widget.tasklist.html
-theme.tasklist_fg_normal                    = colors.black
-theme.tasklist_bg_normal                    = colors.grey_300
-theme.tasklist_fg_focus                     = colors.black
-theme.tasklist_bg_focus                     = colors.green_a700
-theme.tasklist_fg_urgent                    = colors.black
-theme.tasklist_bg_urgent                    = colors.red_a700
-theme.tasklist_fg_minimize                  = colors.black
-theme.tasklist_bg_minimize                  = colors.purple_a700
-theme.tasklist_disable_icon                 = false
-theme.tasklist_disable_task_name            = false
-theme.tasklist_plain_task_name              = false
-theme.tasklist_font                         = theme.font
-theme.tasklist_align                        = center
-theme.tasklist_font_focus                   = theme.font
-theme.tasklist_font_minimized               = theme.font
-theme.tasklist_font_urgent                  = theme.font
-theme.tasklist_sticky                       = " "
-theme.tasklist_ontop                        = "ﱓ "
-theme.tasklist_floating                     = " "
-theme.tasklist_maximized                    = " "
 
 -- Hotkeys
 -- ------------------------------------------------------------------------
@@ -171,14 +114,125 @@ theme.notification_shape        = gears.shape.rect
 theme.notification_opacity      = 90
 theme.notification_margin       = 50
 
+-- Default Wibar
+-- ------------------------------------------------------------------------
+theme.wibar_height = 24
+--theme.
+theme.wibar_fg     = theme.fg_normal
+theme.wibar_bg     = theme.bg_normal .. "44"
+
+local powerline = gears.shape.powerline
+local powerline_inv = function(cr, width, height)
+    gears.shape.powerline(cr, width, height, -theme.wibar_height/2)
+  end
+
+-- Taglist
+-- ------------------------------------------------------------------------
+-- https://awesomewm.org/doc/api/classes/awful.widget.taglist.html
+theme.taglist_font        = theme.font
+theme.taglist_fg_focus    = theme.fg_focus
+theme.taglist_bg_focus    = theme.bg_focus
+theme.taglist_fg_urgent   = theme.fg_urgent
+theme.taglist_bg_urgent   = theme.bg_urgent
+theme.taglist_fg_occupied = theme.fg_occupied
+theme.taglist_bg_occupied = theme.bg_occupied
+theme.taglist_fg_empty    = theme.fg_normal
+theme.taglist_bg_empty    = theme.bg_normal .. "44"
+theme.taglist_fg_volatile = theme.fg_volatile
+theme.taglist_bg_volatile = theme.bg_volatile
+theme.taglist_shape       = powerline
+theme.taglist_spacing     = -dpi(5)
+
+-- Tasklist
+-- ------------------------------------------------------------------------
+-- https://awesomewm.org/doc/api/classes/awful.widget.tasklist.html
+theme.tasklist_fg_normal                    = colors.black
+theme.tasklist_bg_normal                    = colors.grey_300
+theme.tasklist_fg_focus                     = colors.black
+theme.tasklist_bg_focus                     = colors.green_a700
+theme.tasklist_fg_urgent                    = colors.black
+theme.tasklist_bg_urgent                    = colors.red_a700
+theme.tasklist_fg_minimize                  = colors.black
+theme.tasklist_bg_minimize                  = colors.purple_a700
+theme.tasklist_disable_icon                 = false
+theme.tasklist_disable_task_name            = false
+theme.tasklist_plain_task_name              = false
+theme.tasklist_font                         = theme.font
+theme.tasklist_align                        = center
+theme.tasklist_font_focus                   = theme.font
+theme.tasklist_font_minimized               = theme.font
+theme.tasklist_font_urgent                  = theme.font
+theme.tasklist_sticky                       = " "
+theme.tasklist_ontop                        = "ﱓ "
+theme.tasklist_floating                     = " "
+theme.tasklist_maximized                    = " "
+
+-- IP widget variables
+-- ------------------------------------------------------------------------
+-- IP widget
+-- local ip_widget = require("widgets.ip")
+
+-- Uptime widget variables
+-- ------------------------------------------------------------------------
+-- Uptime widget
+local uptime_widget = require("widgets.uptime")
+
+-- Battery widget variables
+-- ------------------------------------------------------------------------
+-- Battery widget
+local bat_widget = require("widgets.bat")
+
+-- Disk widget variables
+-- ------------------------------------------------------------------------
+-- Disk widget
+--local disk_widget = require("widgets.disk")
+
+-- Net widget variables
+-- ------------------------------------------------------------------------
+-- Net widget
+local net_widget = require("widgets.net")
+
+-- Ram widget variables
+-- ------------------------------------------------------------------------
+-- Ram widget
+local ram_widget = require("widgets.ram")
+
+-- CPU widget variables
+-- ------------------------------------------------------------------------
+-- CPU widget
+theme.cpu_fg = theme.fg_normal
+theme.cpu_bg = theme.bg_darker
+theme.cpu_shape = powerline_inv
+local cpu_widget = require("widgets.cpu")
+
+-- Date widget variables
+-- ------------------------------------------------------------------------
+-- Date widget
+theme.date_format = " %a %d %b | %H:%M"
+theme.date_fg = theme.fg_normal
+theme.date_bg = theme.bg_darkest
+theme.date_shape = powerline_inv
+local date_widget = require("widgets.date")
+
 -- Systray widget variables
 -- ------------------------------------------------------------------------
-theme.bg_systray           = theme.fg_normal
+theme.bg_systray           = colors.brown_500
 theme.systray_icon_spacing = dpi(0)
-local systray_widget       = require("widgets.systray")
+local systray_widget = {
+  {
+    wibox.widget.systray(),
+    left = dpi(theme.wibar_height),
+    right = dpi(theme.wibar_height),
+    widget = wibox.container.margin,
+  },
+  bg = theme.bg_systray,
+  shape = powerline_inv,
+  widget = wibox.container.background,
+}
 
 -- Layout widget variables
 -- ------------------------------------------------------------------------
+local layoutbox_widget = require("widgets.layouts")
 -- Layout image
 layout_img_dir          = theme.dir .. "/img/layouts/"
 theme.layout_cornernw   = layout_img_dir .. "cornernw.png"
@@ -196,40 +250,12 @@ theme.layout_tiletop    = layout_img_dir .. "tiletop.png"
 theme.layout_tilebottom = layout_img_dir .. "tilebottom.png"
 theme.layout_tileleft   = layout_img_dir .. "tileleft.png"
 -- Layout widget
-theme.layout_fg        = theme.bg_normal
-theme.layout_bg        = theme.fg_normal
+theme.layout_fg        = theme.fg_normal
+theme.layout_bg        = theme.bg_normal .. "00"
+theme.layout_shape     = powerline_inv
+theme_assets.recolor_layout(theme, theme.fg_normal)
 
-local layoutbox_widget = require("widgets.layouts")
 
--- CPU widget variables
--- ------------------------------------------------------------------------
--- CPU widget
---local cpu_widget = require("widgets.cpu")
-
--- Battery widget variables
--- ------------------------------------------------------------------------
--- Battery widget
-local bat_widget = require("widgets.bat")
-
--- Ram widget variables
--- ------------------------------------------------------------------------
--- Ram widget
-local ram_widget = require("widgets.ram")
-
--- Net widget variables
--- ------------------------------------------------------------------------
--- Net widget
-local net_widget = require("widgets.net")
-
--- Uptime widget variables
--- ------------------------------------------------------------------------
--- Uptime widget
-local uptime_widget = require("widgets.uptime")
-
--- Date widget variables
--- ------------------------------------------------------------------------
--- Date widget
-local date_widget = require("widgets.date")
 
 function theme.at_screen_connect(s)
   -- Time based wallpaper configuration
@@ -254,14 +280,9 @@ function theme.at_screen_connect(s)
     screen  = s,
     filter  = awful.widget.taglist.filter.all,
     buttons = awful.util.taglist_buttons,
-    style = {
-      shape = function(cr, width, height)
-        gears.shape.parallelogram (cr, dpi(width), height, dpi(width-height/2))
-      end,
-    },
     layout = {
       spacing = -dpi(theme.wibar_height/2),
-      layout  = wibox.layout.flex.horizontal
+      layout  = wibox.layout.flex.horizontal,
     },
     widget_template = {
       {
@@ -276,10 +297,10 @@ function theme.at_screen_connect(s)
         layout   = wibox.layout.flex.horizontal,
       },
       id           = 'background_role',
-      forced_width = dpi(theme.wibar_height * 5),
+      forced_width = dpi(theme.wibar_height * 4),
       widget       = wibox.container.background,
       -- Add support for hover colors and an index label
-      create_callback = function(self, tag, index, objects) --luacheck: no unused args
+      create_callback = function(self, tag, index, objects)
         nb_client = tag:clients().n
         if tag.selected then
           fg_color = theme.taglist_fg_focus
@@ -369,36 +390,45 @@ function theme.at_screen_connect(s)
   -- ========================================================================
   -- Initialize top wibar
   -- ------------------------------------------------------------------------
+  s.empty_top_bar = awful.wibar({
+    position = "top",
+    screen   = s,
+    height   = dpi(2 * theme.useless_gap),
+    bg       = "#00000000",
+  })
   s.top_bar = awful.wibar({
     position = "top",
-    screen = s,
-    height = dpi(theme.wibar_height),
-    fg = theme.wibar_fg,
-    bg = theme.wibar_bg,
+    screen   = s,
+    height   = dpi(theme.wibar_height),
+    width    = dpi(s.geometry.width - 4 * theme.useless_gap),
+    fg       = theme.wibar_fg,
+    bg       = theme.wibar_bg,
   })
 
   -- Add widgets to the wibar
   -- ------------------------------------------------------------------------
+  systray = nil
+  if s == screen[1] then systray = systray_widget end
   s.top_bar:setup {
     layout = wibox.layout.align.horizontal,
     { -- Left widgets
-      spacing = -dpi(theme.wibar_height/2),   -- Set spacing between widget
-      layout = wibox.layout.fixed.horizontal, -- Set layout of the widget
       s.mytaglist,                            -- Add taglist
-      systray_widget(),                       -- Add Systray widget
+      spacing = -dpi(theme.wibar_height/4),   -- Set spacing between widget
+      layout  = wibox.layout.fixed.horizontal, -- Set layout of the widget
     },
     { -- Middle widgets
-      opacity = 0,                            -- Hide the sperator
+      opacity = 1,                            -- Hide the sperator
       widget  = wibox.widget.separator,       -- Set the widget to separator
     },
     { -- Right widgets
-      spacing = -dpi(theme.wibar_height/2),   -- Set spacing between widget
-      layout = wibox.layout.fixed.horizontal, -- Set layout of the widget
+      spacing = -dpi(theme.wibar_height/4),   -- Set spacing between widget
+      layout  = wibox.layout.fixed.horizontal, -- Set layout of the widget
       uptime_widget(),                        -- Add uptime widget
-      --cpu_widget(),                           -- Add cpu widget
       bat_widget(),                           -- Add bat widget
       ram_widget(),                           -- Add ram widget
       net_widget(),                           -- Add network widget
+      cpu_widget(),
+      systray,
       date_widget(),                          -- Add date widget
       layoutbox_widget(s,tag),                    -- Add layoubox widget
     },
@@ -410,10 +440,18 @@ function theme.at_screen_connect(s)
   -- ------------------------------------------------------------------------
   s.bot_bar = awful.wibar({
     position = "bottom",
-    screen = s,
-    height = 16,
-    bg = theme.normal_dark,
-    fg = theme.normal_light })
+    screen   = s,
+    height   = dpi(2 * theme.useless_gap),
+    bg       = "#00000000",
+  })
+  s.bot_bar = awful.wibar({
+    position = "bottom",
+    screen   = s,
+    height   = theme.wibar_height,
+    bg       = theme.bg_normal,
+    fg       = theme.fg_normal,
+    width    = dpi(s.geometry.width - 4 * theme.useless_gap),
+  })
 
   -- Add widgets to the wibar
   -- ------------------------------------------------------------------------
@@ -423,6 +461,5 @@ function theme.at_screen_connect(s)
 
 end
 
-theme_assets.recolor_layout(theme, theme.bg_normal)
 
 return theme

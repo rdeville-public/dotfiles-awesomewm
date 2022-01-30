@@ -1,5 +1,6 @@
 # Project Specific Gitignore
 
+.naughty_history
 .vimrc.local
 .tmux*.y*ml
 .old/
