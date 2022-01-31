@@ -46,14 +46,14 @@ theme.fg_focus    = colors.black
 theme.bg_focus    = colors.light_green_a400
 theme.fg_volatile = colors.black
 theme.bg_volatile = colors.cyan_a400
-theme.bg_darkest  = colors.grey_900 .. "44"
-theme.bg_darker   = colors.grey_800 .. "44"
-theme.bg_dark     = colors.grey_700 .. "44"
+theme.bg_darkest  = colors.grey_900
+theme.bg_darker   = colors.grey_800
+theme.bg_dark     = colors.grey_700
 
 -- Base beautiful variables
 -- ------------------------------------------------------------------------
 -- https://awesomewm.org/doc/api/libraries/beautiful.html
-theme.font        = "FiraCode Nerd Font 12"
+theme.font        = "FiraCode Nerd Font 10"
 theme.useless_gap = dpi(5)
 
 -- Border variables
@@ -116,7 +116,7 @@ theme.notification_margin       = 50
 
 -- Default Wibar
 -- ------------------------------------------------------------------------
-theme.wibar_height = 24
+theme.wibar_height = 20
 --theme.
 theme.wibar_fg     = theme.fg_normal
 theme.wibar_bg     = theme.bg_normal .. "44"
@@ -175,6 +175,10 @@ theme.tasklist_maximized                    = " "
 -- Uptime widget variables
 -- ------------------------------------------------------------------------
 -- Uptime widget
+theme.uptime_bg = theme.bg_darker
+theme.uptime_fg = theme.fg_normal
+theme.uptime_shape = powerline_inv
+theme.uptime_icon = " "
 local uptime_widget = require("widgets.uptime")
 
 -- Battery widget variables
@@ -190,19 +194,64 @@ local bat_widget = require("widgets.bat")
 -- Net widget variables
 -- ------------------------------------------------------------------------
 -- Net widget
+theme.net_bg = theme.bg_darker
+theme.net_fg = theme.fg_normal
+theme.net_shape = powerline_inv
+theme.net_up_icon = " "
+theme.net_down_icon = " "
+theme.net_online_icon = " "
+theme.net_offline_icon = " "
+
+theme.net_tier1_clr=colors.green_500
+theme.net_tier2_clr=colors.yellow_500
+theme.net_tier3_clr=colors.orange_500
+theme.net_tier4_clr=colors.red_500
 local net_widget = require("widgets.net")
+
+-- Disk widget variables
+-- ------------------------------------------------------------------------
+-- Disk widget
+theme.disk_bg=theme.bg_darker
+theme.disk_fg=theme.fg_normal
+theme.disk_shape=powerline_inv
+theme.disk_icon=" "
+theme.disk_bar_bg = theme.bg_darkest
+
+theme.disk_tier1_clr=colors.green_500
+theme.disk_tier2_clr=colors.yellow_500
+theme.disk_tier3_clr=colors.orange_500
+theme.disk_tier4_clr=colors.red_500
+local disk_widget = require("widgets.disk")
+
 
 -- Ram widget variables
 -- ------------------------------------------------------------------------
 -- Ram widget
+theme.ram_bg=theme.bg_dark
+theme.ram_fg=theme.fg_normal
+theme.ram_shape=powerline_inv
+theme.ram_icon=" "
+theme.ram_bar_bg = theme.bg_darkest
+
+theme.ram_tier1_clr=colors.green_500
+theme.ram_tier2_clr=colors.yellow_500
+theme.ram_tier3_clr=colors.orange_500
+theme.ram_tier4_clr=colors.red_500
 local ram_widget = require("widgets.ram")
 
 -- CPU widget variables
 -- ------------------------------------------------------------------------
 -- CPU widget
 theme.cpu_fg = theme.fg_normal
-theme.cpu_bg = theme.bg_darker
+theme.cpu_bg = theme.bg_dark
 theme.cpu_shape = powerline_inv
+theme.cpu_icon = "  "
+theme.cpu_bar_bg = theme.bg_darkest
+
+theme.cpu_tier1_clr=colors.green_500
+theme.cpu_tier2_clr=colors.yellow_500
+theme.cpu_tier3_clr=colors.orange_500
+theme.cpu_tier4_clr=colors.red_500
 local cpu_widget = require("widgets.cpu")
 
 -- Date widget variables
@@ -210,7 +259,7 @@ local cpu_widget = require("widgets.cpu")
 -- Date widget
 theme.date_format = " %a %d %b | %H:%M"
 theme.date_fg = theme.fg_normal
-theme.date_bg = theme.bg_darkest
+theme.date_bg = theme.bg_darker
 theme.date_shape = powerline_inv
 local date_widget = require("widgets.date")
 
@@ -424,12 +473,13 @@ function theme.at_screen_connect(s)
       spacing = -dpi(theme.wibar_height/4),   -- Set spacing between widget
       layout  = wibox.layout.fixed.horizontal, -- Set layout of the widget
       uptime_widget(),                        -- Add uptime widget
+      disk_widget(),                          -- Add disk widget
       bat_widget(),                           -- Add bat widget
       ram_widget(),                           -- Add ram widget
       net_widget(),                           -- Add network widget
       cpu_widget(),
-      systray,
       date_widget(),                          -- Add date widget
+      systray,
       layoutbox_widget(s,tag),                    -- Add layoubox widget
     },
   }

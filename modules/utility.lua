@@ -129,7 +129,7 @@ local function getTemp()
 end
 
 -- OS command method
-function os.capture( cmd, raw)
+function os.capture(cmd, raw)
   local f = assert(io.popen(cmd,'r'))
   local s = assert(f:read('*a'))
   f:close()

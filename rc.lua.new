@@ -1,5 +1,3 @@
-#!/usr/bin/env lua
-
 -- DESCRIPTION
 -- ========================================================================
 -- Main configuration files for awesome WM
@@ -776,22 +774,21 @@ client.connect_signal("unfocus",
     c.border_color = beautiful.border_normal
 end)
 
-
 -- Notifications
 ruled.notification.connect_signal('request::rules', function()
-    -- All notifications will match this rule.
-    ruled.notification.append_rule {
-        rule       = { },
-        properties = {
-            screen           = awful.screen.focused,
-            timeout = 5,
-        }
+  -- All notifications will match this rule.
+  ruled.notification.append_rule {
+    rule       = { },
+    properties = {
+      screen  = awful.screen.focused,
+      timeout = 5,
     }
+  }
 end)
 
 -- Store notifications to the file
 naughty.connect_signal("added", function(n)
-    local file = io.open(os.getenv("HOME") .. "/.cache/awesome/naughty_history", "a")
-    file:write(n.title .. ": " .. n.message .. "\n")
-    file:close()
+  local file = io.open(os.getenv("HOME") .. "/.cache/awesome/naughty_history", "a")
+  file:write(n.title .. ": " .. n.message .. "\n")
+  file:close()
 end)
