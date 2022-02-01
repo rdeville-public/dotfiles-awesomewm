@@ -167,15 +167,52 @@ theme.tasklist_ontop                        = "ﱓ "
 theme.tasklist_floating                     = " "
 theme.tasklist_maximized                    = " "
 
+
+-- Keyboard Layout widget variables
+-- ------------------------------------------------------------------------
+-- Keyboard Layout widget
+theme.keyboardlayout_fg = colors.yellow_500
+theme.keyboardlayout_bg = theme.bg_dark
+theme.keyboardlayout_icon = " "
+theme.keyboardlayout_shape = powerline_inv
+local keyboardlayout_widget = wibox.widget
+  {
+    {
+      {
+        {
+          markup = ""..
+            "<span foreground='" .. theme.keyboardlayout_fg.. "'>" ..
+              theme.keyboardlayout_icon ..
+            "</span>",
+          widget = wibox.widget.textbox,
+        },
+        awful.widget.keyboardlayout,
+        layout = wibox.layout.align.horizontal,
+      },
+      widget = wibox.container.margin(_, 15, 15, 0, 0),
+    },
+    fg           = theme.keyboardlayout_fg,
+    bg           = theme.keyboardlayout_bg,
+    font         = theme.font,
+    shape        = theme.keyboardlayout_shape,
+    widget       = wibox.container.background,
+  }
+
 -- IP widget variables
 -- ------------------------------------------------------------------------
 -- IP widget
--- local ip_widget = require("widgets.ip")
+theme.ip_bg = theme.bg_darker
+theme.ip_fg = colors.purple_300
+theme.ip_shape = powerline_inv
+theme.ip_icon = " "
+theme.ip_icon=" "
+theme.ip_icon_vpn="旅"
+local ip_widget = require("widgets.ip")
 
 -- Uptime widget variables
 -- ------------------------------------------------------------------------
 -- Uptime widget
-theme.uptime_bg = theme.bg_darker
+theme.uptime_bg = theme.bg_dark
 theme.uptime_fg = theme.fg_normal
 theme.uptime_shape = powerline_inv
 theme.uptime_icon = " "
@@ -184,29 +221,7 @@ local uptime_widget = require("widgets.uptime")
 -- Battery widget variables
 -- ------------------------------------------------------------------------
 -- Battery widget
-local bat_widget = require("widgets.bat")
-
--- Disk widget variables
--- ------------------------------------------------------------------------
--- Disk widget
---local disk_widget = require("widgets.disk")
-
--- Net widget variables
--- ------------------------------------------------------------------------
--- Net widget
-theme.net_bg = theme.bg_darker
-theme.net_fg = theme.fg_normal
-theme.net_shape = powerline_inv
-theme.net_up_icon = " "
-theme.net_down_icon = " "
-theme.net_online_icon = " "
-theme.net_offline_icon = " "
-
-theme.net_tier1_clr=colors.green_500
-theme.net_tier2_clr=colors.yellow_500
-theme.net_tier3_clr=colors.orange_500
-theme.net_tier4_clr=colors.red_500
-local net_widget = require("widgets.net")
+--local bat_widget = require("widgets.bat")
 
 -- Disk widget variables
 -- ------------------------------------------------------------------------
@@ -223,11 +238,27 @@ theme.disk_tier3_clr=colors.orange_500
 theme.disk_tier4_clr=colors.red_500
 local disk_widget = require("widgets.disk")
 
+-- Net widget variables
+-- ------------------------------------------------------------------------
+-- Net widget
+theme.net_bg = theme.bg_dark
+theme.net_fg = theme.fg_normal
+theme.net_shape = powerline_inv
+theme.net_up_icon = " "
+theme.net_down_icon = " "
+theme.net_online_icon = " "
+theme.net_offline_icon = " "
+
+theme.net_tier1_clr=colors.green_500
+theme.net_tier2_clr=colors.yellow_500
+theme.net_tier3_clr=colors.orange_500
+theme.net_tier4_clr=colors.red_500
+local net_widget = require("widgets.net")
 
 -- Ram widget variables
 -- ------------------------------------------------------------------------
 -- Ram widget
-theme.ram_bg=theme.bg_dark
+theme.ram_bg=theme.bg_darker
 theme.ram_fg=theme.fg_normal
 theme.ram_shape=powerline_inv
 theme.ram_icon=" "
@@ -303,7 +334,6 @@ theme.layout_fg        = theme.fg_normal
 theme.layout_bg        = theme.bg_normal .. "00"
 theme.layout_shape     = powerline_inv
 theme_assets.recolor_layout(theme, theme.fg_normal)
-
 
 
 function theme.at_screen_connect(s)
@@ -393,7 +423,7 @@ function theme.at_screen_connect(s)
     buttons  = awful.util.tasklist_buttons,
     style    = {
       shape_border_width = 0,
-      shape  = gears.shape.hexagon,
+      shape  = gears.shape.powerline,
     },
     layout   = {
       spacing = dpi(10),
@@ -413,26 +443,21 @@ function theme.at_screen_connect(s)
       {
         {
           {
-            {
-              id     = 'icon_role',
-              widget = wibox.widget.imagebox,
-            },
-            margins = 2,
-            widget  = wibox.container.margin,
+            id     = 'icon_role',
+            widget = wibox.widget.imagebox,
           },
-          {
-            id     = 'text_role',
-            widget = wibox.widget.textbox,
-          },
-          layout = wibox.layout.fixed.horizontal,
+          margins = 2,
+          widget  = wibox.container.margin,
         },
-        left  = 10,
-        right = 10,
-        widget = wibox.container.margin
+        layout = wibox.layout.fixed.horizontal,
       },
-      id     = 'background_role',
-      widget = wibox.container.background,
+      left  = 10,
+      right = 10,
+      widget = wibox.container.margin
     },
+    id     = 'background_role',
+    forced_width = theme.wibar_height,
+    widget = wibox.container.background,
   }
 
   -- THE TOP WIBAR
@@ -466,48 +491,25 @@ function theme.at_screen_connect(s)
       layout  = wibox.layout.fixed.horizontal, -- Set layout of the widget
     },
     { -- Middle widgets
-      opacity = 1,                            -- Hide the sperator
-      widget  = wibox.widget.separator,       -- Set the widget to separator
+      s.mytasklist,
+      layout  = wibox.layout.flex.horizontal,-- Set the widget to separator
     },
     { -- Right widgets
       spacing = -dpi(theme.wibar_height/4),   -- Set spacing between widget
       layout  = wibox.layout.fixed.horizontal, -- Set layout of the widget
+      keyboardlayout_widget,
+      ip_widget(),
       uptime_widget(),                        -- Add uptime widget
       disk_widget(),                          -- Add disk widget
-      bat_widget(),                           -- Add bat widget
-      ram_widget(),                           -- Add ram widget
+      --bat_widget(),                           -- Add bat widget
       net_widget(),                           -- Add network widget
+      ram_widget(),                           -- Add ram widget
       cpu_widget(),
       date_widget(),                          -- Add date widget
       systray,
       layoutbox_widget(s,tag),                    -- Add layoubox widget
     },
   }
-
-  -- THE BOTTOM WIBAR
-  -- ========================================================================
-  -- Initialize bottom wibar
-  -- ------------------------------------------------------------------------
-  s.bot_bar = awful.wibar({
-    position = "bottom",
-    screen   = s,
-    height   = dpi(2 * theme.useless_gap),
-    bg       = "#00000000",
-  })
-  s.bot_bar = awful.wibar({
-    position = "bottom",
-    screen   = s,
-    height   = theme.wibar_height,
-    bg       = theme.bg_normal,
-    fg       = theme.fg_normal,
-    width    = dpi(s.geometry.width - 4 * theme.useless_gap),
-  })
-
-  -- Add widgets to the wibar
-  -- ------------------------------------------------------------------------
-  local botlayout = wibox.layout.align.horizontal()
-  botlayout:set_middle(s.mytasklist)
-  s.bot_bar:set_widget(botlayout)
 
 end
 

@@ -56,7 +56,7 @@ local function factory(args)
   end
 
   local function get_disk_value(stat_lines)
-    local disk = {}
+    local disks_value = {}
 
     -- Get disk stats
     ------------------------------------------------------------
@@ -75,18 +75,18 @@ local function factory(args)
       end
       if not find then
         find = false
-        for _,i_disk in ipairs(disk) do
+        for _,i_disk in ipairs(disks_value) do
           if i_disk.name == curr_disk.name then
             find = true
           end
         end
         if not find then
-          table.insert(disk,curr_disk)
+          table.insert(disks_value,curr_disk)
         end
       end
     end
 
-    return disk
+    return disks_value
   end
 
   args.font        = args.font        or beautiful.disk_font        or beautiful.font
@@ -116,41 +116,44 @@ local function factory(args)
 
   args.disks_value = get_disk_value(os.capture("df -H", true))
 
-  disk_bars = wibox.widget {
-    item = {},
-    layout = wibox.layout.flex.horizontal,
-  }
-
-  for idx in pairs(args.disks_value) do
-    local disk_template = wibox.widget {
-      {
-        {
-          id               = "disk_bar_" .. tostring(idx),
-          -- DEBUG
-          value            = idx * 10,
-          widget           = wibox.widget.progressbar,
-          -- https://awesomewm.org/apidoc/classes/wibox.widget.progressbar.html
-          clip             = true,
-          color            = args.bar_fg,
-          background_color = args.bar_bg,
-          bar_shape        = args.bar_fill_shape,
-          shape            = args.bar_shape,
-          max_value        = 100,
-          forced_width     = args.bar_width,
-          visible          = true,
-        },
-        forced_width = args.bar_width,
-        forced_height = args.height,
-        direction = "east",
-        layout = wibox.container.rotate,
-      },
-     -- layout = wibox.layout.align.horizontal,
-      widget = wibox.container.margin(_,5,5,0,0),
+  disk_bars = function()
+    local disk_bars = wibox.widget {
+      item = {},
+      layout = wibox.layout.flex.horizontal,
     }
-    table.insert(disk_bars.item,disk_template)
-    disk_bars:add(disk_template)
-  end
 
+    for idx = 1,#args.disks_value do
+      local clr_value   = compute_tier_clr(args.disks_value[idx].value)
+      local disk_template = wibox.widget {
+        {
+          {
+            id               = "disk_bar_" .. tostring(idx),
+            -- DEBUG
+            value            = tonumber(args.disks_value[idx].value),
+            widget           = wibox.widget.progressbar,
+            -- https://awesomewm.org/apidoc/classes/wibox.widget.progressbar.html
+            clip             = true,
+            color            = clr_value,
+            background_color = args.bar_bg,
+            bar_shape        = args.bar_fill_shape,
+            shape            = args.bar_shape,
+            max_value        = 100,
+            forced_width     = args.bar_width,
+            visible          = true,
+          },
+          forced_width = args.bar_width,
+          forced_height = args.height,
+          direction = "east",
+          layout = wibox.container.rotate,
+        },
+       -- layout = wibox.layout.align.horizontal,
+        widget = wibox.container.margin(_,5,5,0,0),
+      }
+      table.insert(disk_bars.item,disk_template)
+      disk_bars:add(disk_template)
+    end
+    return disk_bars
+  end
 
   disk = wibox.widget
   {
@@ -162,14 +165,7 @@ local function factory(args)
           font   = args.font,
           widget = wibox.widget.textbox,
         },
-        {
-          {
-            item = disk_bars,
-            id = "disk_bars",
-            layout = wibox.layout.fixed.horizontal,
-          },
-          widget = wibox.container.margin(_,0,0,0,0),
-        },
+        disk_bars(),
         layout = wibox.layout.align.horizontal,
       },
       widget = wibox.container.margin(_, 20, 20, 0, 0),
@@ -183,27 +179,9 @@ local function factory(args)
       local alert_value = args.alert_value
       for idx=1,#disks_value do
         clr_value   = compute_tier_clr(disks_value[idx].value)
-        widget = self:get_children_by_id("disk_bar_" .. idx)
-        local str = "=="
-        for idx, data in pairs(widget) do
-          str = str .. " " .. tostring(idx) .. "++" .. tostring(data)
-        end
-        str = str .. "??"
-          --v:get_children_by_id("disk_bar_" .. idx)[1].value = disks_value[idx].value
-          --v:get_children_by_id("disk_bar_" .. idx)[1].color = clr_value
-        show(10,str)
-
-        --self:get_children_by_id("disk_bars")[idx].value   = disks_value[idx].value
-        --self:get_children_by_id("disk_bars")[idx].color   = clr_value
-        --self:get_children_by_id("disk_bar_" .. idx).value   = disks_value[idx].value
-        --self:get_children_by_id("disk_bar_" .. idx).color   = clr_value
+        self:get_children_by_id("disk_bar_" .. idx).color = clr_value
+        self:get_children_by_id("disk_bar_" .. idx).value = disks_value[idx].value
       end
-      -- Update widget values
-      --self:get_children_by_id("disk_icon")[1].markup     = "<span foreground='" .. clr_value .."'>".. args.icon .. "</span>"
-      --self:get_children_by_id("disk_bar")[1].value   = disk_value.pourcent
-      --self:get_children_by_id("disk_bar")[1].color   = clr_value
-      --self:get_children_by_id("disk_value")[1].markup     = "<span foreground='" .. clr_value .."'>".. pourcent .. "</span>"
-      --self:get_children_by_id("disk_load")[1].markup     = "<span foreground='" .. clr_value .."'>".. loadavg .. "</span>"
       -- Show alert if usage above specified threshold
 --      if ( disk_value.pourcent > args.alert_value )
 --      then
@@ -230,75 +208,3 @@ return setmetatable(disk, { __call = function(_, ...)
 end })
 
 -- vim: fdm=indent
--- o
---
---
---
---
--- local disks = {}
---    watch([[bash -c "df | tail -n +2"]], _config.refresh_rate,
---            function(widget, stdout)
---                for line in stdout:gmatch("[^\r\n$]+") do
---                    local filesystem, size, used, avail, perc, mount =
---                        line:match('([%p%w]+)%s+([%d%w]+)%s+([%d%w]+)%s+([%d%w]+)%s+([%d]+)%%%s+([%p%w]+)')
---
---                    disks[mount] = {}
---                    disks[mount].filesystem = filesystem
---                    disks[mount].size = size
---                    disks[mount].used = used
---                    disks[mount].avail = avail
---                    disks[mount].perc = perc
---                    disks[mount].mount = mount
---
---                    if disks[mount].mount == _config.mounts[1] then
---                        widget:set_value(tonumber(disks[mount].perc))
---                    end
---                end
---
---                for k, v in ipairs(_config.mounts) do
---
---                    local row = wibox.widget {
---                        {
---                            text = disks[v].mount,
---                            forced_width = 150,
---                            widget = wibox.widget.textbox
---                        },
---                        {
---                            color = _config.popup_bar_color,
---                            max_value = 100,
---                            value = tonumber(disks[v].perc),
---                            forced_height = 20,
---                            paddings = 1,
---                            margins = 4,
---                            border_width = 1,
---                            border_color = _config.popup_bar_border_color,
---                            background_color = _config.popup_bar_background_color,
---                            bar_border_width = 1,
---                            bar_border_color = _config.popup_bar_border_color,
---                            widget = wibox.widget.progressbar,
---                        },
---                        {
---                            text = math.floor(disks[v].used / 1024 / 1024)
---                                    .. '/'
---                                    .. math.floor(disks[v].size / 1024 / 1024) .. 'GB('
---                                    .. math.floor(disks[v].perc) .. '%)',
---                            widget = wibox.widget.textbox
---                        },
---                        layout = wibox.layout.ratio.horizontal
---                    }
---                    row:ajust_ratio(2, 0.3, 0.3, 0.4)
---
---                    disk_rows[k] = row
---                end
---                popup:setup {
---                    {
---                        disk_header,
---                        disk_rows,
---                        layout = wibox.layout.fixed.vertical,
---                    },
---                    margins = 8,
---                    widget = wibox.container.margin
---                }
---            end,
---            storage_bar_widget
---    )

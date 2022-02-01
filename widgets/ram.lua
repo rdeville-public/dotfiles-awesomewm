@@ -18,13 +18,11 @@ local naughty   = require("naughty")
 -- ========================================================================
 local dpi            = require("beautiful.xresources").apply_dpi
 -- Directory
-local ram_dir        = awful.util.getdir("config") .. "widgets/ram"
 local ram            = {}
 
 -- METHODS
 -- ========================================================================
 local function factory(args)
-  local default_command = "free | grep 'Mem:'"
   local args = args or {}
 
   local function split(string_to_split, separator)
@@ -85,7 +83,7 @@ local function factory(args)
     end
   end
 
-  args.max_value = get_ram_value(os.capture(default_command)).total
+  args.max_value = get_ram_value(os.capture("free | grep 'Mem:'")).total
 
   args.font        = args.font        or beautiful.ram_font        or beautiful.font
   args.bg          = args.bg          or beautiful.ram_bg          or "#000000"
@@ -110,7 +108,6 @@ local function factory(args)
   args.tier2_val   = args.tier2_val   or beautiful.ram_tier2_val   or args.max_value * 0.50
   args.tier3_val   = args.tier3_val   or beautiful.ram_tier3_val   or args.max_value * 0.75
   args.tier4_val   = args.tier4_val   or beautiful.ram_tier4_val   or args.max_value
-
 
   ram = wibox.widget
   {
@@ -174,10 +171,6 @@ local function factory(args)
       self:get_children_by_id("ram_bar")[1].value   = ram.pourcent
       self:get_children_by_id("ram_bar")[1].color   = clr_value
       self:get_children_by_id("ram_value")[1].markup     = "<span foreground='" .. clr_value .."'>".. text_value .. "</span>"
---      self:get_children_by_id("ram_cached_bar")[1].value = tonumber(used + cached)
---      self:get_children_by_id("ram_buffer_bar")[1].value = tonumber(used + buffer)
---      self:get_children_by_id("ram_icon")[1].image       = img
---      self:get_children_by_id("ram_value")[1].markup     = "<span foreground = '" .. clr_value .."'>".. text_value.. "</span>"
 --      -- Show alert if usage above specified threshold
 --      if ( used > args.alert_value )
 --      then

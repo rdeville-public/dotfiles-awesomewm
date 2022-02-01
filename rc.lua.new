@@ -314,7 +314,6 @@ local globalkeys = gears.table.join(
     function ()
       for s in screen do
         s.top_bar.visible = not s.top_bar.visible
-        s.bot_bar.visible = not s.bot_bar.visible
       end
     end,
     {

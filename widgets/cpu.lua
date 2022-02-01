@@ -18,38 +18,10 @@ local naughty   = require("naughty")
 -- ========================================================================
 local dpi            = require("beautiful.xresources").apply_dpi
 -- Directory
-local cpu_dir        = awful.util.getdir("config") .. "widgets/cpu"
 local cpu            = {}
 
 local function factory(args)
-  local args       = args              or {}
-  args.font        = args.font        or beautiful.cpu_font        or beautiful.font
-  args.bg          = args.bg          or beautiful.cpu_bg          or "#000000"
-  args.fg          = args.fg          or beautiful.cpu_fg          or "#FFFFFF"
-  args.height      = args.height      or beautiful.cpu_height      or 24
-  args.icon        = args.icon        or beautiful.cpu_icon        or "CPU: "
-  args.alert_value = args.alert_value or beautiful.cpu_alert_value or 90
-  args.timeout     = args.timeout     or beautiful.cpu_timeout     or 1
-
-  args.shape       = args.shape       or beautiful.cpu_shape       or gears.shape.rect
-
-  args.bar_shape   = args.bar_shape   or beautiful.cpu_bar_shape   or default_shape
-  args.bar_width   = args.bar_width   or beautiful.cpu_bar_width   or 10
-  args.bar_fg      = args.bar_fg      or beautiful.cpu_bar_fg      or args.fg
-  args.bar_bg      = args.bar_bg      or beautiful.cpu_bar_bg      or args.bg
-
-  args.tier1_clr   = args.tier1_clr   or beautiful.cpu_tier1_clr   or args.fg
-  args.tier2_clr   = args.tier2_clr   or beautiful.cpu_tier2_clr   or args.fg
-  args.tier3_clr   = args.tier3_clr   or beautiful.cpu_tier3_clr   or args.fg
-  args.tier4_clr   = args.tier4_clr   or beautiful.cpu_tier4_clr   or args.fg
-  args.tier1_val   = args.tier1_val   or beautiful.cpu_tier1_val   or 25
-  args.tier2_val   = args.tier2_val   or beautiful.cpu_tier2_val   or 50
-  args.tier3_val   = args.tier3_val   or beautiful.cpu_tier3_val   or 75
-  args.tier4_val   = args.tier4_val   or beautiful.cpu_tier4_val   or args.max_value
-
-  local tmp_stat_file="/tmp/awesome.old_proc_stat.tmp"
-  local loadavg_file="/proc/loadavg"
-  local curr_data = {}
+  local args = args or {}
 
   local function compute_tier_clr(value)
     if value <= args.tier1_val then
@@ -65,9 +37,9 @@ local function factory(args)
 
   local function get_cpu_value(stat_line)
     local cpu = {}
-    local old_cpu = {}
     local curr_data = {}
     local file = nil
+    local loadavg_file="/proc/loadavg"
 
     cpu = {
       raw_data = {},
@@ -81,29 +53,16 @@ local function factory(args)
       table.insert(cpu.raw_data, i)
     end
 
-    file = io.open(tmp_stat_file,"r")
-    if file ~= nil
-    then
-      for line in io.lines(tmp_stat_file) do
-        for i in string.gmatch(line, "([^ ]+)") do
-          table.insert(old_cpu, i)
-        end
-      end
-      io.close(file)
-    else
-      old_cpu = { 0 , 0 }
-    end
-
     -- Calculate usage
     ------------------------------------------------------------
     cpu.active = cpu.raw_data[1] + cpu.raw_data[2] + cpu.raw_data[3] + cpu.raw_data[6] + cpu.raw_data[7] + cpu.raw_data[8] + cpu.raw_data[9] + cpu.raw_data[10]
     cpu.total = cpu.active + cpu.raw_data[4] + cpu.raw_data[5]
 
-    file = assert(io.open(tmp_stat_file, "w"))
-    file:write(cpu.active .. " " .. cpu.total)
+    curr_data.active =  cpu.active - args.old_cpu[1]
+    curr_data.total = cpu.total - args.old_cpu[2]
 
-    curr_data.active =  cpu.active - old_cpu[1] or 0
-    curr_data.total = cpu.total - old_cpu[2] or 0
+    args.old_cpu[1] = curr_data.active
+    args.old_cpu[2] = curr_data.total
 
     curr_data.pourcent = math.floor((curr_data.active / curr_data.total) * 1000) / 10
 
@@ -117,6 +76,33 @@ local function factory(args)
     return curr_data
   end
 
+  args.max_value   = args.max_value   or beautiful.cpu_max_value   or 100
+
+  args.font        = args.font        or beautiful.cpu_font        or beautiful.font
+  args.bg          = args.bg          or beautiful.cpu_bg          or "#000000"
+  args.fg          = args.fg          or beautiful.cpu_fg          or "#FFFFFF"
+  args.height      = args.height      or beautiful.cpu_height      or 24
+  args.icon        = args.icon        or beautiful.cpu_icon        or "CPU: "
+  args.timeout     = args.timeout     or beautiful.cpu_timeout     or 1
+
+  args.shape       = args.shape       or beautiful.cpu_shape       or gears.shape.rect
+
+  args.bar_shape   = args.bar_shape   or beautiful.cpu_bar_shape   or default_shape
+  args.bar_width   = args.bar_width   or beautiful.cpu_bar_width   or 10
+  args.bar_fg      = args.bar_fg      or beautiful.cpu_bar_fg      or args.fg
+  args.bar_bg      = args.bar_bg      or beautiful.cpu_bar_bg      or args.bg
+
+  args.alert_value = args.alert_value or beautiful.cpu_alert_value or 90
+  args.tier1_clr   = args.tier1_clr   or beautiful.cpu_tier1_clr   or args.fg
+  args.tier2_clr   = args.tier2_clr   or beautiful.cpu_tier2_clr   or args.fg
+  args.tier3_clr   = args.tier3_clr   or beautiful.cpu_tier3_clr   or args.fg
+  args.tier4_clr   = args.tier4_clr   or beautiful.cpu_tier4_clr   or args.fg
+  args.tier1_val   = args.tier1_val   or beautiful.cpu_tier1_val   or 25
+  args.tier2_val   = args.tier2_val   or beautiful.cpu_tier2_val   or 50
+  args.tier3_val   = args.tier3_val   or beautiful.cpu_tier3_val   or 75
+  args.tier4_val   = args.tier4_val   or beautiful.cpu_tier4_val   or args.max_value
+
+  args.old_cpu = args.old_cpu or {0, 0}
 
   cpu = wibox.widget
   {
@@ -178,7 +164,7 @@ local function factory(args)
         },
         layout = wibox.layout.align.horizontal,
       },
-      widget = wibox.container.margin(_, 20, 20, 0, 0),
+      widget = wibox.container.margin(_, 15, 15, 0, 0),
     },
     bg           = args.bg,
     shape        = args.shape,

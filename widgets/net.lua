@@ -18,13 +18,7 @@ local naughty   = require("naughty")
 -- ========================================================================
 local dpi            = require("beautiful.xresources").apply_dpi
 -- Directory
-local net_dir        = awful.util.getdir("config") .. "widgets/net"
-local up_net_img     = net_dir .. "/img/upload_"
-local down_net_img   = net_dir .. "/img/download_"
-local net_img_suffix = ".svg"
 local net            = {}
-local prev_rx        = 0
-local prev_tx        = 0
 
 -- METHODS
 -- ========================================================================
@@ -60,6 +54,9 @@ local function factory(args)
   args.tier2_val    = args.tier2_val          or beautiful.net_tier2_val     or 5 * 1024 * 1024
   args.tier3_val    = args.tier3_val          or beautiful.net_tier3_val     or 7.5 * 1024 * 1024
   args.tier4_val    = args.tier4_val          or beautiful.net_tier4_val     or args.max_value
+
+  args.prev_rx      = args.prev_rx            or 0
+  args.prev_tx      = args.prev_tx            or 0
 
   local default_command = string.format([[bash -c "cat /sys/class/net/%s/statistics/*_bytes"]], args.interface)
   args.command        = args.command        or beautiful.net_command    or default_command
@@ -118,7 +115,7 @@ local function factory(args)
     return t
   end
 
-  local net = wibox.widget
+  net = wibox.widget
   {
     {
       {
@@ -230,14 +227,14 @@ local function factory(args)
         if i%2 == 0 then cur_tx = cur_tx + cur_vals[i] end
     end
 
-    speed_rx = cur_rx - prev_rx
-    speed_tx = cur_tx - prev_tx
+    speed_rx = cur_rx - args.prev_rx
+    speed_tx = cur_tx - args.prev_tx
 
     widget:set_net(speed_rx,"down")
     widget:set_net(speed_tx,"up")
 
-    prev_rx = cur_rx
-    prev_tx = cur_tx
+    args.prev_rx = cur_rx
+    args.prev_tx = cur_tx
   end
 
   awful.widget.watch(args.command, args.timeout, update_widget, net)
