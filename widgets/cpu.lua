@@ -173,7 +173,7 @@ local function factory(args)
       local cpu_value = get_cpu_value(cpu_stdout)
       local clr_value   = compute_tier_clr(cpu_value.pourcent)
       local alert_value = args.alert_value
-      pourcent = string.format(" %03.1f%%", cpu_value.pourcent)
+      pourcent = string.format(" %04.1f%%", cpu_value.pourcent)
       loadavg = string.format(" %03.2f", cpu_value.loadavg[1])
       -- Update widget values
       self:get_children_by_id("cpu_icon")[1].markup     = "<span foreground='" .. clr_value .."'>".. args.icon .. "</span>"

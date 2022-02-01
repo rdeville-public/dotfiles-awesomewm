@@ -14,12 +14,12 @@ return wibox.widget {
 	{
 		notif_header,
 		nil,
-		require("notifs.notif-center.clear-all"),
+		require("modules.notifs.notif_center.clear-all"),
 		expand = "none",
 		spacing = dpi(10),
 		layout = wibox.layout.align.horizontal,
 	},
-	require('notifs.notif-center.build-notifbox'),
+	require('modules.notifs.notif_center.build-notifbox'),
 	spacing = dpi(10),
 	layout = wibox.layout.fixed.vertical,
 }
