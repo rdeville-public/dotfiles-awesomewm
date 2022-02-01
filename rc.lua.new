@@ -98,8 +98,8 @@ local popup = require("modules.notifs.notif_center.notif_popup")
 -- STARTUP RUN ONCE
 -- ========================================================================
 run_once({
-  --"xcompmgr",        -- Composite manager, make term transparent
-  "picom -b --experimental-backends --dbus --config " .. config_path .. '/picom.conf',
+  "xcompmgr",        -- Composite manager, make term transparent
+  --"picom -b --experimental-backends --dbus --config " .. config_path .. '/picom.conf',
   "redshift",        -- redshift to avoid blue light at night
   "unclutter -root", -- hide mouse after 5 sec of inactivity
   "keynav",          -- manipulation of mouse with keyboard
