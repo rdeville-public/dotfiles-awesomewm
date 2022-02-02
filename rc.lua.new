@@ -2,14 +2,6 @@
 -- ========================================================================
 -- Main configuration files for awesome WM
 
--- PACKAGE PATH CONFIGURATION
--- ========================================================================
--- Update config path to load personnal widgets
---local config_path   = awful.util.getdir("config")
---package.path        = config_path .. "?.lua;"     .. package.path
---package.path        = config_path .. "?/?.lua;"   .. package.path
---package.path        = config_path .. "?/?/?.lua;" .. package.path
---
 -- LIBRARY
 -- ========================================================================
 -- Awesome libraries
@@ -178,7 +170,6 @@ end)
 
 -- Key bindings
 -- ------------------------------------------------------------------------
---local globalkeys = awful.util.table.join(
 local globalkeys = gears.table.join(
   -- Take a screenshot
   -- https://github.com/lcpz/dots/blob/master/bin/screenshot
@@ -491,6 +482,7 @@ local globalkeys = gears.table.join(
       group = "Applications"
     })
 )
+local globalkeys = require("config.keys").global
 
 local clientkeys = awful.util.table.join(
   awful.key({ modkey }, "f",
@@ -777,3 +769,5 @@ naughty.connect_signal("added", function(n)
   file:write(n.title .. ": " .. n.message .. "\n")
   file:close()
 end)
+
+-- vim: fdm=indent
