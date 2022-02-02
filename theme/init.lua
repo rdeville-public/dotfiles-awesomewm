@@ -28,8 +28,7 @@ local theme   = {}
 
 -- Theme directory
 -- ------------------------------------------------------------------------
-theme_name = "powerarrow-dark"
-theme.dir  = os.getenv("HOME") .. "/.config/awesome/theme/" .. theme_name
+theme.dir  = os.getenv("HOME") .. "/.config/awesome/theme/"
 
 -- Colors
 -- ------------------------------------------------------------------------
@@ -314,17 +313,17 @@ local systray_widget = {
 -- ------------------------------------------------------------------------
 local layoutbox_widget = require("widgets.layouts")
 -- Layout image
-layout_img_dir          = theme.dir .. "/img/layouts/"
+layout_img_dir          = theme.dir .. "/icons/layouts/"
 theme.layout_cornernw   = layout_img_dir .. "cornernw.png"
 theme.layout_cornerne   = layout_img_dir .. "cornerne.png"
 theme.layout_cornersw   = layout_img_dir .. "cornersw.png"
 theme.layout_cornerse   = layout_img_dir .. "cornerse.png"
-theme.layout_fairh      = layout_img_dir .. "fairh.png"
-theme.layout_fairv      = layout_img_dir .. "fairv.png"
+theme.layout_fairh      = layout_img_dir .. "fairhorizontal.png"
+theme.layout_fairv      = layout_img_dir .. "fair.png"
 theme.layout_floating   = layout_img_dir .. "floating.png"
 theme.layout_magnifier  = layout_img_dir .. "magnifier.png"
 theme.layout_max        = layout_img_dir .. "max.png"
-theme.layout_fullscreen = layout_img_dir .. "fullscreen.png"
+theme.layout_fullscreen = layout_img_dir .. "maxfullscreen.png"
 theme.layout_tile       = layout_img_dir .. "tile.png"
 theme.layout_tiletop    = layout_img_dir .. "tiletop.png"
 theme.layout_tilebottom = layout_img_dir .. "tilebottom.png"

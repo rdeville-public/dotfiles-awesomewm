@@ -90,14 +90,15 @@ awesome.set_preferred_icon_size(24)
 -- Set local
 os.setlocale(os.getenv("LANG"))
 -- Initialize theme variables
-beautiful.init(string.format("%s/.config/awesome/theme/%s/theme.lua", os.getenv("HOME"), theme_name))
+beautiful.init(require("theme"))
 -- Initialize notification center // From https://github.com/raven2cz/awesomewm-config.git
-local popup = require("modules.notifs.notif-center.notif_popup")
+local popup = require("modules.notifs.notif_center.notif_popup")
 
 -- STARTUP RUN ONCE
 -- ========================================================================
 run_once({
   "xcompmgr",        -- Composite manager, make term transparent
+  --"picom -b --experimental-backends --dbus --config " .. config_path .. '/picom.conf',
   "redshift",        -- redshift to avoid blue light at night
   "unclutter -root", -- hide mouse after 5 sec of inactivity
   "keynav",          -- manipulation of mouse with keyboard
