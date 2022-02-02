@@ -2,47 +2,32 @@
 -- ========================================================================
 -- Main configuration files for awesome WM
 
+-- PACKAGE PATH CONFIGURATION
+-- ========================================================================
+-- Update config path to load personnal widgets
+--local config_path   = awful.util.getdir("config")
+--package.path        = config_path .. "?.lua;"     .. package.path
+--package.path        = config_path .. "?/?.lua;"   .. package.path
+--package.path        = config_path .. "?/?/?.lua;" .. package.path
+--
 -- LIBRARY
 -- ========================================================================
--- Required libraries
--- ------------------------------------------------------------------------
-local os       = os
-local string   = string
-local ipairs   = ipairs
-local tostring = tostring
-local tonumber = tonumber
-local type     = type
-
-local awesome  = awesome
-local client   = client
-local mouse    = mouse
-local screen   = screen
-local tag      = tag
-
--- Awesome module libraries
--- ------------------------------------------------------------------------
--- Main awesome wm library
+-- Awesome libraries
+-- Main awesome widget library
 local awful         = require("awful")
                       require("awful.autofocus")
 local hotkeys_popup = require("awful.hotkeys_popup.widget")
-local rules         = require("awful.rules")
-local ruled         = require("ruled")
 -- Awesome wm utility box
 local gears         = require("gears")
--- Awesome wm theme library
-local beautiful     = require("beautiful")
 -- Awesome wm notification library
 local naughty       = require("naughty")
 -- Awesome wm windows management library
 local wibox         = require("wibox")
-
--- PERSONNAL LIBRARY
--- ========================================================================
--- Update config path to load personnal widgets
-local config_path   = awful.util.getdir("config")
-package.path        = config_path .. "?.lua;"     .. package.path
-package.path        = config_path .. "?/?.lua;"   .. package.path
-package.path        = config_path .. "?/?/?.lua;" .. package.path
+-- Main awesome rules library
+local rules         = require("awful.rules")
+local ruled         = require("ruled")
+-- Awesome wm theme library
+local beautiful     = require("beautiful")
 
 -- Personal tools, mainly for run_once method
 require("modules.utility")
