@@ -4,19 +4,15 @@
 
 -- LIBRARY
 -- ========================================================================
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
-local capi = { screen = screen, tag = tag }
+local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi                 = require("beautiful.xresources").apply_dpi
--- Directory
-local layout_dir = awful.util.getdir("config") .. "widgets/layouts"
-local layout_img_dir = layout_dir .. "/img/"
 local layout = {}
 
 -- WIDGET
@@ -43,9 +39,10 @@ local function factory(s,t, args)
   }
 
   return layout
-
 end
 
 return setmetatable(layout, { __call = function(_, ...)
     return factory(...)
   end })
+
+-- vim: fdm=indent

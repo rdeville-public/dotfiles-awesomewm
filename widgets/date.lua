@@ -4,17 +4,15 @@
 
 -- LIBRARY
 -- ========================================================================
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
+local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi                 = require("beautiful.xresources").apply_dpi
--- Directory
-local date_dir = awful.util.getdir("config") .. "widgets/date"
 local date = {}
 
 -- WIDGET
@@ -32,8 +30,7 @@ local function factory(args)
     {
       {
         {
-          format = "<span"  ..
-            " font_desc='"  .. args.font .. "'>"  ..
+          format = "<span font_desc='"  .. args.font .. "'>" ..
             args.format     ..
             "</span>",
           widget = wibox.widget.textclock,
@@ -54,3 +51,5 @@ end
 return setmetatable(date, { __call = function(_, ...)
     return factory(...)
   end })
+
+-- vim: fdm=indent

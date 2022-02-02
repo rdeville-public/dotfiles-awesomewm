@@ -1,24 +1,19 @@
 -- DESCRIPTION
 -- ========================================================================
--- Widget to show the ramwork
+-- Widget to show the RAM usage
 
 -- LIBRARY
 -- ========================================================================
--- Global libraries
-local math =  math
-local string = string
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi            = require("beautiful.xresources").apply_dpi
--- Directory
-local ram            = {}
+local ram = {}
 
 -- METHODS
 -- ========================================================================
@@ -199,5 +194,7 @@ local function factory(args)
 end
 
 return setmetatable(ram, { __call = function(_, ...)
-  return factory(...)
-end })
+    return factory(...)
+  end })
+
+-- vim: fdm=indent

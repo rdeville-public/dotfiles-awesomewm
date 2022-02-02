@@ -1,21 +1,18 @@
 -- DESCRIPTION
 -- ========================================================================
--- Widget to show the ip
+-- Widget to show the IP
 
 -- LIBRARY
 -- ========================================================================
--- Global libraries
-local math =  math
-local string = string
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
+local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi = require("beautiful.xresources").apply_dpi
 local ip  = {}
 
 -- WIDGET
@@ -53,7 +50,9 @@ local function factory(args)
           id            = "ip_value",
           widget        = wibox.widget.textbox,
           -- https://awesomewm.org/apidoc/classes/wibox.widget.textbox.html
-          markup        = "<span foreground='"..args.fg.."'>"..string.format("%s %s", args.icon, "0.0.0.0").."</span>",
+          markup        = "<span foreground='"..args.fg.."'>" ..
+              string.format("%s %s", args.icon, "0.0.0.0") ..
+            "</span>",
           ellipsize     = "end",       -- start, middle, end
           wrap          = "word_char", -- word, char, word_char
           valign        = "center",    -- top, center, bottom
@@ -98,3 +97,5 @@ end
 return setmetatable(ip, { __call = function(_, ...)
     return factory(...)
   end })
+
+-- vim: fdm=indent

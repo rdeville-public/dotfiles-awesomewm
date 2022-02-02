@@ -1,24 +1,19 @@
 -- DESCRIPTION
 -- ========================================================================
--- Widget to show the network
+-- Widget to show the network info (up and down bandwidth usage)
 
 -- LIBRARY
 -- ========================================================================
--- Global libraries
-local math =  math
-local string = string
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi            = require("beautiful.xresources").apply_dpi
--- Directory
-local net            = {}
+local net = {}
 
 -- METHODS
 -- ========================================================================
@@ -240,11 +235,10 @@ local function factory(args)
   awful.widget.watch(args.command, args.timeout, update_widget, net)
 
   return net
-
 end
 
 return setmetatable(net, { __call = function(_, ...)
-  return factory(...)
-end })
+    return factory(...)
+  end })
 
 -- vim: fdm=indent

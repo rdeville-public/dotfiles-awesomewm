@@ -4,22 +4,16 @@
 
 -- LIBRARY
 -- ========================================================================
--- Global libraries
-local math =  math
-local string = string
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
+local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi        = require("beautiful.xresources").apply_dpi
--- Directory
-local uptime_dir = awful.util.getdir("config") .. "widgets/uptime"
-local uptime_img = uptime_dir .. "/img/uptime.svg"
-local uptime     = {}
+local uptime = {}
 
 -- WIDGET
 -- ========================================================================
@@ -93,9 +87,10 @@ local function factory(args)
   awful.widget.watch(args.command, args.timeout, update_widget)
 
   return uptime
-
 end
 
 return setmetatable(uptime, { __call = function(_, ...)
     return factory(...)
   end })
+
+-- vim: fdm=indent

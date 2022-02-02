@@ -4,71 +4,39 @@
 
 -- LIBRARY
 -- ========================================================================
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
-local cairo     = require("lgi").cairo
+local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi                 = require("beautiful.xresources").apply_dpi
--- Directory
-local systray_dir = awful.util.getdir("config") .. "widgets/systray"
 local systray = {}
 
 -- WIDGET
 -- ========================================================================
 local function factory(args)
   local args = args or {}
+  args.bg    = args.bg    or beautiful.systray_bg    or gears.bg.rect
+  args.shape = args.shape or beautiful.systray_shape or gears.shape.rect
 
-  args.systray_icon_spacing = args.systray_icon_spacing or beautiful.systray_icon_spacing or dpi(10)
-  args.bg_systray           = args.bg_systray           or beautiful.bg_systray           or "#000000"
-
-  local function right_img(height)
-    -- Create a surface
-    local img = cairo.ImageSurface.create(cairo.Format.ARGB32, dpi(height/2), dpi(height))
-    -- Create a context
-    cr  = cairo.Context(img)
-    -- Alternative:
-    cr:set_source(gears.color(args.bg_systray))
-    -- Add a 10px square path to the context at x=10, y=10
-    cr:move_to(dpi(height/2),0)
-    cr:line_to(0,dpi(height))
-    cr:line_to(0,0)
-    cr:close_path()
-    -- Actually draw the rectangle on img
-    cr:fill()
-    return img
-  end
-
-  local function left_img(height)
-    -- Create a surface
-    local img = cairo.ImageSurface.create(cairo.Format.ARGB32, dpi(height/2), dpi(height))
-    -- Create a context
-    cr  = cairo.Context(img)
-    -- Alternative:
-    cr:set_source(gears.color(args.bg_systray))
-    -- Add a 10px square path to the context at x=10, y=10
-    cr:move_to(0,dpi(height))
-    cr:line_to(dpi(height/2),dpi(height))
-    cr:line_to(dpi(height/2),0)
-    cr:close_path()
-    cr:rotate(dpi(height/4),dpi(height/2),math.pi)
-    -- Actually draw the rectangle on img
-    cr:fill()
-    return img
-  end
-
-  local systray = wibox.widget{
-    wibox.container.place(wibox.widget.systray(true)),
+  return wibox.container.background {
+    {
+      wibox.widget.systray(),
+      left = dpi(beautiful.wibar_height),
+      right = dpi(beautiful.wibar_height),
+      widget = wibox.container.margin,
+    },
+    bg = args.bg,
+    shape = args.shape,
+    widget = wibox.container.background,
   }
-
-  return systray
-
 end
 
 return setmetatable(systray, { __call = function(_, ...)
     return factory(...)
   end })
+
+-- vim: fdm=indent

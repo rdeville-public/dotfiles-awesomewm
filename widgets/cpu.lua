@@ -1,25 +1,22 @@
 -- DESCRIPTION
 -- ========================================================================
--- Widget to show the cpuwork
+-- Widget to show the CPU usage
 
 -- LIBRARY
 -- ========================================================================
--- Global libraries
-local math =  math
-local string = string
--- Required library
 local awful     = require("awful")
 local wibox     = require("wibox")
 local gears     = require("gears")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
-local dpi            = require("beautiful.xresources").apply_dpi
--- Directory
-local cpu            = {}
+local cpu = {}
 
+-- WIDGET
+-- ========================================================================
 local function factory(args)
   local args = args or {}
 
@@ -203,7 +200,7 @@ local function factory(args)
 end
 
 return setmetatable(cpu, { __call = function(_, ...)
-  return factory(...)
-end })
+    return factory(...)
+  end })
 
 -- vim: fdm=indent
