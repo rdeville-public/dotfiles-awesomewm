@@ -22,8 +22,9 @@ ruled.client.append_rules {
       --buttons          = clientbuttons,
       screen           = awful.screen.preferred,
       placement        = awful.placement.no_overlap+awful.placement.no_offscreen,
-      size_hints_honor = false
-   }
+      size_hints_honor = false,
+      titlebars_enabled = true,
+    }
   },
   {
     rule_any = { class = { "st", "terminator", "xterm" } },
@@ -38,7 +39,7 @@ ruled.client.append_rules {
     properties = { tag = tagname.mail, switch_to_tags = true }
   },
   {
-    rule_any = { class = "keepassxc" },
+    rule_any = { class = {"keepassxc" } },
     properties = { tag = tagname.pass, switch_to_tags = true }
   },
   --[[
@@ -97,7 +98,7 @@ ruled.client.append_rules {
   },
   -- Add titles bars to dialog client
   {
-    rule_any = { type = "dialog" },
+    rule_any = { type = { "dialog" } },
     properties = {
       floating = true,
       titlebars_enabled = true,
@@ -111,7 +112,7 @@ ruled.client.append_rules {
   },
   -- Add titles bars to floating client
   {
-    rule_any = { type = "floating" },
+    rule_any = { type = { "floating" } },
     properties = {
       titlebars_enabled = true,
       shape = function(cr, width, height)

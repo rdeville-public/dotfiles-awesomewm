@@ -125,3 +125,12 @@ function os.capture(cmd, raw)
   return s
 end
 
+function hex2rgba(hex,alpha)
+  local hex = hex:gsub("#","")
+  if alpha then
+    return tonumber("0x"..hex:sub(1,2)), tonumber("0x"..hex:sub(3,4)), tonumber("0x"..hex:sub(5,6), tonumber("0x"..alpha))
+  else
+    return tonumber("0x"..hex:sub(1,2)), tonumber("0x"..hex:sub(3,4)), tonumber("0x"..hex:sub(5,6))
+  end
+end
+

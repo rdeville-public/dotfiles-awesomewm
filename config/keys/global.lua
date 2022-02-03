@@ -322,13 +322,13 @@ local globalkeys =  gears.table.join(
 )
 
 for i = 1, 9 do
-  globalkeys = awful.util.table.join(globalkeys,
+  globalkeys = gears.table.join(globalkeys,
     awful.key({ modkey,         }, "#" .. i + 9,
     function ()
       local screen = mouse.screen
-      local tag = awful.tag.gettags(screen)[i]
+      local tag = screen.tags[i]
       if tag then
-        awful.tag.viewonly(tag)
+        tag:view_only()
       end
     end,
     {
@@ -338,7 +338,7 @@ for i = 1, 9 do
     awful.key({ modkey, ctrlkey }, "#" .. i + 9,
     function ()
       local screen = mouse.screen
-      local tag = awful.tag.gettags(screen)[i]
+      local tag = screen.tags[i]
       if tag then
         awful.tag.viewtoggle(tag)
       end

@@ -2,16 +2,13 @@ local cairo = require("lgi").cairo
 local beautiful = require("beautiful")
 local gears = require("gears")
 
-local circle_filled_text = function (color,size,icon_str)
+local circle_filled_text = function (color, size, icon_str)
   local surface = cairo.ImageSurface.create("ARGB32",size,size)
   local cr = cairo.Context.create(surface)
-  cr:arc(size / 2, size / 2, size / 2, rad(0), rad(360))
+  cr:arc(size / 2, size / 2, size / 2, 0, math.pi/2)
   cr:set_source_rgba(color)
   cr.antialias = cairo.Antialias.BEST
   cr:fill()
-  cr:font_face(cr, beautiful.font,
-    CAIRO_FONT_SLANT_NORMAL,
-    CAIRO_FONT_WEIGHT_BOLD)
   cr:move_to(size/2, size/2)
   cr:show_text(icon_str)
   return surface
@@ -22,7 +19,6 @@ local powerline = gears.shape.powerline
 local powerline_inv = function(cr, width, height)
   gears.shape.powerline(cr, width, height, -beautiful.wibar_height/2)
 end
-
 
 return {
   circle_filled_text = circle_filled_text,

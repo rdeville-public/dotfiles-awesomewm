@@ -45,13 +45,6 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.font        = "FiraCode Nerd Font 10"
   theme.useless_gap = dpi(5)
 
--- Border variables
--- ------------------------------------------------------------------------
-  theme.border_width  = dpi(2)
-  theme.border_normal = colors.grey_900
-  theme.border_focus  = theme.bg_focus
-  theme.border_urgent = theme.bg_urgent
-
 -- Wallpaper configuration
 -- ------------------------------------------------------------------------
 -- Method to set a wallpaper based on current time
@@ -84,6 +77,102 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   -- Static, i.e. path to the image
   theme.wallpaper_path = theme.dir .. "/wallpapers/landscape/"
   theme.wallpaper      = time_based_wallpaper
+
+-- Border variables
+-- ------------------------------------------------------------------------
+  theme.border_width  = dpi(2)
+  theme.border_normal = colors.grey_900
+  theme.border_focus  = theme.bg_focus
+  theme.border_urgent = theme.bg_urgent
+
+-- Titlebar var
+  theme.titlebar_size = 20
+  theme.titlebar_fg_normal = theme.bg_normal
+  theme.titlebar_bg_normal = theme.fg_normal
+  theme.titlebar_fg = theme.bg_normal
+  theme.titlebar_bg = theme.fg_normal
+  theme.titlebar_fg_focus = theme.bg_focus
+  theme.titlebar_bg_focus = theme.fg_focus
+  theme.titlebar_fg_urgent = theme.bg_urgent
+  theme.titlebar_bg_urgent = theme.fg_urgent
+
+  theme.titlebar_minimize_button_normal = shapes.circle_filled_text(
+    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), "❌")
+  --[[
+  theme.titlebar_minimize_button_normal_hover
+  theme.titlebar_minimize_button_normal_press
+  theme.titlebar_minimize_button_focus
+  theme.titlebar_minimize_button_focus_hover
+  theme.titlebar_minimize_button_focus_press
+
+  theme.titlebar_close_button_normal
+  theme.titlebar_close_button_normal_hover
+  theme.titlebar_close_button_normal_press
+  theme.titlebar_close_button_focus
+  theme.titlebar_close_button_focus_hover
+  theme.titlebar_close_button_focus_press
+
+  theme.titlebar_maximized_button_normal
+  theme.titlebar_maximized_button_normal_active
+  theme.titlebar_maximized_button_normal_active_hover
+  theme.titlebar_maximized_button_normal_active_press
+  theme.titlebar_maximized_button_normal_inactive
+  theme.titlebar_maximized_button_normal_inactive_hover
+  theme.titlebar_maximized_button_normal_inactive_press
+  theme.titlebar_maximized_button_focus
+  theme.titlebar_maximized_button_focus_active
+  theme.titlebar_maximized_button_focus_active_hover
+  theme.titlebar_maximized_button_focus_active_press
+  theme.titlebar_maximized_button_focus_inactive
+  theme.titlebar_maximized_button_focus_inactive_hover
+  theme.titlebar_maximized_button_focus_inactive_press
+
+  theme.titlebar_ontop_button_normal
+  theme.titlebar_ontop_button_normal_active
+  theme.titlebar_ontop_button_normal_active_hover
+  theme.titlebar_ontop_button_normal_active_press
+  theme.titlebar_ontop_button_normal_inactive
+  theme.titlebar_ontop_button_normal_inactive_hover
+  theme.titlebar_ontop_button_normal_inactive_press
+  theme.titlebar_ontop_button_focus
+  theme.titlebar_ontop_button_focus_active
+  theme.titlebar_ontop_button_focus_active_hover
+  theme.titlebar_ontop_button_focus_active_press
+  theme.titlebar_ontop_button_focus_inactive
+  theme.titlebar_ontop_button_focus_inactive_hover
+  theme.titlebar_ontop_button_focus_inactive_press
+
+  theme.titlebar_sticky_button_normal
+  theme.titlebar_sticky_button_normal_active
+  theme.titlebar_sticky_button_normal_active_hover
+  theme.titlebar_sticky_button_normal_active_press
+  theme.titlebar_sticky_button_normal_inactive
+  theme.titlebar_sticky_button_normal_inactive_hover
+  theme.titlebar_sticky_button_normal_inactive_press
+  theme.titlebar_sticky_button_focus
+  theme.titlebar_sticky_button_focus_active
+  theme.titlebar_sticky_button_focus_active_hover
+  theme.titlebar_sticky_button_focus_active_press
+  theme.titlebar_sticky_button_focus_inactive
+  theme.titlebar_sticky_button_focus_inactive_hover
+  theme.titlebar_sticky_button_focus_inactive_press
+
+  theme.titlebar_floating_button_normal
+  theme.titlebar_floating_button_normal_active
+  theme.titlebar_floating_button_normal_active_hover
+  theme.titlebar_floating_button_normal_active_press
+  theme.titlebar_floating_button_normal_inactive
+  theme.titlebar_floating_button_normal_inactive_hover
+  theme.titlebar_floating_button_normal_inactive_press
+  theme.titlebar_floating_button_focus
+  theme.titlebar_floating_button_focus_active
+  theme.titlebar_floating_button_focus_active_hover
+  theme.titlebar_floating_button_focus_active_press
+  theme.titlebar_floating_button_focus_inactive
+  theme.titlebar_floating_button_focus_inactive_hover
+  theme.titlebar_floating_button_focus_inactive_press
+  --]]
+
 
 -- Hotkeys
 -- ------------------------------------------------------------------------
