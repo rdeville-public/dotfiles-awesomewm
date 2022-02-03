@@ -3,33 +3,33 @@ local awful                                 = require("awful")
 local naughty                               = require("naughty")
 local beautiful                             = require("beautiful")
 
--- | Functions | --------------------------------------------------------------
--- | Hide notification | FOR DEBUG PURPOSE
+-- FUNCTIONS
+-- ============================================================================
+-- Hide notification
 function hide()
-    if notification ~= nil then
-        naughty.destroy(notification)
-        notification = nil
-    end
+  if notification ~= nil then
+    naughty.destroy(notification)
+    notification = nil
+  end
 end
 
--- | Show notification | FOR DEBUG PURPOSE
+-- Show notification
 function show(t_out, text_out)
-    hide()
-    notification = naughty.notify({
-      preset     = fs_notification_preset,
-      text       = text_out,
-      timeout    = t_out,
-      screen     = mouse.screen,
-    })
+  notification = naughty.notify({
+    preset     = fs_notification_preset,
+    text       = text_out,
+    timeout    = t_out,
+    screen     = mouse.screen,
+  })
 end
 
--- | Check file
+-- Check file
 function file_exists(name)
-     local f=io.open(name,"r")
-     if f~=nil then io.close(f) return true else return false end
+   local f=io.open(name,"r")
+   if f~=nil then io.close(f) return true else return false end
 end
 
--- | Autostart Application
+-- Autostart Application
 function run_once(cmd_arr)
   for _, cmd in ipairs(cmd_arr) do
     findme = cmd
@@ -38,10 +38,10 @@ function run_once(cmd_arr)
       findme = cmd:sub(0, firstspace-1)
     end
     awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
-    end
+  end
 end
 
--- | Round function for display
+-- Round function for display
 function round(num)
     under = math.floor(num)
     upper = math.floor(num) + 1
@@ -54,7 +54,7 @@ function round(num)
     end
 end
 
--- | On the fly useless gaps change
+-- On the fly useless gaps change
 function useless_gaps_resize(thatmuch, s, t)
     local scr = s or awful.screen.focused()
     local tag = t or scr.selected_tag
@@ -62,7 +62,7 @@ function useless_gaps_resize(thatmuch, s, t)
     awful.layout.arrange(scr)
 end
 
--- | Gradient color
+-- Gradient black and white
 function gradient_black_white(min, max, val)
   local white = 0
   if ( min >= max ) then
@@ -77,6 +77,7 @@ function gradient_black_white(min, max, val)
   return string.format("#%02x%02x%02x", white, white, white)
 end
 
+-- Gradient Green to red colors
 function gradient(min, max, val)
   local v,d,red,green
   if ( min >= max ) then
@@ -112,22 +113,6 @@ function gradient(min, max, val)
   return string.format("#%02x%02x00", red, green)
 end
 
--- | Get CPU/HDD/GPU Temperature
-local function getTemp()
-    temp = {}
-    temp.cpu = {}
-
-    f = io.popen("sensors | grep '°C' | grep 'high' | grep -e 'Core' -e 'Physical'")
-    for line in f:lines() do
-        cpu = {}
-        cpu.curr  = tonumber(string.sub(string.match(line, "[%d]+.[%d]+°C"), 0, 4))
-        cpu.high  = tonumber(string.sub(string.match(line, "[%d]+.[%d]+°C,"), 0, 4))
-        cpu.crit  = tonumber(string.sub(string.match(line, "[%d]+.[%d]+°C%)"), 0, 4))
-        table.insert(temp.cpu, cpu )
-    end
-    return temp
-end
-
 -- OS command method
 function os.capture(cmd, raw)
   local f = assert(io.popen(cmd,'r'))
@@ -139,16 +124,4 @@ function os.capture(cmd, raw)
     s = string.gsub(s, '[\n\r]+', '')
   return s
 end
-
-local function split(string_to_split, separator)
-    if separator == nil then separator = "%s" end
-    local t = {}
-
-    for str in string.gmatch(string_to_split, "([^".. separator .."]+)") do
-        table.insert(t, str)
-    end
-
-    return t
-  end
-
 

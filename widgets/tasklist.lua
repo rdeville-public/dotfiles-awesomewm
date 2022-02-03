@@ -9,7 +9,7 @@ local gears     = require("gears")
 local wibox     = require("wibox")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
-local dpi          = require("beautiful.xresources").apply_dpi
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================

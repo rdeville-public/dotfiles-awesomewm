@@ -13,6 +13,7 @@ local wibox        = require("wibox")
 local dpi          = require("beautiful.xresources").apply_dpi
 local colors       = require("widgets.colors")
 local theme_assets = require("beautiful.theme_assets")
+local shapes       = require("modules.shapes")
 
 -- THEME VARIABLES
 -- ========================================================================
@@ -20,13 +21,6 @@ local theme_assets = require("beautiful.theme_assets")
 -- ------------------------------------------------------------------------
 local theme = {}
 theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
-
--- Shapes
--- ------------------------------------------------------------------------
-  local powerline = gears.shape.powerline
-  local powerline_inv = function(cr, width, height)
-    gears.shape.powerline(cr, width, height, -theme.wibar_height/2)
-  end
 
 -- COLORS
 -- ========================================================================
@@ -135,7 +129,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.taglist_bg_empty    = theme.bg_normal .. "44"
   theme.taglist_fg_volatile = theme.fg_volatile
   theme.taglist_bg_volatile = theme.bg_volatile
-  theme.taglist_shape       = powerline
+  theme.taglist_shape       = shapes.powerline
   theme.taglist_spacing     = -dpi(5)
   local taglist = require("widgets.taglist")
 
@@ -170,14 +164,14 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.keyboardlayout_fg = colors.yellow_500
   theme.keyboardlayout_bg = theme.bg_dark
   theme.keyboardlayout_icon = " "
-  theme.keyboardlayout_shape = powerline_inv
+  theme.keyboardlayout_shape = shapes.powerline_inv
   local keyboardlayout_widget = require("widgets.keyboardlayout")
 
 -- IP widget
 -- ------------------------------------------------------------------------
   theme.ip_bg = theme.bg_darker
   theme.ip_fg = colors.purple_300
-  theme.ip_shape = powerline_inv
+  theme.ip_shape = shapes.powerline_inv
   theme.ip_icon = " "
   theme.ip_icon=" "
   theme.ip_icon_vpn="旅"
@@ -187,7 +181,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
 -- ------------------------------------------------------------------------
   theme.uptime_bg = theme.bg_dark
   theme.uptime_fg = theme.fg_normal
-  theme.uptime_shape = powerline_inv
+  theme.uptime_shape = shapes.powerline_inv
   theme.uptime_icon = " "
   local uptime_widget = require("widgets.uptime")
 
@@ -198,23 +192,23 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
 
 -- Disk widget
 -- ------------------------------------------------------------------------
-  theme.disk_bg=theme.bg_darker
-  theme.disk_fg=theme.fg_normal
-  theme.disk_shape=powerline_inv
-  theme.disk_icon=" "
-  theme.disk_bar_bg = theme.bg_darkest
+  theme.disk_bg        = theme.bg_darker
+  theme.disk_fg        = theme.fg_normal
+  theme.disk_shape     = shapes.powerline_inv
+  theme.disk_icon      = " "
+  theme.disk_bar_bg    = theme.bg_darkest
 
-  theme.disk_tier1_clr=colors.green_500
-  theme.disk_tier2_clr=colors.yellow_500
-  theme.disk_tier3_clr=colors.orange_500
-  theme.disk_tier4_clr=colors.red_500
-  local disk_widget = require("widgets.disk")
+  theme.disk_tier1_clr = colors.green_500
+  theme.disk_tier2_clr = colors.yellow_500
+  theme.disk_tier3_clr = colors.orange_500
+  theme.disk_tier4_clr = colors.red_500
+  local disk_widget    = require("widgets.disk")
 
 -- Net widget variables
 -- ------------------------------------------------------------------------
   theme.net_bg = theme.bg_dark
   theme.net_fg = theme.fg_normal
-  theme.net_shape = powerline_inv
+  theme.net_shape = shapes.powerline_inv
   theme.net_up_icon = " "
   theme.net_down_icon = " "
   theme.net_online_icon = " "
@@ -230,7 +224,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
 -- ------------------------------------------------------------------------
   theme.ram_bg=theme.bg_darker
   theme.ram_fg=theme.fg_normal
-  theme.ram_shape=powerline_inv
+  theme.ram_shape=shapes.powerline_inv
   theme.ram_icon=" "
   theme.ram_bar_bg = theme.bg_darkest
 
@@ -244,7 +238,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
 -- ------------------------------------------------------------------------
   theme.cpu_fg = theme.fg_normal
   theme.cpu_bg = theme.bg_dark
-  theme.cpu_shape = powerline_inv
+  theme.cpu_shape = shapes.powerline_inv
   theme.cpu_icon = "  "
   theme.cpu_bar_bg = theme.bg_darkest
 
@@ -259,7 +253,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.date_format = " %a %d %b | %H:%M"
   theme.date_fg = theme.fg_normal
   theme.date_bg = theme.bg_darker
-  theme.date_shape = powerline_inv
+  theme.date_shape = shapes.powerline_inv
   local date_widget = require("widgets.date")
 
 -- Systray widget variables
@@ -267,7 +261,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.systray_bg           = colors.brown_500
   theme.bg_systray           = theme.systray_bg
   theme.systray_icon_spacing = dpi(0)
-  theme.systray_shape        = powerline_inv
+  theme.systray_shape        = shapes.powerline_inv
   local systray_widget = require("widgets.systray")
 
 -- Layoutbox widget variables
@@ -292,7 +286,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   -- Layout widget
   theme.layout_fg        = theme.fg_normal
   theme.layout_bg        = theme.bg_normal .. "00"
-  theme.layout_shape     = powerline_inv
+  theme.layout_shape     = shapes.powerline_inv
   theme_assets.recolor_layout(theme, theme.fg_normal)
 
 local top_left_wibar = function(screen)

@@ -1,3 +1,4 @@
+--[[
 local awful         = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup.widget")
 -- Awesome wm utility box
@@ -363,4 +364,5 @@ end
 
 return globalkeys
 
+--]]
 -- vim: fdm=indent
