@@ -42,7 +42,9 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
 
 -- Base beautiful variables
 -- ------------------------------------------------------------------------
-  theme.font        = "FiraCode Nerd Font 10"
+  theme.font_name   = "FiraCode Nerd Font"
+  theme.font_size   = 10
+  theme.font        = theme.font_name .. " " .. theme.font_size
   theme.useless_gap = dpi(5)
 
 -- Wallpaper configuration
@@ -86,93 +88,97 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.border_urgent = theme.bg_urgent
 
 -- Titlebar var
-  theme.titlebar_size = 20
-  theme.titlebar_fg_normal = theme.bg_normal
-  theme.titlebar_bg_normal = theme.fg_normal
-  theme.titlebar_fg = theme.bg_normal
-  theme.titlebar_bg = theme.fg_normal
-  theme.titlebar_fg_focus = theme.bg_focus
-  theme.titlebar_bg_focus = theme.fg_focus
-  theme.titlebar_fg_urgent = theme.bg_urgent
-  theme.titlebar_bg_urgent = theme.fg_urgent
+  theme.titlebar_size = 60
+  theme.titlebar_fg_normal = theme.fg_normal .. "FF"
+  theme.titlebar_bg_normal = theme.bg_normal .. "FF"
+  theme.titlebar_fg        = theme.fg_normal .. "FF"
+  theme.titlebar_bg        = theme.bg_normal .. "FF"
+  theme.titlebar_fg_focus  = theme.fg_focus .. "FF"
+  theme.titlebar_bg_focus  = theme.bg_focus .. "FF"
+  theme.titlebar_fg_urgent = theme.fg_urgent .. "FF"
+  theme.titlebar_bg_urgent = theme.bg_urgent .. "FF"
 
-  theme.titlebar_minimize_button_normal = shapes.circle_filled_text(
-    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), "❌")
-  --[[
-  theme.titlebar_minimize_button_normal_hover
-  theme.titlebar_minimize_button_normal_press
-  theme.titlebar_minimize_button_focus
-  theme.titlebar_minimize_button_focus_hover
-  theme.titlebar_minimize_button_focus_press
-
-  theme.titlebar_close_button_normal
-  theme.titlebar_close_button_normal_hover
-  theme.titlebar_close_button_normal_press
-  theme.titlebar_close_button_focus
-  theme.titlebar_close_button_focus_hover
-  theme.titlebar_close_button_focus_press
-
-  theme.titlebar_maximized_button_normal
-  theme.titlebar_maximized_button_normal_active
-  theme.titlebar_maximized_button_normal_active_hover
-  theme.titlebar_maximized_button_normal_active_press
-  theme.titlebar_maximized_button_normal_inactive
-  theme.titlebar_maximized_button_normal_inactive_hover
-  theme.titlebar_maximized_button_normal_inactive_press
-  theme.titlebar_maximized_button_focus
-  theme.titlebar_maximized_button_focus_active
-  theme.titlebar_maximized_button_focus_active_hover
-  theme.titlebar_maximized_button_focus_active_press
-  theme.titlebar_maximized_button_focus_inactive
-  theme.titlebar_maximized_button_focus_inactive_hover
-  theme.titlebar_maximized_button_focus_inactive_press
-
-  theme.titlebar_ontop_button_normal
-  theme.titlebar_ontop_button_normal_active
-  theme.titlebar_ontop_button_normal_active_hover
-  theme.titlebar_ontop_button_normal_active_press
-  theme.titlebar_ontop_button_normal_inactive
-  theme.titlebar_ontop_button_normal_inactive_hover
-  theme.titlebar_ontop_button_normal_inactive_press
-  theme.titlebar_ontop_button_focus
-  theme.titlebar_ontop_button_focus_active
-  theme.titlebar_ontop_button_focus_active_hover
-  theme.titlebar_ontop_button_focus_active_press
-  theme.titlebar_ontop_button_focus_inactive
-  theme.titlebar_ontop_button_focus_inactive_hover
-  theme.titlebar_ontop_button_focus_inactive_press
-
-  theme.titlebar_sticky_button_normal
-  theme.titlebar_sticky_button_normal_active
-  theme.titlebar_sticky_button_normal_active_hover
-  theme.titlebar_sticky_button_normal_active_press
-  theme.titlebar_sticky_button_normal_inactive
-  theme.titlebar_sticky_button_normal_inactive_hover
-  theme.titlebar_sticky_button_normal_inactive_press
-  theme.titlebar_sticky_button_focus
-  theme.titlebar_sticky_button_focus_active
-  theme.titlebar_sticky_button_focus_active_hover
-  theme.titlebar_sticky_button_focus_active_press
-  theme.titlebar_sticky_button_focus_inactive
-  theme.titlebar_sticky_button_focus_inactive_hover
-  theme.titlebar_sticky_button_focus_inactive_press
-
-  theme.titlebar_floating_button_normal
-  theme.titlebar_floating_button_normal_active
-  theme.titlebar_floating_button_normal_active_hover
-  theme.titlebar_floating_button_normal_active_press
-  theme.titlebar_floating_button_normal_inactive
-  theme.titlebar_floating_button_normal_inactive_hover
-  theme.titlebar_floating_button_normal_inactive_press
-  theme.titlebar_floating_button_focus
-  theme.titlebar_floating_button_focus_active
-  theme.titlebar_floating_button_focus_active_hover
-  theme.titlebar_floating_button_focus_active_press
-  theme.titlebar_floating_button_focus_inactive
-  theme.titlebar_floating_button_focus_inactive_hover
-  theme.titlebar_floating_button_focus_inactive_press
-  --]]
-
+----  theme.titlebar_minimize_button_normal
+----  theme.titlebar_minimize_button_normal_hover
+----  theme.titlebar_minimize_button_normal_press
+----  theme.titlebar_minimize_button_focus
+----  theme.titlebar_minimize_button_focus_hover
+----  theme.titlebar_minimize_button_focus_press
+----
+--  theme.titlebar_close_button_normal = shapes.circle_filled_text(
+--    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_close)
+----  theme.titlebar_close_button_normal_hover
+----  theme.titlebar_close_button_normal_press
+----  theme.titlebar_close_button_focus
+----  theme.titlebar_close_button_focus_hover
+----  theme.titlebar_close_button_focus_press
+----
+--  theme.titlebar_maximized_button_normal = shapes.circle_filled_text(
+--    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_maximized)
+----  theme.titlebar_maximized_button_normal_active
+----  theme.titlebar_maximized_button_normal_active_hover
+----  theme.titlebar_maximized_button_normal_active_press
+----  theme.titlebar_maximized_button_normal_inactive
+----  theme.titlebar_maximized_button_normal_inactive_hover
+----  theme.titlebar_maximized_button_normal_inactive_press
+--
+--  theme.titlebar_focus_button_normal = shapes.circle_filled_text(
+--    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), "F")
+----  theme.titlebar_maximized_button_focus
+----  theme.titlebar_maximized_button_focus_active
+----  theme.titlebar_maximized_button_focus_active_hover
+----  theme.titlebar_maximized_button_focus_active_press
+----  theme.titlebar_maximized_button_focus_inactive
+----  theme.titlebar_maximized_button_focus_inactive_hover
+----  theme.titlebar_maximized_button_focus_inactive_press
+----
+--  theme.titlebar_ontop_button_normal = shapes.circle_filled_text(
+--    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_ontop)
+----  theme.titlebar_ontop_button_normal_active
+----  theme.titlebar_ontop_button_normal_active_hover
+----  theme.titlebar_ontop_button_normal_active_press
+----  theme.titlebar_ontop_button_normal_inactive
+----  theme.titlebar_ontop_button_normal_inactive_hover
+----  theme.titlebar_ontop_button_normal_inactive_press
+----  theme.titlebar_ontop_button_focus
+----  theme.titlebar_ontop_button_focus_active
+----  theme.titlebar_ontop_button_focus_active_hover
+----  theme.titlebar_ontop_button_focus_active_press
+----  theme.titlebar_ontop_button_focus_inactive
+----  theme.titlebar_ontop_button_focus_inactive_hover
+----  theme.titlebar_ontop_button_focus_inactive_press
+----
+--  theme.titlebar_sticky_button_normal = shapes.circle_filled_text(
+--    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_sticky)
+----  theme.titlebar_sticky_button_normal_active
+----  theme.titlebar_sticky_button_normal_active_hover
+----  theme.titlebar_sticky_button_normal_active_press
+----  theme.titlebar_sticky_button_normal_inactive
+----  theme.titlebar_sticky_button_normal_inactive_hover
+----  theme.titlebar_sticky_button_normal_inactive_press
+----  theme.titlebar_sticky_button_focus
+----  theme.titlebar_sticky_button_focus_active
+----  theme.titlebar_sticky_button_focus_active_hover
+----  theme.titlebar_sticky_button_focus_active_press
+----  theme.titlebar_sticky_button_focus_inactive
+----  theme.titlebar_sticky_button_focus_inactive_hover
+----  theme.titlebar_sticky_button_focus_inactive_press
+----
+--  theme.titlebar_floating_button_normal = shapes.circle_filled_text(
+--    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_floating)
+----  theme.titlebar_floating_button_normal_active
+----  theme.titlebar_floating_button_normal_active_hover
+----  theme.titlebar_floating_button_normal_active_press
+----  theme.titlebar_floating_button_normal_inactive
+----  theme.titlebar_floating_button_normal_inactive_hover
+----  theme.titlebar_floating_button_normal_inactive_press
+----  theme.titlebar_floating_button_focus
+----  theme.titlebar_floating_button_focus_active
+----  theme.titlebar_floating_button_focus_active_hover
+----  theme.titlebar_floating_button_focus_active_press
+----  theme.titlebar_floating_button_focus_inactive
+----  theme.titlebar_floating_button_focus_inactive_hover
+----  theme.titlebar_floating_button_focus_inactive_press
 
 -- Hotkeys
 -- ------------------------------------------------------------------------
@@ -184,8 +190,8 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.hotkeys_modifiers_fg     = colors.yellow_a700
   theme.hotkeys_label_bg         = colors.black
   theme.hotkeys_label_fg         = colors.black
-  theme.hotkeys_font             = "FiraCode Nerd Font 11"
-  theme.hotkeys_description_font = "FiraCode Nerd Font 11"
+  theme.hotkeys_font             = theme.font
+  theme.hotkeys_description_font = theme.font
   theme.hotkeys_group_margin     = 10
 
 -- Naughty notification
@@ -240,6 +246,8 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.tasklist_font_focus                   = theme.font
   theme.tasklist_font_minimized               = theme.font
   theme.tasklist_font_urgent                  = theme.font
+  theme.tasklist_close                        = ""
+  theme.tasklist_minimize                     = ""
   theme.tasklist_sticky                       = ""
   theme.tasklist_ontop                        = "ﱓ"
   theme.tasklist_floating                     = ""

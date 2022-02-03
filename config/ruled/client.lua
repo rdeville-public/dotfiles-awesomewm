@@ -1,8 +1,9 @@
 
-local awful         = require("awful")
-local beautiful     = require("beautiful")
-local ruled         = require("ruled")
-local gears         = require("gears")
+local awful     = require("awful")
+local beautiful = require("beautiful")
+local ruled     = require("ruled")
+local gears     = require("gears")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 local clientkeys    = require("config.keys.client")
 local clientbuttons = require("config.buttons.client")
@@ -58,7 +59,7 @@ ruled.client.append_rules {
         layout = awful.layout.suit.tile,
         volatile = true,
       },
-    }
+    },
   },
   {
     rule_any = { class = { "Steam" } },

@@ -34,6 +34,9 @@ awful.util.tagnames         = require("config.tags").tags
 awful.layout.layouts        = require("config.layouts")
 awful.util.tasklist_buttons = require("config.buttons.tasklist")
 
+-- Set titlebar
+require("config.titlebars")
+
 -- Virtual Desktop
 -- ------------------------------------------------------------------------
 -- Create a wibox for each screen and add it
@@ -47,14 +50,15 @@ local globalkeys = require("config.keys.global")
 local clientkeys = require("config.keys.client")
 root.keys(globalkeys)
 
--- Set rules for client and notification
-require("config.ruled.client")
-
 -- Set Signals
 require("config.signals.naughty")
 require("config.signals.screen")
 require("config.signals.client")
 require("config.signals.ruled")
+
+-- Set rules for client and notification
+require("config.ruled.client")
+
 
 -- STARTUP RUN ONCE
 -- ========================================================================
@@ -67,4 +71,3 @@ run_once({
   "xautolock -time 180 -locker ~/.bin/lock &" , -- lock the screen after 180 sec on inactivity
 })
 
--- vim: fdm=indent

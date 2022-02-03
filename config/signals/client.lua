@@ -1,6 +1,8 @@
 local beautiful = require("beautiful")
 local awful     = require("awful")
 local gears     = require("gears")
+local wibox     = require("wibox")
+local dpi          = require("beautiful.xresources").apply_dpi
 
 -- Signal function to execute when a new client appears.
 client.connect_signal("mouse::enter",
@@ -46,4 +48,5 @@ client.connect_signal("property::floating",
       c.shape = nil
     end
   end)
+
 
