@@ -99,6 +99,11 @@ local theme = {}
   theme.titlebar_fg_urgent = theme.fg_urgent .. "BB"
   theme.titlebar_bg_urgent = theme.bg_urgent .. "BB"
 
+  theme.titlebar_right_bg    = theme.bg_normal .. "BB"
+  theme.titlebar_right_shape = shapes.rectangular_tag
+  theme.titlebar_left_bg     = theme.bg_normal .. "BB"
+  theme.titlebar_left_shape  = shapes.rectangular_tag_inv
+
   local icons={
     "floating",
     "sticky",

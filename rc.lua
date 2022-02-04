@@ -59,7 +59,6 @@ require("config.signals.ruled")
 -- Set rules for client and notification
 require("config.ruled.client")
 
-
 -- STARTUP RUN ONCE
 -- ========================================================================
 run_once({

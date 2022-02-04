@@ -24,7 +24,6 @@ ruled.client.append_rules {
       screen           = awful.screen.preferred,
       placement        = awful.placement.no_overlap+awful.placement.no_offscreen,
       size_hints_honor = false,
-      titlebars_enabled = true,
     }
   },
   {

@@ -72,13 +72,13 @@ main()
           active)
             icon_cfg[circle_fill]="${clr_icon}"
             icon_cfg[circle_stroke]="${clr_icon}"
-            icon_cfg[text_fill]="${light}"
+            icon_cfg[text_fill]="${lightest}"
             icon_cfg[text_stroke]="${dark}"
             ;;
           inactive)
             icon_cfg[circle_fill]="${darker}"
             icon_cfg[circle_stroke]="${darkest}"
-            icon_cfg[text_fill]="${dark}"
+            icon_cfg[text_fill]="${lightest}"
             icon_cfg[text_stroke]="${lighter}"
             ;;
         esac
