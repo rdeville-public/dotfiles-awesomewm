@@ -20,12 +20,13 @@ local shapes       = require("modules.shapes")
 -- Init theme variable
 -- ------------------------------------------------------------------------
 local theme = {}
-theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
+  theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
 
 -- COLORS
 -- ========================================================================
 -- Default colors
 -- ------------------------------------------------------------------------
+  theme.bg_main     = colors.green_500
   theme.fg_normal   = colors.grey_300
   theme.bg_normal   = colors.green_700
   theme.fg_urgent   = colors.black
@@ -88,97 +89,40 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.border_urgent = theme.bg_urgent
 
 -- Titlebar var
-  theme.titlebar_size = 60
-  theme.titlebar_fg_normal = theme.fg_normal .. "FF"
-  theme.titlebar_bg_normal = theme.bg_normal .. "FF"
-  theme.titlebar_fg        = theme.fg_normal .. "FF"
-  theme.titlebar_bg        = theme.bg_normal .. "FF"
-  theme.titlebar_fg_focus  = theme.fg_focus .. "FF"
-  theme.titlebar_bg_focus  = theme.bg_focus .. "FF"
-  theme.titlebar_fg_urgent = theme.fg_urgent .. "FF"
-  theme.titlebar_bg_urgent = theme.bg_urgent .. "FF"
+  theme.titlebar_size      = 24
+  theme.titlebar_fg_normal = theme.bg_normal .. "BB"
+  theme.titlebar_bg_normal = theme.bg_darkest.. "BB"
+  theme.titlebar_fg        = theme.bg_normal .. "BB"
+  theme.titlebar_bg        = theme.bg_darkest.. "BB"
+  theme.titlebar_fg_focus  = theme.bg_focus  .. "BB"
+  theme.titlebar_bg_focus  = theme.bg_darker .. "BB"
+  theme.titlebar_fg_urgent = theme.fg_urgent .. "BB"
+  theme.titlebar_bg_urgent = theme.bg_urgent .. "BB"
 
-----  theme.titlebar_minimize_button_normal
-----  theme.titlebar_minimize_button_normal_hover
-----  theme.titlebar_minimize_button_normal_press
-----  theme.titlebar_minimize_button_focus
-----  theme.titlebar_minimize_button_focus_hover
-----  theme.titlebar_minimize_button_focus_press
-----
---  theme.titlebar_close_button_normal = shapes.circle_filled_text(
---    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_close)
-----  theme.titlebar_close_button_normal_hover
-----  theme.titlebar_close_button_normal_press
-----  theme.titlebar_close_button_focus
-----  theme.titlebar_close_button_focus_hover
-----  theme.titlebar_close_button_focus_press
-----
---  theme.titlebar_maximized_button_normal = shapes.circle_filled_text(
---    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_maximized)
-----  theme.titlebar_maximized_button_normal_active
-----  theme.titlebar_maximized_button_normal_active_hover
-----  theme.titlebar_maximized_button_normal_active_press
-----  theme.titlebar_maximized_button_normal_inactive
-----  theme.titlebar_maximized_button_normal_inactive_hover
-----  theme.titlebar_maximized_button_normal_inactive_press
---
---  theme.titlebar_focus_button_normal = shapes.circle_filled_text(
---    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), "F")
-----  theme.titlebar_maximized_button_focus
-----  theme.titlebar_maximized_button_focus_active
-----  theme.titlebar_maximized_button_focus_active_hover
-----  theme.titlebar_maximized_button_focus_active_press
-----  theme.titlebar_maximized_button_focus_inactive
-----  theme.titlebar_maximized_button_focus_inactive_hover
-----  theme.titlebar_maximized_button_focus_inactive_press
-----
---  theme.titlebar_ontop_button_normal = shapes.circle_filled_text(
---    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_ontop)
-----  theme.titlebar_ontop_button_normal_active
-----  theme.titlebar_ontop_button_normal_active_hover
-----  theme.titlebar_ontop_button_normal_active_press
-----  theme.titlebar_ontop_button_normal_inactive
-----  theme.titlebar_ontop_button_normal_inactive_hover
-----  theme.titlebar_ontop_button_normal_inactive_press
-----  theme.titlebar_ontop_button_focus
-----  theme.titlebar_ontop_button_focus_active
-----  theme.titlebar_ontop_button_focus_active_hover
-----  theme.titlebar_ontop_button_focus_active_press
-----  theme.titlebar_ontop_button_focus_inactive
-----  theme.titlebar_ontop_button_focus_inactive_hover
-----  theme.titlebar_ontop_button_focus_inactive_press
-----
---  theme.titlebar_sticky_button_normal = shapes.circle_filled_text(
---    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_sticky)
-----  theme.titlebar_sticky_button_normal_active
-----  theme.titlebar_sticky_button_normal_active_hover
-----  theme.titlebar_sticky_button_normal_active_press
-----  theme.titlebar_sticky_button_normal_inactive
-----  theme.titlebar_sticky_button_normal_inactive_hover
-----  theme.titlebar_sticky_button_normal_inactive_press
-----  theme.titlebar_sticky_button_focus
-----  theme.titlebar_sticky_button_focus_active
-----  theme.titlebar_sticky_button_focus_active_hover
-----  theme.titlebar_sticky_button_focus_active_press
-----  theme.titlebar_sticky_button_focus_inactive
-----  theme.titlebar_sticky_button_focus_inactive_hover
-----  theme.titlebar_sticky_button_focus_inactive_press
-----
---  theme.titlebar_floating_button_normal = shapes.circle_filled_text(
---    hex2rgba(colors.red_500), dpi(theme.titlebar_size-4), theme.tasklist_floating)
-----  theme.titlebar_floating_button_normal_active
-----  theme.titlebar_floating_button_normal_active_hover
-----  theme.titlebar_floating_button_normal_active_press
-----  theme.titlebar_floating_button_normal_inactive
-----  theme.titlebar_floating_button_normal_inactive_hover
-----  theme.titlebar_floating_button_normal_inactive_press
-----  theme.titlebar_floating_button_focus
-----  theme.titlebar_floating_button_focus_active
-----  theme.titlebar_floating_button_focus_active_hover
-----  theme.titlebar_floating_button_focus_active_press
-----  theme.titlebar_floating_button_focus_inactive
-----  theme.titlebar_floating_button_focus_inactive_hover
-----  theme.titlebar_floating_button_focus_inactive_press
+  local icons={
+    "floating",
+    "sticky",
+    "ontop",
+    "minimize",
+    "maximized",
+    "close",
+  }
+  local states={"active", "inactive"}
+  local modes={"normal", "focus"}
+  local titlebar_button_img = theme.dir .. "icons/titlebars/"
+
+  for _,i_icon in ipairs(icons) do
+    for _,i_state in ipairs(states) do
+      for _,i_mode in ipairs(modes) do
+        if i_state == "active" and i_mode == "focus" then
+          theme["titlebar_" .. i_icon .. "_button_" .. i_mode] = titlebar_button_img .. i_icon .. "_" .. i_state .. "_" .. i_mode .. ".svg"
+        elseif i_state == "inactive" and i_mode == "normal" then
+          theme["titlebar_" .. i_icon .. "_button_" .. i_mode] = titlebar_button_img .. i_icon .. "_" .. i_state .. "_" .. i_mode .. ".svg"
+        end
+        theme["titlebar_" .. i_icon .. "_button_" .. i_mode .. "_" .. i_state] = titlebar_button_img .. i_icon .. "_" .. i_state .. "_" .. i_mode.. ".svg"
+      end
+    end
+  end
 
 -- Hotkeys
 -- ------------------------------------------------------------------------
@@ -209,7 +153,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
 -- ------------------------------------------------------------------------
   theme.wibar_height = 20
   theme.wibar_fg     = theme.fg_normal
-  theme.wibar_bg     = theme.bg_normal .. "44"
+  theme.wibar_bg     = theme.bg_main .. "44"
 
 -- Taglist
 -- ------------------------------------------------------------------------
@@ -221,48 +165,46 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.taglist_fg_occupied = theme.fg_occupied
   theme.taglist_bg_occupied = theme.bg_occupied
   theme.taglist_fg_empty    = theme.fg_normal
-  theme.taglist_bg_empty    = theme.bg_normal .. "44"
+  theme.taglist_bg_empty    = theme.bg_main .. "44"
   theme.taglist_fg_volatile = theme.fg_volatile
   theme.taglist_bg_volatile = theme.bg_volatile
   theme.taglist_shape       = shapes.powerline
   theme.taglist_spacing     = -dpi(5)
-  local taglist = require("widgets.taglist")
+local taglist = require("widgets.taglist")
 
 -- Tasklist
 -- ------------------------------------------------------------------------
-  theme.tasklist_fg_normal                    = colors.black
-  theme.tasklist_bg_normal                    = colors.grey_300
-  theme.tasklist_fg_focus                     = colors.black
-  theme.tasklist_bg_focus                     = colors.green_a700
-  theme.tasklist_fg_urgent                    = colors.black
-  theme.tasklist_bg_urgent                    = colors.red_a700
-  theme.tasklist_fg_minimize                  = colors.black
-  theme.tasklist_bg_minimize                  = colors.purple_a700
-  theme.tasklist_disable_icon                 = false
-  theme.tasklist_disable_task_name            = false
-  theme.tasklist_plain_task_name              = false
-  theme.tasklist_font                         = theme.font
-  theme.tasklist_align                        = center
-  theme.tasklist_font_focus                   = theme.font
-  theme.tasklist_font_minimized               = theme.font
-  theme.tasklist_font_urgent                  = theme.font
-  theme.tasklist_close                        = ""
-  theme.tasklist_minimize                     = ""
-  theme.tasklist_sticky                       = ""
-  theme.tasklist_ontop                        = "ﱓ"
-  theme.tasklist_floating                     = ""
-  theme.tasklist_maximized                    = ""
-  local tasklist = require("widgets.tasklist")
+  theme.tasklist_fg_normal         = colors.black
+  theme.tasklist_bg_normal         = colors.grey_700
+  theme.tasklist_fg_focus          = colors.black
+  theme.tasklist_bg_focus          = colors.green_a700
+  theme.tasklist_fg_urgent         = colors.black
+  theme.tasklist_bg_urgent         = colors.red_a700
+  theme.tasklist_fg_minimize       = colors.black
+  theme.tasklist_bg_minimize       = colors.purple_a700
+  theme.tasklist_disable_icon      = false
+  theme.tasklist_disable_task_name = true
+  theme.tasklist_plain_task_name   = false
+  theme.tasklist_font              = theme.font
+  theme.tasklist_align             = center
+  theme.tasklist_font_focus        = theme.font
+  theme.tasklist_font_minimized    = theme.font
+  theme.tasklist_font_urgent       = theme.font
+  theme.tasklist_close             = " "
+  theme.tasklist_minimize          = " "
+  theme.tasklist_sticky            = " "
+  theme.tasklist_ontop             = "ﱓ "
+  theme.tasklist_floating          = " "
+  theme.tasklist_maximized         = " "
+local tasklist = require("widgets.tasklist")
 
--- WIDGETS VARIABLES
--- ========================================================================
 -- Keyboard Layout widget
 -- ------------------------------------------------------------------------
   theme.keyboardlayout_fg = colors.yellow_500
   theme.keyboardlayout_bg = theme.bg_dark
   theme.keyboardlayout_icon = " "
   theme.keyboardlayout_shape = shapes.powerline_inv
-  local keyboardlayout_widget = require("widgets.keyboardlayout")
+local keyboardlayout_widget = require("widgets.keyboardlayout")
 
 -- IP widget
 -- ------------------------------------------------------------------------
@@ -272,15 +214,15 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.ip_icon = " "
   theme.ip_icon=" "
   theme.ip_icon_vpn="旅"
-  local ip_widget = require("widgets.ip")
+local ip_widget = require("widgets.ip")
 
 -- Uptime widget
 -- ------------------------------------------------------------------------
-  theme.uptime_bg = theme.bg_dark
+  theme.uptime_bg = theme.bg_darker
   theme.uptime_fg = theme.fg_normal
   theme.uptime_shape = shapes.powerline_inv
   theme.uptime_icon = " "
-  local uptime_widget = require("widgets.uptime")
+local uptime_widget = require("widgets.uptime")
 
 -- Battery widget
 -- ------------------------------------------------------------------------
@@ -299,7 +241,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.disk_tier2_clr = colors.yellow_500
   theme.disk_tier3_clr = colors.orange_500
   theme.disk_tier4_clr = colors.red_500
-  local disk_widget    = require("widgets.disk")
+local disk_widget    = require("widgets.disk")
 
 -- Net widget variables
 -- ------------------------------------------------------------------------
@@ -315,7 +257,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.net_tier2_clr=colors.yellow_500
   theme.net_tier3_clr=colors.orange_500
   theme.net_tier4_clr=colors.red_500
-  local net_widget = require("widgets.net")
+local net_widget = require("widgets.net")
 
 -- Ram widget variables
 -- ------------------------------------------------------------------------
@@ -329,7 +271,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.ram_tier2_clr=colors.yellow_500
   theme.ram_tier3_clr=colors.orange_500
   theme.ram_tier4_clr=colors.red_500
-  local ram_widget = require("widgets.ram")
+local ram_widget = require("widgets.ram")
 
 -- CPU widget variables
 -- ------------------------------------------------------------------------
@@ -343,7 +285,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.cpu_tier2_clr=colors.yellow_500
   theme.cpu_tier3_clr=colors.orange_500
   theme.cpu_tier4_clr=colors.red_500
-  local cpu_widget = require("widgets.cpu")
+local cpu_widget = require("widgets.cpu")
 
 -- Date widget variables
 -- ------------------------------------------------------------------------
@@ -351,7 +293,7 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.date_fg = theme.fg_normal
   theme.date_bg = theme.bg_darker
   theme.date_shape = shapes.powerline_inv
-  local date_widget = require("widgets.date")
+local date_widget = require("widgets.date")
 
 -- Systray widget variables
 -- ------------------------------------------------------------------------
@@ -359,11 +301,10 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.bg_systray           = theme.systray_bg
   theme.systray_icon_spacing = dpi(0)
   theme.systray_shape        = shapes.powerline_inv
-  local systray_widget = require("widgets.systray")
+local systray_widget = require("widgets.systray")
 
 -- Layoutbox widget variables
 -- ------------------------------------------------------------------------
-  local layoutbox_widget = require("widgets.layouts")
   -- Image location
   layout_img_dir          = theme.dir .. "/icons/layouts/"
   theme.layout_cornernw   = layout_img_dir .. "cornernw.png"
@@ -382,9 +323,10 @@ theme.dir   = os.getenv("HOME") .. "/.config/awesome/theme/"
   theme.layout_tileleft   = layout_img_dir .. "tileleft.png"
   -- Layout widget
   theme.layout_fg        = theme.fg_normal
-  theme.layout_bg        = theme.bg_normal .. "00"
+  theme.layout_bg        = theme.bg_main   .. "00"
   theme.layout_shape     = shapes.powerline_inv
   theme_assets.recolor_layout(theme, theme.fg_normal)
+local layoutbox_widget = require("widgets.layouts")
 
 local top_left_wibar = function(screen)
   return { -- Left widgets
@@ -406,9 +348,9 @@ local top_right_wibar = function(screen,tag)
     spacing = -dpi(theme.wibar_height/4),
     layout  = wibox.layout.fixed.horizontal,
     keyboardlayout_widget(),
-    ip_widget(),
+    --ip_widget(),
     uptime_widget(),
-    disk_widget(),
+    --disk_widget(),
     --bat_widget(),
     net_widget(),
     ram_widget(),
