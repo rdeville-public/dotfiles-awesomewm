@@ -103,7 +103,7 @@ ruled.client.append_rules {
       floating = true,
       titlebars_enabled = true,
       shape = function(cr, width, height)
-        return gears.shape.rounded(cr, width, height, dpi(20))
+        return gears.shape.rounded_rect(cr, width, height, dpi(20))
       end,
     },
     callback = function(c)
@@ -116,7 +116,7 @@ ruled.client.append_rules {
     properties = {
       titlebars_enabled = true,
       shape = function(cr, width, height)
-        return gears.shape.rounded(cr, width, height, dpi(20))
+        return gears.shape.rounded_rect(cr, width, height, dpi(20))
       end,
     },
   },
