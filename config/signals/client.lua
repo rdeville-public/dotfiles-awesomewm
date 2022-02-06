@@ -49,4 +49,3 @@ client.connect_signal("property::floating",
     end
   end)
 
-

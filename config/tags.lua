@@ -8,6 +8,7 @@ local name = {
   steam       = " ",
   inkscape    = "縉",
   gimp        = " ",
+  office      = " ",
 }
 
 return {
@@ -15,9 +16,6 @@ return {
   tags = {
     name.terminal,
     name.browser,
-    name.mail,
-    name.pass,
-    name.monitor,
   },
 }
 

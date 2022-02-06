@@ -9,10 +9,19 @@ local clientkeys    = require("config.keys.client")
 local clientbuttons = require("config.buttons.client")
 local tagname       = require("config.tags").name
 
+local function default_callback(screen, tag, volatile)
+  if not awful.find_by_name(screen, tag) then
+    awful.tag.add(tag, {
+      volatile = volatile,
+      screen  = screen,
+    })
+  end
+end
+
 ruled.client.append_rules {
   -- All clients will match this rule.
   {
-    rule = {},
+    rule       = {},
     properties =
     {
       border_width     = beautiful.border_width,
@@ -24,85 +33,138 @@ ruled.client.append_rules {
       screen           = awful.screen.preferred,
       placement        = awful.placement.no_overlap+awful.placement.no_offscreen,
       size_hints_honor = false,
-    }
-  },
-  {
-    rule_any = { class = { "st", "terminator", "xterm" } },
-    properties = { tag = tagname.terminal, switch_to_tags = true }
-  },
-  {
-    rule_any = { class = { "firefox", "chromium-browser" } },
-    properties = { tag = tagname.browser, switch_to_tags = true }
-  },
-  {
-    rule = { class = "thunderbird" },
-    properties = { tag = tagname.mail, switch_to_tags = true }
-  },
-  {
-    rule_any = { class = {"keepassxc" } },
-    properties = { tag = tagname.pass, switch_to_tags = true }
-  },
-  --[[
-  {
-    rule_any = { TODO Monitor},
-    properties = { tag = tagname.monitor, switch_to_tags = true }
-  },
-  --]]
-  {
-    rule_any = { class = { "explorer" }, instance = { "Thunar", "pcmanfm" } },
-    properties = {
-      tag = tagname.filemanager,
-      switch_to_tags = true ,
-      new_tag = {
-        name = tagname.filemanager,
-        layout = awful.layout.suit.tile,
-        volatile = true,
-      },
     },
   },
   {
-    rule_any = { class = { "Steam" } },
+    rule_any   = { class = { "st", "terminator", "xterm" } },
     properties = {
-      tag = tagname.steam,
+      tag            = tagname.terminal,
       switch_to_tags = true,
-      new_tag = {
-        name = tagname.steam,
-        layout = awful.layout.suit.tile,
+    },
+  },
+  {
+    rule_any   = { class = { "firefox", "chromium-browser" } },
+    properties = {
+      tag            = tagname.browser,
+      switch_to_tags = true,
+    },
+  },
+  {
+    rule = { class = "Thunderbird" },
+    callback   = function(c, properties)
+      default_callback(properties.screen, properties.tag, properties.volatile)
+    end,
+    properties = {
+      tag            = tagname.mail,
+      switch_to_tags = true,
+      screen         = 3 or 1, -- left or center
+      new_tag        = {
+        name     = tagname.mail,
+        layout   = awful.layout.suit.tile,
         volatile = true,
       },
     },
   },
   {
-    rule_any = { class = { "Inkscape" } },
+    rule_any   = { class = {"keepassxc", "KeePassXC" } },
+    callback   = function(c, properties)
+      default_callback(properties.screen, properties.tag, properties.volatile)
+    end,
     properties = {
-      tag = tagname.inkscape,
-      new_tag = {
-        name = tagname.inkscape,
-        layout = awful.layout.suit.tile,
+      tag            = tagname.pass,
+      switch_to_tags = true,
+      screen         = 3 or 1, -- left or center
+      new_tag        = {
+        name     = tagname.pass,
+        layout   = awful.layout.suit.tile,
         volatile = true,
       },
-      switch_to_tags = true
     },
   },
   {
-    rule_any = { class = { "Gimp" } },
+    rule_any   = { class = { "libreoffice", "libreoffice-startcenter" } },
+    callback   = function(c, properties)
+      default_callback(properties.screen, properties.tag, properties.volatile)
+    end,
     properties = {
-      tag = tagname.gimp,
-      new_tag = {
-        name = tagname.gimp,
-        layout = awful.layout.suit.tile,
+      tag            = tagname.office,
+      switch_to_tags = true,
+      new_tag        = {
+        name     = tagname.office,
+        layout   = awful.layout.suit.tile,
         volatile = true,
       },
-      switch_to_tags = true
+    },
+  },
+  {
+    rule_any   = { class = { "explorer" }, instance = { "Thunar", "pcmanfm" } },
+    callback   = function(c, properties)
+      default_callback(properties.screen, properties.tag, properties.volatile)
+    end,
+    properties = {
+      tag            = tagname.filemanager,
+      switch_to_tags = true ,
+      new_tag        = {
+        name     = tagname.filemanager,
+        layout   = awful.layout.suit.tile,
+        volatile = true,
+      },
+    },
+  },
+  {
+    rule_any   = { class = { "Steam", "discord" }, name = { "Discord"} },
+    callback   = function(c, properties)
+      default_callback(properties.screen, properties.tag, properties.volatile)
+    end,
+    properties = {
+      tag            = tagname.steam,
+      switch_to_tags = true,
+      screen         = 3 or 1, -- left or center
+      new_tag        = {
+        name     = tagname.steam,
+        layout   = awful.layout.suit.tile,
+        volatile = true,
+      },
+    },
+  },
+  {
+    rule_any   = { class = { "Inkscape" } },
+    callback   = function(c, properties)
+      default_callback(properties.screen, properties.tag, properties.volatile)
+    end,
+    properties = {
+      tag            = tagname.inkscape,
+      switch_to_tags = true,
+      new_tag        = {
+        name     = tagname.inkscape,
+        layout   = awful.layout.suit.tile,
+        volatile = true,
+      },
+    },
+  },
+  {
+    rule_any   = { class = { "Gimp" } },
+    callback   = function(c, properties)
+      default_callback(properties.screen, properties.tag, properties.volatile)
+    end,
+    properties = {
+      tag            = tagname.gimp,
+      switch_to_tags = true,
+      new_tag        = {
+        name     = tagname.gimp,
+        layout   = awful.layout.suit.tile,
+        volatile = true,
+      },
     },
   },
   -- Add titles bars to dialog client
   {
-    rule_any = { type = { "dialog" } },
+    rule_any   = { type = { "dialog" } },
     properties = {
-      floating = true,
+      floating          = true,
       titlebars_enabled = true,
-      shape = function(cr, width, height)
+      width             = dpi(640),
+      shape             = function(cr, width, height)
         return gears.shape.rounded_rect(cr, width, height, dpi(20))
       end,
     },
@@ -112,10 +174,10 @@ ruled.client.append_rules {
   },
   -- Add titles bars to floating client
   {
-    rule_any = { type = { "floating" } },
+    rule_any   = { type = { "floating" } },
     properties = {
       titlebars_enabled = true,
-      shape = function(cr, width, height)
+      shape             = function(cr, width, height)
         return gears.shape.rounded_rect(cr, width, height, dpi(20))
       end,
     },

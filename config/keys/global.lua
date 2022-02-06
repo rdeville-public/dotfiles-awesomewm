@@ -46,6 +46,7 @@ local globalkeys =  gears.table.join(
       group = "Tag"
     }),
 
+
 -- CLIENT BROWSING
 -- ==========================================================================
   awful.key({ modkey }, "j",

@@ -45,6 +45,7 @@ awful.screen.connect_for_each_screen(function(s)
     beautiful.at_screen_connect(s)
   end)
 
+
 -- Set key bindings
 local globalkeys = require("config.keys.global")
 local clientkeys = require("config.keys.client")

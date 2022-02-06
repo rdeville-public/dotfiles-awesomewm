@@ -392,7 +392,7 @@ function theme.at_screen_connect(s)
     position = "top",
     screen   = s,
     height   = dpi(theme.wibar_height),
-    width    = dpi(s.geometry.width - 4 * theme.useless_gap),
+    width    = s.geometry.width - 4 * theme.useless_gap,
     fg       = theme.wibar_fg,
     bg       = theme.wibar_bg,
   })

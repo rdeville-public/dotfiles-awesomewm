@@ -103,12 +103,6 @@ return awful.util.table.join(
     {
       description = "\t\tMaximize",
       group = "Client"
-    }),
-  awful.key({ modkey , shiftkey }, "r",
-    function () screen.focused().mypromptbox:run() end,
-    {
-      description = "\t\tRun prompt",
-      group = "Client"
     })
 )
 

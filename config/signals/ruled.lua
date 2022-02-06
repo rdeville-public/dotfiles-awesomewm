@@ -9,7 +9,7 @@ ruled.notification.connect_signal("request::rules",
       rule       = { },
       properties = {
         screen  = awful.screen.focused,
-        timeout = 5,
+        timeout = 10,
       },
     }
   end
