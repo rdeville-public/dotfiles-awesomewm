@@ -7,23 +7,23 @@ local button = {}
 
 button.create = function(image, size, radius, margin, bg, bg_hover, bg_press, command)
     local button_image = wibox.widget {
-        image = image, 
-        forced_height = size, 
-        forced_width = size, 
+        image = image,
+        forced_height = size,
+        forced_width = size,
         widget = wibox.widget.imagebox
     }
 
     local button = wibox.widget {
         {
-            button_image, 
+            button_image,
             margins = dpi(margin),
             widget = wibox.container.margin,
-        }, 
-        bg = bg, 
+        },
+        bg = bg,
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, dpi(radius))
         end,
-        widget = wibox.container.background 
+        widget = wibox.container.background
     }
 
     button:connect_signal("button::press", function()
@@ -45,15 +45,15 @@ end
 button.create_widget = function(widget, command)
     local button = wibox.widget {
         {
-            widget, 
+            widget,
             margins = dpi(10),
             widget = wibox.container.margin,
-        }, 
-        bg = beautiful.bg_normal, 
+        },
+        bg = beautiful.bg_normal,
         shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, dpi(10))
         end,
-        widget = wibox.container.background 
+        widget = wibox.container.background
     }
 
     button:connect_signal("button::press", function()
@@ -70,10 +70,10 @@ end
 
 button.create_image = function(image, image_hover)
     local image_widget = wibox.widget {
-        image = image, 
+        image = image,
         widget = wibox.widget.imagebox
     }
-    
+
     image_widget:connect_signal("mouse::enter", function() image_widget.image = image_hover end)
     image_widget:connect_signal("mouse::leave", function() image_widget.image = image end)
 
@@ -84,7 +84,7 @@ button.create_image_onclick = function(image, image_hover, onclick)
     local image = button.create_image(image, image_hover)
 
     local container = wibox.widget {
-        image, 
+        image,
         widget = wibox.container.background
     }
 
@@ -95,8 +95,8 @@ end
 
 button.create_text = function(color, color_hover, text, font)
    local textWidget = wibox.widget {
-        font = font, 
-        markup = "<span foreground='"..color.."'>"..text.."</span>", 
+        font = font,
+        markup = "<span foreground='"..color.."'>"..text.."</span>",
         widget = wibox.widget.textbox
     }
 
@@ -106,4 +106,4 @@ button.create_text = function(color, color_hover, text, font)
     return textWidget
 end
 
-return button 
+return button

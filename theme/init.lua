@@ -177,6 +177,13 @@ local theme = {}
   theme.taglist_spacing     = -dpi(5)
 local taglist = require("widgets.taglist")
 
+-- Prompt
+-- ------------------------------------------------------------------------
+  theme.popup_prompt_fg    = theme.fg_normal
+  theme.popup_prompt_bg    = theme.bg_darker
+  theme.popup_prompt_shape = shapes.powerline_inv
+local popup_prompt = require("widgets.popup_prompt")
+
 -- Tasklist
 -- ------------------------------------------------------------------------
   theme.tasklist_fg_normal         = colors.black
@@ -252,7 +259,7 @@ local ip_widget = require("widgets.ip")
 
 -- Uptime widget
 -- ------------------------------------------------------------------------
-  theme.uptime_bg = theme.bg_darker
+  theme.uptime_bg = theme.bg_dark
   theme.uptime_fg = theme.fg_normal
   theme.uptime_shape = shapes.powerline_inv
   theme.uptime_icon = " "
@@ -378,9 +385,9 @@ local top_right_wibar = function(screen,tag)
     layout  = wibox.layout.fixed.horizontal,
     bat_widget(),
     keyboardlayout_widget(),
-    --ip_widget(),
+    ip_widget(),
     uptime_widget(),
-    --disk_widget(),
+    disk_widget(),
     net_widget(),
     ram_widget(),
     cpu_widget(),

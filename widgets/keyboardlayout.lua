@@ -10,10 +10,26 @@ local gears     = require("gears")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local dpi       = require("beautiful.xresources").apply_dpi
+local rofi      = require("modules.rofi")
 
 -- VARIABLES
 -- ========================================================================
 local keyboardlayout = {}
+local keyboarloayout_buttons = {}
+
+keyboarloayout_buttons = gears.table.join(
+  awful.button({ }, 1,         --Left click
+    function()
+      rofi.prompt(
+        {
+          p    = "New keyboard layout",
+          dmenu = true,
+        },
+        function(new_kbl)
+          awful.spawn.with_shell("setxkbmap " .. new_kbl)
+        end)
+    end)
+)
 
 -- METHOD
 -- ========================================================================
@@ -35,6 +51,7 @@ local function factory(screen)
     },
     fg           = beautiful.keyboardlayout_fg,
     bg           = beautiful.keyboardlayout_bg,
+    buttons      = keyboarloayout_buttons,
     font         = beautiful.font,
     shape        = beautiful.keyboardlayout_shape,
     widget       = wibox.container.background,

@@ -22,7 +22,7 @@ local function factory(args)
   local default_alert_value = 25
   local args                = args or {}
 
-  if #bat_info_dir >= 0 then
+  if #bat_info_dir > 0 then
     local found = false
     local idx   = 1
     while not found do
@@ -33,8 +33,10 @@ local function factory(args)
       idx = idx + 1
     end
     if not found then
-      return false
+      return nil
     end
+  else
+    return nil
   end
 
   default_commands = {}

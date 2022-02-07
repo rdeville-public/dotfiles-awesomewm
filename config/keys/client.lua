@@ -43,17 +43,7 @@ return awful.util.table.join(
       awful.tag.history.restore()
       -- Move client to next screen
       c:move_to_screen()
-      while idx < #c.screen.tags and not stop
-      do
-        if c.screen.tags[idx].name == tag.name
-        then
-          stop = true
-        else
-          idx = idx + 1
-        end
-      end
-      if not stop
-      then
+      if not awful.tag.find_by_name(c.screen, tag.name) then
         awful.tag.add(
           tag.name,
           {
@@ -62,9 +52,8 @@ return awful.util.table.join(
             layout = awful.layout.suit.tile
           }
         )
-        idx = idx + 1
       end
-      tag = c.screen.tags[idx]
+      tag = awful.tag.find_by_name(c.screen, tag.name)
       c:move_to_tag(tag)
       c:jump_to()
       awful.tag.history.update(c.screen)

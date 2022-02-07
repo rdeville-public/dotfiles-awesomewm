@@ -10,7 +10,8 @@ local clientbuttons = require("config.buttons.client")
 local tagname       = require("config.tags").name
 
 local function default_callback(screen, tag, volatile)
-  if not awful.find_by_name(screen, tag) then
+  local volatile = volatile or false
+  if not awful.tag.find_by_name(screen, tag.name) then
     awful.tag.add(tag, {
       volatile = volatile,
       screen  = screen,
@@ -59,7 +60,9 @@ ruled.client.append_rules {
   {
     rule = { class = "Thunderbird" },
     callback   = function(c, properties)
-      default_callback(properties.screen, properties.tag, properties.volatile)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
     end,
     properties = {
       tag            = tagname.mail,
@@ -75,7 +78,9 @@ ruled.client.append_rules {
   {
     rule_any   = { class = {"keepassxc", "KeePassXC" } },
     callback   = function(c, properties)
-      default_callback(properties.screen, properties.tag, properties.volatile)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
     end,
     properties = {
       tag            = tagname.pass,
@@ -91,7 +96,9 @@ ruled.client.append_rules {
   {
     rule_any   = { class = { "libreoffice", "libreoffice-startcenter" } },
     callback   = function(c, properties)
-      default_callback(properties.screen, properties.tag, properties.volatile)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
     end,
     properties = {
       tag            = tagname.office,
@@ -106,7 +113,9 @@ ruled.client.append_rules {
   {
     rule_any   = { class = { "explorer" }, instance = { "Thunar", "pcmanfm" } },
     callback   = function(c, properties)
-      default_callback(properties.screen, properties.tag, properties.volatile)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
     end,
     properties = {
       tag            = tagname.filemanager,
@@ -121,7 +130,9 @@ ruled.client.append_rules {
   {
     rule_any   = { class = { "Steam", "discord" }, name = { "Discord"} },
     callback   = function(c, properties)
-      default_callback(properties.screen, properties.tag, properties.volatile)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
     end,
     properties = {
       tag            = tagname.steam,
@@ -137,7 +148,9 @@ ruled.client.append_rules {
   {
     rule_any   = { class = { "Inkscape" } },
     callback   = function(c, properties)
-      default_callback(properties.screen, properties.tag, properties.volatile)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
     end,
     properties = {
       tag            = tagname.inkscape,
@@ -152,7 +165,9 @@ ruled.client.append_rules {
   {
     rule_any   = { class = { "Gimp" } },
     callback   = function(c, properties)
-      default_callback(properties.screen, properties.tag, properties.volatile)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
     end,
     properties = {
       tag            = tagname.gimp,

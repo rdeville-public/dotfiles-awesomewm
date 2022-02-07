@@ -1,20 +1,20 @@
 local awful         = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup.widget")
--- Awesome wm utility box
 local gears         = require("gears")
--- Awesome theme
 local beautiful     = require("beautiful")
 
-local modkey   = require("config.keys.mod").modkey
-local altkey   = require("config.keys.mod").altkey
-local shiftkey = require("config.keys.mod").shiftkey
-local ctrlkey  = require("config.keys.mod").ctrlkey
+local modkey        = require("config.keys.mod").modkey
+local altkey        = require("config.keys.mod").altkey
+local shiftkey      = require("config.keys.mod").shiftkey
+local ctrlkey       = require("config.keys.mod").ctrlkey
 
-local terminal   = require("config.apps").terminal
-local editor     = require("config.apps").editor
-local gui_editor = require("config.apps").gui_editor
-local browser    = require("config.apps").browser
-local explorer   = require("config.apps").explorer
+local terminal      = require("config.apps").terminal
+local editor        = require("config.apps").editor
+local gui_editor    = require("config.apps").gui_editor
+local browser       = require("config.apps").browser
+local explorer      = require("config.apps").explorer
+
+local rofi          = require("modules.rofi")
 
 local globalkeys =  gears.table.join(
 -- Hotkeys
@@ -30,22 +30,64 @@ local globalkeys =  gears.table.join(
   awful.key({ modkey, shiftkey }, "h",
     awful.tag.viewprev,
     {
-      description = "\t\tView previous tag",
-      group = "Tag"
+      description = "\t\t\tView previous tag",
+      group = "Tags"
     }),
   awful.key({ modkey, shiftkey }, "l",
     awful.tag.viewnext,
     {
-      description = "\t\tView next tag",
-      group = "Tag"
+      description = "\t\t\tView next tag",
+      group = "Tags"
     }),
   awful.key({ modkey, }, "Tab",
     awful.tag.history.restore,
     {
-      description = "\t\tSwitch with last used tag",
-      group = "Tag"
+      description = "\t\t\tSwitch with last used tag",
+      group = "Tags"
     }),
-
+  awful.key({ modkey, shiftkey }, "r",
+    function ()
+      local screen = awful.screen.focused()
+      local tag = screen.selected_tag
+      rofi.prompt(
+        {
+          p    = "Rename tag",
+          dmenu = true,
+        },
+        function(new_name)
+          tag.name = new_name
+        end)
+    end,
+    {
+      description = "\t\t\tRename current tag",
+      group = "Tags"
+    }),
+  awful.key({ modkey, shiftkey }, "a",
+    function ()
+      rofi.prompt(
+        {
+        p = "New tag name",
+        dmenu = true,
+        },
+        function(new_name)
+          awful.tag.add(new_name):view_only()
+        end)
+    end,
+    {
+      description = "\t\t\tCreate new tag",
+      group = "Tags"
+    }),
+  awful.key({ modkey, shiftkey }, "w",
+    function ()
+      local screen = awful.screen.focused()
+      local tag = screen.selected_tag
+      if not tag then return end
+      tag:delete()
+    end,
+    {
+      description = "\t\t\tDelete current tag",
+      group = "Tags"
+    }),
 
 -- CLIENT BROWSING
 -- ==========================================================================
@@ -165,6 +207,7 @@ local globalkeys =  gears.table.join(
   awful.key({ modkey }, "b",
     function ()
       for s in screen do
+        s.empty_top_bar.visible = not s.empty_top_bar.visible
         s.top_bar.visible = not s.top_bar.visible
       end
     end,
@@ -208,13 +251,13 @@ local globalkeys =  gears.table.join(
   awful.key({ }, "XF86MonBrightnessUp",
     function () os.execute("xbacklight -inc 10") end,
     {
-      description = "\tIncrease backlight +10%",
+      description = "\t\tIncrease backlight +10%",
       group = "Hotkeys"
     }),
   awful.key({ }, "XF86MonBrightnessDown",
     function () os.execute("xbacklight -dec 10") end,
     {
-      description = "\tDecrease backlight -10%",
+      description = "\t\tDecrease backlight -10%",
       group = "Hotkeys"
     }),
 
@@ -225,7 +268,7 @@ local globalkeys =  gears.table.join(
       if beautiful.volume then beautiful.volume.update() end
     end,
     {
-      description = "\tVolume up",
+      description = "\t\tVolume up",
       group = "Hotkeys"
     }),
   awful.key({ }, "XF86AudioLowerVolume",
@@ -234,7 +277,7 @@ local globalkeys =  gears.table.join(
       if beautiful.volume then beautiful.volume.update() end
     end,
     {
-      description = "\tVolume down",
+      description = "\t\tVolume down",
       group = "Hotkeys"
     }),
   awful.key({ }, "XF86AudioMute",
@@ -253,7 +296,7 @@ local globalkeys =  gears.table.join(
       if beautiful.volume then beautiful.volume.update() end
     end,
     {
-      description = "\t\tVolume up",
+      description = "\tVolume up",
       group = "Hotkeys"
     }),
   awful.key({ modkey }, "Down",
@@ -262,7 +305,7 @@ local globalkeys =  gears.table.join(
       if beautiful.volume then beautiful.volume.update() end
     end,
     {
-      description = "\t\tVolume down",
+      description = "\tVolume down",
       group = "Hotkeys"
     }),
   awful.key({ modkey, shiftkey }, "m",
@@ -271,7 +314,7 @@ local globalkeys =  gears.table.join(
       if beautiful.volume then beautiful.volume.update() end
     end,
     {
-      description = "\t\tToggle mute",
+      description = "\tToggle mute",
       group = "Hotkeys"
     }),
 
@@ -305,13 +348,18 @@ local globalkeys =  gears.table.join(
 -- USE ROFI AS COMMAND PROMPT
 -- ==========================================================================
   awful.key({ modkey }, "r",
-    function ()
-        awful.spawn("rofi -show run")
+    function()
+      rofi.prompt(
+        {
+          show    = "run",
+          prompt = "Run:",
+        }
+      )
     end,
-    {
-      description = "\t\tRun rofi",
-      group = "Applications"
-    }),
+      {
+        description = "\t\tRun rofi",
+        group = "Applications"
+      }),
   awful.key({ modkey }, "i",
     function ()
         awful.spawn.with_shell("~/.local/bin/dmenu_unicode")
@@ -319,6 +367,21 @@ local globalkeys =  gears.table.join(
     {
       description = "\t\tRun rofi to select unicode char",
       group = "Applications"
+    }),
+  awful.key({ modkey, altkey }, "k",
+    function()
+      rofi.prompt(
+        {
+          p    = "New keyboard layout",
+          dmenu = true,
+        },
+        function(new_kbl)
+          awful.spawn.with_shell("setxkbmap " .. new_kbl)
+        end)
+    end,
+    {
+      description = "\t\tRun rofi to select keyboard layout",
+      group = "Keyboard"
     })
 )
 
@@ -350,6 +413,7 @@ for i = 1, 9 do
     }),
     awful.key({ modkey, shiftkey }, "#" .. i + 9,
     function ()
+      if not client.focus then return end
       local tag = awful.tag.gettags(client.focus.screen)[i]
       if client.focus and tag then
         awful.client.movetotag(tag)

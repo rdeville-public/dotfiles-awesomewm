@@ -19,7 +19,7 @@ local function factory(screen)
   return awful.widget.taglist {
     screen  = screen,
     filter  = awful.widget.taglist.filter.all,
-    buttons = awful.util.taglist_buttons,
+    buttons = require("config.buttons.taglist") ,
     layout = {
       spacing = -dpi(beautiful.wibar_height/2),
       layout  = wibox.layout.flex.horizontal,
