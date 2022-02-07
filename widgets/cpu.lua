@@ -90,6 +90,7 @@ local function factory(args)
   args.bar_bg      = args.bar_bg      or beautiful.cpu_bar_bg      or args.bg
 
   args.alert_value = args.alert_value or beautiful.cpu_alert_value or 90
+
   args.tier1_clr   = args.tier1_clr   or beautiful.cpu_tier1_clr   or args.fg
   args.tier2_clr   = args.tier2_clr   or beautiful.cpu_tier2_clr   or args.fg
   args.tier3_clr   = args.tier3_clr   or beautiful.cpu_tier3_clr   or args.fg
@@ -173,11 +174,11 @@ local function factory(args)
       pourcent = string.format(" %04.1f%%", cpu_value.pourcent)
       loadavg = string.format(" %03.2f", cpu_value.loadavg[1])
       -- Update widget values
-      self:get_children_by_id("cpu_icon")[1].markup     = "<span foreground='" .. clr_value .."'>".. args.icon .. "</span>"
-      self:get_children_by_id("cpu_bar")[1].value   = cpu_value.pourcent
-      self:get_children_by_id("cpu_bar")[1].color   = clr_value
-      self:get_children_by_id("cpu_value")[1].markup     = "<span foreground='" .. clr_value .."'>".. pourcent .. "</span>"
-      self:get_children_by_id("cpu_load")[1].markup     = "<span foreground='" .. clr_value .."'>".. loadavg .. "</span>"
+      self:get_children_by_id("cpu_icon")[1].markup  = "<span foreground  = '" .. clr_value .."'>".. args.icon .. "</span>"
+      self:get_children_by_id("cpu_bar")[1].value    = cpu_value.pourcent
+      self:get_children_by_id("cpu_bar")[1].color    = clr_value
+      self:get_children_by_id("cpu_value")[1].markup = "<span foreground  = '" .. clr_value .."'>".. pourcent .. "</span>"
+      self:get_children_by_id("cpu_load")[1].markup  = "<span foreground  = '" .. clr_value .."'>".. loadavg .. "</span>"
       -- Show alert if usage above specified threshold
 --      if ( cpu_value.pourcent > args.alert_value )
 --      then

@@ -29,6 +29,19 @@ function file_exists(name)
    if f~=nil then io.close(f) return true else return false end
 end
 
+-- Return list of files in directory
+function scandir(directory)
+  local ext = ext or ""
+  local i, t, popen = 0, {}, io.popen
+  local pfile = popen("ls '" .. directory.. "'")
+  for filename in pfile:lines() do
+    i = i + 1
+    t[i] = filename
+  end
+  pfile:close()
+  return t
+end
+
 -- Autostart Application
 function run_once(cmd_arr)
   for _, cmd in ipairs(cmd_arr) do

@@ -203,6 +203,35 @@ local taglist = require("widgets.taglist")
   theme.tasklist_maximized         = " "
 local tasklist = require("widgets.tasklist")
 
+-- Battery widget
+-- ------------------------------------------------------------------------
+  theme.bat_fg                    = theme.fg_normal
+  theme.bat_bg                    = theme.bg_darker
+  theme.bat_shape                 = shapes.powerline_inv
+  theme.bat_icon                  = ""
+  theme.bat_bar_bg                = theme.bg_darkest
+
+  theme.bat_tier1_clr_discharging = colors.red_500
+  theme.bat_tier2_clr_discharging = colors.orange_500
+  theme.bat_tier3_clr_discharging = colors.yellow_500
+  theme.bat_tier4_clr_discharging = colors.green_500
+  theme.bat_icon_discharging_1    = ' '
+  theme.bat_icon_discharging_2    = ' '
+  theme.bat_icon_discharging_3    = ' '
+  theme.bat_icon_discharging_4    = ' '
+  theme.bat_icon_discharging_5    = ' '
+
+  theme.bat_tier1_clr_charging    = colors.red_500
+  theme.bat_tier2_clr_charging    = colors.orange_500
+  theme.bat_tier3_clr_charging    = colors.yellow_500
+  theme.bat_tier4_clr_charging    = colors.green_500
+  theme.bat_icon_charging_1       = ' '
+  theme.bat_icon_charging_2       = ' '
+  theme.bat_icon_charging_3       = '  '
+  theme.bat_icon_charging_4       = ' '
+  theme.bat_icon_charging_5       = ' '
+local bat_widget = require("widgets.bat")
+
 -- Keyboard Layout widget
 -- ------------------------------------------------------------------------
   theme.keyboardlayout_fg = colors.yellow_500
@@ -228,11 +257,6 @@ local ip_widget = require("widgets.ip")
   theme.uptime_shape = shapes.powerline_inv
   theme.uptime_icon = " "
 local uptime_widget = require("widgets.uptime")
-
--- Battery widget
--- ------------------------------------------------------------------------
--- Battery widget
---local bat_widget = require("widgets.bat")
 
 -- Disk widget
 -- ------------------------------------------------------------------------
@@ -352,11 +376,11 @@ local top_right_wibar = function(screen,tag)
   return { -- Right widgets
     spacing = -dpi(theme.wibar_height/4),
     layout  = wibox.layout.fixed.horizontal,
+    bat_widget(),
     keyboardlayout_widget(),
     --ip_widget(),
     uptime_widget(),
     --disk_widget(),
-    --bat_widget(),
     net_widget(),
     ram_widget(),
     cpu_widget(),

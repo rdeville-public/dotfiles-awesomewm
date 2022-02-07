@@ -18,6 +18,13 @@ local function default_callback(screen, tag, volatile)
   end
 end
 
+local function set_screen(preferred, default)
+  if screen.count() >= 3 then
+    return preferred
+  end
+  return default
+end
+
 ruled.client.append_rules {
   -- All clients will match this rule.
   {
@@ -57,7 +64,7 @@ ruled.client.append_rules {
     properties = {
       tag            = tagname.mail,
       switch_to_tags = true,
-      screen         = 3 or 1, -- left or center
+      screen         = set_screen(3,1), -- left or center
       new_tag        = {
         name     = tagname.mail,
         layout   = awful.layout.suit.tile,
@@ -73,7 +80,7 @@ ruled.client.append_rules {
     properties = {
       tag            = tagname.pass,
       switch_to_tags = true,
-      screen         = 3 or 1, -- left or center
+      screen         = set_screen(3,1), -- left or center
       new_tag        = {
         name     = tagname.pass,
         layout   = awful.layout.suit.tile,
@@ -119,7 +126,7 @@ ruled.client.append_rules {
     properties = {
       tag            = tagname.steam,
       switch_to_tags = true,
-      screen         = 3 or 1, -- left or center
+      screen         = set_screen(3,1), -- left or center
       new_tag        = {
         name     = tagname.steam,
         layout   = awful.layout.suit.tile,
