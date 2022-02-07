@@ -19,7 +19,6 @@ local function factory(args)
   local default_commands = {}
   local power_info_dir      = "/sys/class/power_supply/"
   local bat_info_dir        = scandir(power_info_dir)
-  local default_alert_value = 25
   local args                = args or {}
 
   if #bat_info_dir > 0 then
@@ -194,14 +193,16 @@ local function factory(args)
     set_bat_remain = function(self, remain, status)
       local clr = compute_tier_clr(remain)
       local icon = compute_tier_icon(remain, status)
+      --[[
       if status == "Discharging"  and remain <= args.alert_value then
         naughty.notify({
           preset  = naughty.config.presets.critical,
-          timeout = 15,
+          timeout = 2,
           title   = "Battery Alert !",
-          text    = "<span foreground= '#FFFFFF'>Warning, Battery below "..alert_value.."% !</span>"
+          text    = "<span foreground= '#FFFFFF'>Warning, Battery below " .. args.alert_value .. "% !</span>"
         })
       end
+      --]]
       -- Update widget values
       self.fg = clr
       self:get_children_by_id("bat_icon")[1].text  = icon
