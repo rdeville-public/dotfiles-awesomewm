@@ -14,6 +14,17 @@ local gears     = require("gears")
 -- ========================================================================
 client.connect_signal("request::titlebars",
   function(c)
+    local titlebar_button = gears.table.join(
+      awful.button({ }, 1, function()
+        c:emit_signal("request::activate", "titlebar", {raise = true})
+        awful.mouse.client.move(c)
+      end),
+      awful.button({ }, 3, function()
+        c:emit_signal("request::activate", "titlebar", {raise = true})
+        awful.mouse.client.resize(c)
+      end)
+    )
+
     awful.titlebar(c,
       {
         size = dpi(beautiful.titlebar_size) or dpi(20),
@@ -35,7 +46,7 @@ client.connect_signal("request::titlebars",
           bg = beautiful.titlebar_left_bg or beautiful.titlebar_bg or "#000000",
           shape = beautiful.titlebar_left_shape,
         },
-        buttons = buttons,
+        buttons = titlebar_button,
         layout  = wibox.layout.fixed.horizontal
       },
       {
@@ -45,7 +56,7 @@ client.connect_signal("request::titlebars",
           align  = "center",
           widget = awful.titlebar.widget.titlewidget(c)
         },
-        buttons = buttons,
+        buttons = titlebar_button,
         layout  = wibox.layout.flex.horizontal
       },
       {

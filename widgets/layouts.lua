@@ -28,14 +28,15 @@ local function factory(s,t, args)
   layout = wibox.widget {
     {
       awful.widget.layoutbox(s),
-      left = beautiful.wibar_height,
+      left   = beautiful.wibar_height,
       widget = wibox.container.margin,
     },
-    shape = args.shape,
-    fg = args.fg,
-    bg = args.bg,
+    buttons      = require("config.buttons.layout"),
+    shape        = args.shape,
+    fg           = args.fg,
+    bg           = args.bg,
     forced_width = dpi(beautiful.wibar_height * 3),
-    widget = wibox.container.background,
+    widget       = wibox.container.background,
   }
 
   return layout

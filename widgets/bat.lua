@@ -68,6 +68,7 @@ local function factory(args)
   args.tier2_clr_discharging = args.tier2_clr_discharging or beautiful.bat_tier2_clr_discharging or args.fg
   args.tier3_clr_discharging = args.tier3_clr_discharging or beautiful.bat_tier3_clr_discharging or args.fg
   args.tier4_clr_discharging = args.tier4_clr_discharging or beautiful.bat_tier4_clr_discharging or args.fg
+  args.tier5_clr_discharging = args.tier5_clr_discharging or beautiful.bat_tier5_clr_discharging or args.fg
 
   args.icon_discharging      = args.icon_discharging      or beautiful.bat_icon_discharging      or " "
   args.icon_discharging_0    = args.icon_discharging_0    or beautiful.bat_icon_discharging_0    or args.icon_discharging
@@ -81,6 +82,7 @@ local function factory(args)
   args.tier2_clr_charging    = args.tier2_clr_charging    or beautiful.bat_tier2_clr_charging    or args.fg
   args.tier3_clr_charging    = args.tier3_clr_charging    or beautiful.bat_tier3_clr_charging    or args.fg
   args.tier4_clr_charging    = args.tier4_clr_charging    or beautiful.bat_tier4_clr_charging    or args.fg
+  args.tier5_clr_charging    = args.tier5_clr_charging    or beautiful.bat_tier5_clr_charging    or args.fg
 
   args.icon_charging         = args.icon_charging         or beautiful.bat_icon_charging         or " "
   args.icon_charging_0       = args.icon_charging_0       or beautiful.bat_icon_charging_0       or args.icon_charging

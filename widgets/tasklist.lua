@@ -21,7 +21,7 @@ local function factory(screen)
   return awful.widget.tasklist {
     screen   = screen,
     filter   = awful.widget.tasklist.filter.currenttags,
-    buttons  = tasklist_buttons,
+    buttons  = require("config.buttons.tasklist"),
     layout   = {
       layout  = wibox.layout.fixed.horizontal,
       spacing = dpi(2)

@@ -6,35 +6,55 @@ local altkey        = require("config.keys.mod").altkey
 local shiftkey      = require("config.keys.mod").shiftkey
 local ctrlkey       = require("config.keys.mod").ctrlkey
 
-local taglist_buttons = {}
-
-taglist_buttons = gears.table.join(
+return gears.table.join(
   awful.button({ }, 1,         --Left click
     function(t)
       t:view_only()
     end),
+    --[[
+    {
+      description = "\t\tView Tag",
+      group       = "Taglist",
+    },
+    --]]
   awful.button({ modkey }, 1,  --Left click
     function(t)
       if client.focus then
         client.focus:move_to_tag(t)
       end
     end),
+    --[[
+    {
+      description = "\t\tMove client to  Tag",
+      group       = "Taglist",
+    },
+    --]]
   awful.button({ }, 3,        -- Right click
     awful.tag.viewtoggle),
-  awful.button({ modkey }, 3, -- Right click
-    function(t)
-      if client.focus then
-        client.focus:toggle_tag(t)
-      end
-    end),
+    --[[
+    {
+      description = "\t\tView client of the tag",
+      group       = "Taglist",
+    },
+    --]]
   awful.button({ }, 4,      -- Scroll up
     function(t)
       awful.tag.viewnext(t.screen)
     end),
+    --[[
+    {
+      description = "\t\tView next tag",
+      group       = "Taglist",
+    }),
+    --]]
   awful.button({ }, 5,      -- Scroll down
     function(t)
       awful.tag.viewprev(t.screen)
     end)
+    --[[
+    {
+      description = "\t\tView previous tag",
+      group       = "Taglist",
+    }
+    --]]
 )
-
-return taglist_buttons

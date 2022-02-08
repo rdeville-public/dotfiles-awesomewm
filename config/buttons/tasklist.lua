@@ -17,28 +17,34 @@ return gears.table.join(
       client.focus = c
       c:raise()
       end
-    end,
+    end),
+    --[[
     {
       description = "\t\tToggle Minimized",
       group = "Tasklist"
-    }),
+    }
+    --]]
   -- Mouse scroll wheel switch to previous or next task
   awful.button({ }, 4,
     function ()
       awful.client.focus.byidx(1)
-    end,
+    end),
+    --[[
     {
       description = "\t\tSwitch to next task",
       group = "Tasklist"
     }),
+    --]]
   awful.button({ }, 5,
     function ()
       awful.client.focus.byidx(-1)
-    end,
+    end)
+    --[[
     {
       description = "\t\tSwitch to prev task",
       group = "Tasklist"
     })
+    --]]
   )
 
 -- vim: fdm=indent

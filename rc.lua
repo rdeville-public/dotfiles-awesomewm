@@ -41,9 +41,9 @@ require("config.titlebars")
 -- ------------------------------------------------------------------------
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s)
-    -- Apply theme to each screen
-    beautiful.at_screen_connect(s)
-  end)
+  -- Apply theme to each screen
+  beautiful.at_screen_connect(s)
+end)
 
 
 -- Set key bindings
@@ -68,6 +68,6 @@ run_once({
   "redshift",        -- redshift to avoid blue light at night
   "keynav",          -- manipulation of mouse with keyboard
   "nextcloud",       -- nextcloud client
-  "xautolock -time 180 -locker ~/.bin/lock &" , -- lock the screen after 180 sec on inactivity
+  --"xautolock -time 180 -locker ~/.bin/lock &" , -- lock the screen after 180 sec on inactivity
 })
 

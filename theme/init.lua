@@ -177,13 +177,6 @@ local theme = {}
   theme.taglist_spacing     = -dpi(5)
 local taglist = require("widgets.taglist")
 
--- Prompt
--- ------------------------------------------------------------------------
-  theme.popup_prompt_fg    = theme.fg_normal
-  theme.popup_prompt_bg    = theme.bg_darker
-  theme.popup_prompt_shape = shapes.powerline_inv
-local popup_prompt = require("widgets.popup_prompt")
-
 -- Tasklist
 -- ------------------------------------------------------------------------
   theme.tasklist_fg_normal         = colors.black
@@ -222,6 +215,7 @@ local tasklist = require("widgets.tasklist")
   theme.bat_tier2_clr_discharging = colors.orange_500
   theme.bat_tier3_clr_discharging = colors.yellow_500
   theme.bat_tier4_clr_discharging = colors.green_500
+  theme.bat_tier5_clr_discharging = colors.light_green_500
   theme.bat_icon_discharging_1    = ' '
   theme.bat_icon_discharging_2    = ' '
   theme.bat_icon_discharging_3    = ' '
@@ -232,6 +226,7 @@ local tasklist = require("widgets.tasklist")
   theme.bat_tier2_clr_charging    = colors.orange_500
   theme.bat_tier3_clr_charging    = colors.yellow_500
   theme.bat_tier4_clr_charging    = colors.green_500
+  theme.bat_tier5_clr_charging    = colors.light_green_500
   theme.bat_icon_charging_1       = ' '
   theme.bat_icon_charging_2       = ' '
   theme.bat_icon_charging_3       = '  '
