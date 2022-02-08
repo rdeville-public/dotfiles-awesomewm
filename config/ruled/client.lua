@@ -75,6 +75,7 @@ ruled.client.append_rules {
       },
     },
   },
+  --[[
   {
     rule_any   = { class = {"keepassxc", "KeePassXC" } },
     callback   = function(c, properties)
@@ -93,6 +94,7 @@ ruled.client.append_rules {
       },
     },
   },
+  --]]
   {
     rule_any   = { class = { "libreoffice", "libreoffice-startcenter" } },
     callback   = function(c, properties)
