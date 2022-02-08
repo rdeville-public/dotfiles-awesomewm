@@ -1,4 +1,5 @@
-local awful         = require("awful")
+local awful    = require("awful")
+local rofi     = require("modules.rofi")
 
 local modkey   = require("config.keys.mod").modkey
 local altkey   = require("config.keys.mod").altkey
@@ -33,6 +34,31 @@ return awful.util.table.join(
       description = "\tToggle floating",
       group = "Client"
     }),
+  awful.key({ modkey }, "a",
+    function (c)
+      rofi.prompt(
+        {
+        p = "New tag name",
+        dmenu = true,
+        },
+        function(new_name)
+          -- Create new tag
+          tag = awful.tag.add(
+            new_name,
+            {
+              volatile = true,
+              screen = c.screen,
+              layout = awful.layout.suit.tile
+            })
+          -- Move client to next screen
+          c:move_to_tag(tag)
+          tag:view_only()
+        end)
+    end,
+    {
+      description = "\t\t\tMove to new tag",
+      group = "Tags"
+    }),
   awful.key({ modkey }, "o",
     function (c, t)
       -- Get idx of current tag of client
@@ -59,7 +85,7 @@ return awful.util.table.join(
       awful.tag.history.update(c.screen)
     end,
     {
-      description = "\t\tMove to screen",
+      description = "\t\tMove to next screen",
       group = "Client"
     }),
   awful.key({ modkey }, "t",
@@ -82,6 +108,19 @@ return awful.util.table.join(
     end ,
     {
       description = "\t\tMinimize",
+      group = "Client"
+    }),
+  awful.key({ modkey, shiftkey }, "n",
+    function ()
+      local c = awful.client.restore()
+      -- Focus restored client
+      if c then
+        client.focus = c
+        c:raise()
+      end
+    end,
+    {
+      description = "\t\tRestore minimized",
       group = "Client"
     }),
   awful.key({ modkey }, "m",

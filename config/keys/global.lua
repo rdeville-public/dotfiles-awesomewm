@@ -155,19 +155,6 @@ local globalkeys =  gears.table.join(
       description = "\tSelect previous layout",
       group = "Screen"
     }),
-  awful.key({ modkey, shiftkey }, "n",
-    function ()
-      local c = awful.client.restore()
-      -- Focus restored client
-      if c then
-        client.focus = c
-        c:raise()
-      end
-    end,
-    {
-      description = "\t\tRestore minimized",
-      group = "Client"
-    }),
 
 -- LAYOUT MANIPULATION
 -- ==========================================================================
