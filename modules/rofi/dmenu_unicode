@@ -1,0 +1,64 @@
+#!/bin/sh
+# Give dmenu/rofi list of all unicode characters to copy.
+# Shows the selected character in dunst if running.
+
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+notify(){
+  local urgency="$1"
+  local title="$2"
+  local msg="$3"
+  local icon="$4"
+  if [[ -z ${icon} ]]
+  then
+    case urgency in
+      critical)
+        icon="${SCRIPTPATH}/../../theme/icons/dialog-error.svg"
+        ;;
+      low)
+        icon="${SCRIPTPATH}/../../theme/icons/dialog-information.svg"
+        ;;
+      *)
+        icon="${SCRIPTPATH}/../../theme/icons/dialog-warning.svg"
+        ;;
+    esac
+  elif [[ "${icon[0]}" != "/" ]]
+  then
+    icon="${SCRIPTPATH}/../../theme/icons/${icon}.svg"
+  fi
+  notify-send \
+    -u ${urgency} \
+    -i "${icon}" \
+    "${title}" "${msg}" &
+}
+check_requirement(){
+  # Must have xclip installed to even show menu.
+  if ! command -v xclip > /dev/null
+  then
+    notify \
+      "critical" \
+      "Missing Requirement" \
+      "'xclip' command not found, please install it"
+    exit 1
+  fi
+}
+
+main(){
+  check_requirement
+  emoji_files=""
+
+  for i_file in "${SCRIPTPATH}"/*.txt
+  do
+    emoji_files="${emoji_files} ${i_file}"
+  done
+
+  chosen=$(grep -v "#" -h ${emoji_files} | rofi -dmenu)
+
+  [[ -n "${chosen}" ]] || exit
+
+  c=$(echo "$chosen" | sed "s/ .*//")
+  notify "low" "Rofi" "'$c' Copied to clipboard and primary." "rofi" &
+  echo "$c" | tr -d '\n' | xclip -selection clipboard
+}
+
+main "$@"

@@ -38,7 +38,7 @@ return awful.util.table.join(
     function (c)
       rofi.prompt(
         {
-        p = "New tag name",
+        p = "New tag name for client",
         dmenu = true,
         },
         function(new_name)

@@ -14,7 +14,8 @@ local gui_editor    = require("config.apps").gui_editor
 local browser       = require("config.apps").browser
 local explorer      = require("config.apps").explorer
 
-local rofi          = require("modules.rofi")
+local rofi           = require("modules.rofi")
+local control_center = require("widgets.notif_center.notif_popup")
 
 local globalkeys =  gears.table.join(
 -- Hotkeys
@@ -23,6 +24,15 @@ local globalkeys =  gears.table.join(
     {
       description = "\t\tShow help",
       group="Awesome"
+    }),
+-- personal widget notification center
+  awful.key({ modkey }, "d",
+    function()
+      control_center.visible = not control_center.visible
+    end,
+    {
+      description = "Show notification center",
+      group = "Awesome"
     }),
 
 -- TAG BROWSING
@@ -248,7 +258,8 @@ local globalkeys =  gears.table.join(
       group = "Hotkeys"
     }),
 
-  -- ALSA/Pulksemixer volume control
+-- VOLUME CONTROL
+-- ==========================================================================
   awful.key({ }, "XF86AudioRaiseVolume",
     function ()
       os.execute(string.format("pulsemixer --change-volume +5"))
@@ -349,7 +360,7 @@ local globalkeys =  gears.table.join(
       }),
   awful.key({ modkey }, "i",
     function ()
-        awful.spawn.with_shell("~/.local/bin/dmenu_unicode")
+        awful.spawn.with_shell("~/.config/awesome/modules/rofi/dmenu_unicode")
     end,
     {
       description = "\t\tRun rofi to select unicode char",

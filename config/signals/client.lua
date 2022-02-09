@@ -2,7 +2,7 @@ local beautiful = require("beautiful")
 local awful     = require("awful")
 local gears     = require("gears")
 local wibox     = require("wibox")
-local dpi          = require("beautiful.xresources").apply_dpi
+local dpi       = require("beautiful.xresources").apply_dpi
 
 -- Signal function to execute when a new client appears.
 client.connect_signal("mouse::enter",
@@ -14,6 +14,16 @@ client.connect_signal("mouse::enter",
     end
   end
 )
+
+client.connect_signal("request::manage",
+  function(c)
+    if c.first_tag.layout.name == "floating" then
+      if not c.floating then
+        c.floating = true
+        awful.titlebar.show(c)
+      end
+    end
+  end)
 
 client.connect_signal("request::activate",
   -- Color border of newly activated client
@@ -45,7 +55,7 @@ client.connect_signal("property::floating",
       end
     else
       awful.titlebar.hide(c)
-      c.shape = nil
+      c.shape = gears.shape.rect
     end
   end)
 

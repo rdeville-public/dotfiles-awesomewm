@@ -54,6 +54,7 @@ root.keys(globalkeys)
 -- Set Signals
 require("config.signals.naughty")
 require("config.signals.screen")
+require("config.signals.tag")
 require("config.signals.client")
 require("config.signals.ruled")
 
@@ -63,8 +64,8 @@ require("config.ruled.client")
 -- STARTUP RUN ONCE
 -- ========================================================================
 run_once({
-  --"picom -b --experimental-backends --dbus --config " .. config_path .. '/picom.conf',
-  "xcompmgr",        -- Composite manager, make term transparent
+  "picom --experimental-backends --dbus --config \"${HOME}/.config/awesome/picom.conf\"",
+  --"xcompmgr",        -- Composite manager, make term transparent
   "redshift",        -- redshift to avoid blue light at night
   "keynav",          -- manipulation of mouse with keyboard
   "nextcloud",       -- nextcloud client
