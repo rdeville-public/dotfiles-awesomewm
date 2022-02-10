@@ -1,16 +1,14 @@
 -- This returns the "Wow, such empty." message.
 local beautiful = require("beautiful")
-local wibox = require('wibox')
-
-local dpi = require('beautiful').xresources.apply_dpi
-
+local wibox     = require('wibox')
+local dpi       = require('beautiful').xresources.apply_dpi
 
 local empty_notifbox = wibox.widget {
   {
     layout = wibox.layout.fixed.vertical,
     spacing = dpi(5),
     {
-      expand = 'none',
+      fxpand = 'none',
       layout = wibox.layout.align.horizontal,
       nil,
       {

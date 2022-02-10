@@ -14,6 +14,7 @@ local dpi       = require("beautiful.xresources").apply_dpi
 -- VARIABLES
 -- ========================================================================
 local cpu = {}
+local old_cpu = { 50, 50}
 
 -- WIDGET
 -- ========================================================================
@@ -52,14 +53,16 @@ local function factory(args)
 
     -- Calculate usage
     ------------------------------------------------------------
-    cpu.active = cpu.raw_data[1] + cpu.raw_data[2] + cpu.raw_data[3] + cpu.raw_data[6] + cpu.raw_data[7] + cpu.raw_data[8] + cpu.raw_data[9] + cpu.raw_data[10]
-    cpu.total = cpu.active + cpu.raw_data[4] + cpu.raw_data[5]
+    cpu.active = cpu.raw_data[1] + cpu.raw_data[2] + cpu.raw_data[3] +
+                 cpu.raw_data[6] + cpu.raw_data[7] + cpu.raw_data[8] +
+                 cpu.raw_data[9] + cpu.raw_data[10]
+    cpu.total  = cpu.active + cpu.raw_data[4] + cpu.raw_data[5]
 
-    curr_data.active =  cpu.active - args.old_cpu[1]
-    curr_data.total = cpu.total - args.old_cpu[2]
+    curr_data.active = cpu.active - old_cpu[1]
+    curr_data.total  = cpu.total  - old_cpu[2]
 
-    args.old_cpu[1] = curr_data.active
-    args.old_cpu[2] = curr_data.total
+    old_cpu[1] = cpu.active
+    old_cpu[2] = cpu.total
 
     curr_data.pourcent = math.floor((curr_data.active / curr_data.total) * 1000) / 10
 
@@ -99,8 +102,6 @@ local function factory(args)
   args.tier2_val   = args.tier2_val   or beautiful.cpu_tier2_val   or 50
   args.tier3_val   = args.tier3_val   or beautiful.cpu_tier3_val   or 75
   args.tier4_val   = args.tier4_val   or beautiful.cpu_tier4_val   or args.max_value
-
-  args.old_cpu = args.old_cpu or {0, 0}
 
   cpu = wibox.widget
   {
@@ -168,7 +169,7 @@ local function factory(args)
     shape        = args.shape,
     widget       = wibox.container.background,
     set_cpu_used = function(self, cpu_stdout)
-      local cpu_value = get_cpu_value(cpu_stdout)
+      local cpu_value   = get_cpu_value(cpu_stdout)
       local clr_value   = compute_tier_clr(cpu_value.pourcent)
       local alert_value = args.alert_value
       pourcent = string.format(" %04.1f%%", cpu_value.pourcent)
