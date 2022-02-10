@@ -27,6 +27,10 @@ local rectangular_tag_inv = function(cr, width, height)
     :rotate_at(width/2, height/2, math.pi)(cr,width,height)
 end
 
+local rounded_rect = function(cr, width, height)
+  gears.shape.rounded_rect(cr,width,height,10)
+end
+
 return {
   powerline = powerline,
   powerline_inv = powerline_inv,

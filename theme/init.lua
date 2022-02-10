@@ -160,6 +160,14 @@ local theme = {}
   theme.wibar_fg     = theme.fg_normal
   theme.wibar_bg     = theme.bg_main .. "44"
 
+-- Systray widget variables
+-- ------------------------------------------------------------------------
+  theme.systray_bg           = colors.brown_500
+  theme.bg_systray           = theme.systray_bg
+  theme.systray_icon_spacing = dpi(0)
+  theme.systray_shape        = shapes.rectangular_tag_inv
+local systray_widget = require("widgets.systray")
+
 -- Taglist
 -- ------------------------------------------------------------------------
   theme.taglist_font        = theme.font
@@ -236,28 +244,28 @@ local bat_widget = require("widgets.bat")
 
 -- Keyboard Layout widget
 -- ------------------------------------------------------------------------
-  theme.keyboardlayout_fg = colors.yellow_500
-  theme.keyboardlayout_bg = theme.bg_dark
-  theme.keyboardlayout_icon = " "
+  theme.keyboardlayout_fg    = colors.yellow_500
+  theme.keyboardlayout_bg    = theme.bg_dark
+  theme.keyboardlayout_icon  = " "
   theme.keyboardlayout_shape = shapes.powerline_inv
 local keyboardlayout_widget = require("widgets.keyboardlayout")
 
 -- IP widget
 -- ------------------------------------------------------------------------
-  theme.ip_bg = theme.bg_darker
-  theme.ip_fg = colors.purple_300
-  theme.ip_shape = shapes.powerline_inv
-  theme.ip_icon = " "
-  theme.ip_icon=" "
-  theme.ip_icon_vpn="旅"
+  theme.ip_bg       = theme.bg_darker
+  theme.ip_fg       = colors.purple_300
+  theme.ip_shape    = shapes.powerline_inv
+  theme.ip_icon     = " "
+  theme.ip_icon     = " "
+  theme.ip_icon_vpn = "旅"
 local ip_widget = require("widgets.ip")
 
 -- Uptime widget
 -- ------------------------------------------------------------------------
-  theme.uptime_bg = theme.bg_dark
-  theme.uptime_fg = theme.fg_normal
+  theme.uptime_bg    = theme.bg_dark
+  theme.uptime_fg    = theme.fg_normal
   theme.uptime_shape = shapes.powerline_inv
-  theme.uptime_icon = " "
+  theme.uptime_icon  = " "
 local uptime_widget = require("widgets.uptime")
 
 -- Disk widget
@@ -276,63 +284,68 @@ local disk_widget    = require("widgets.disk")
 
 -- Net widget variables
 -- ------------------------------------------------------------------------
-  theme.net_bg = theme.bg_dark
-  theme.net_fg = theme.fg_normal
-  theme.net_shape = shapes.powerline_inv
-  theme.net_up_icon = " "
-  theme.net_down_icon = " "
-  theme.net_online_icon = " "
+  theme.net_bg           = theme.bg_dark
+  theme.net_fg           = theme.fg_normal
+  theme.net_shape        = shapes.powerline_inv
+  theme.net_up_icon      = " "
+  theme.net_down_icon    = " "
+  theme.net_online_icon  = " "
   theme.net_offline_icon = " "
 
-  theme.net_tier1_clr=colors.green_500
-  theme.net_tier2_clr=colors.yellow_500
-  theme.net_tier3_clr=colors.orange_500
-  theme.net_tier4_clr=colors.red_500
+  theme.net_tier1_clr    = colors.green_500
+  theme.net_tier2_clr    = colors.yellow_500
+  theme.net_tier3_clr    = colors.orange_500
+  theme.net_tier4_clr    = colors.red_500
 local net_widget = require("widgets.net")
 
 -- Ram widget variables
 -- ------------------------------------------------------------------------
-  theme.ram_bg=theme.bg_darker
-  theme.ram_fg=theme.fg_normal
-  theme.ram_shape=shapes.powerline_inv
-  theme.ram_icon=" "
-  theme.ram_bar_bg = theme.bg_darkest
+  theme.ram_bg        = theme.bg_darker
+  theme.ram_fg        = theme.fg_normal
+  theme.ram_shape     = shapes.powerline_inv
+  theme.ram_icon      = " "
+  theme.ram_bar_bg    = theme.bg_darkest
 
-  theme.ram_tier1_clr=colors.green_500
-  theme.ram_tier2_clr=colors.yellow_500
-  theme.ram_tier3_clr=colors.orange_500
-  theme.ram_tier4_clr=colors.red_500
+  theme.ram_tier1_clr = colors.green_500
+  theme.ram_tier2_clr = colors.yellow_500
+  theme.ram_tier3_clr = colors.orange_500
+  theme.ram_tier4_clr = colors.red_500
 local ram_widget = require("widgets.ram")
 
 -- CPU widget variables
 -- ------------------------------------------------------------------------
-  theme.cpu_fg = theme.fg_normal
-  theme.cpu_bg = theme.bg_dark
-  theme.cpu_shape = shapes.powerline_inv
-  theme.cpu_icon = "  "
-  theme.cpu_bar_bg = theme.bg_darkest
+  theme.cpu_bg        = theme.bg_dark
+  theme.cpu_fg        = theme.fg_normal
+  theme.cpu_shape     = shapes.powerline_inv
+  theme.cpu_icon      = "  "
+  theme.cpu_bar_bg    = theme.bg_darkest
 
-  theme.cpu_tier1_clr=colors.green_500
-  theme.cpu_tier2_clr=colors.yellow_500
-  theme.cpu_tier3_clr=colors.orange_500
-  theme.cpu_tier4_clr=colors.red_500
+  theme.cpu_tier1_clr = colors.green_500
+  theme.cpu_tier2_clr = colors.yellow_500
+  theme.cpu_tier3_clr = colors.orange_500
+  theme.cpu_tier4_clr = colors.red_500
 local cpu_widget = require("widgets.cpu")
 
 -- Date widget variables
 -- ------------------------------------------------------------------------
   theme.date_format = " %a %d %b | %H:%M"
-  theme.date_fg = theme.fg_normal
-  theme.date_bg = theme.bg_darker
-  theme.date_shape = shapes.powerline_inv
+  theme.date_fg     = theme.fg_normal
+  theme.date_bg     = theme.bg_darker
+  theme.date_shape  = shapes.powerline_inv
 local date_widget = require("widgets.date")
 
--- Systray widget variables
+-- notif_center widget variables
 -- ------------------------------------------------------------------------
-  theme.systray_bg           = colors.brown_500
-  theme.bg_systray           = theme.systray_bg
-  theme.systray_icon_spacing = dpi(0)
-  theme.systray_shape        = shapes.powerline_inv
-local systray_widget = require("widgets.systray")
+  theme.notif_center_icon  = " "
+  theme.notif_center_fg    = theme.fg_normal
+  theme.notif_center_bg    = theme.bg_dark
+  theme.notif_center_shape = shapes.powerline_inv
+
+  theme.notif_center_popup_fg    = theme.fg_normal
+  theme.notif_center_popup_bg    = theme.bg_dark
+  theme.notif_center_popup_shape = shapes.rounded_rect
+  --theme.notif_center_popup_position = shapes.rounded_rect
+local notif_center_widget = require("widgets.notif_center")
 
 -- Layoutbox widget variables
 -- ------------------------------------------------------------------------
@@ -361,6 +374,7 @@ local layoutbox_widget = require("widgets.layouts")
 
 local top_left_wibar = function(screen)
   return { -- Left widgets
+    systray,
     taglist(screen),
     spacing = -dpi(theme.wibar_height/4),
     layout  = wibox.layout.fixed.horizontal,
@@ -387,7 +401,7 @@ local top_right_wibar = function(screen,tag)
     ram_widget(),
     cpu_widget(),
     date_widget(),
-    systray,
+    notif_center_widget(),
     layoutbox_widget(screen,tag),
   }
 end

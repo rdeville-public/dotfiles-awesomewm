@@ -14,8 +14,8 @@ local gui_editor    = require("config.apps").gui_editor
 local browser       = require("config.apps").browser
 local explorer      = require("config.apps").explorer
 
-local rofi           = require("modules.rofi")
-local control_center = require("widgets.notif_center.notif_popup")
+local rofi                = require("modules.rofi")
+local notif_center_widget = require("widgets.notif_center.notif_popup")
 
 local globalkeys =  gears.table.join(
 -- Hotkeys
@@ -28,7 +28,7 @@ local globalkeys =  gears.table.join(
 -- personal widget notification center
   awful.key({ modkey }, "d",
     function()
-      control_center.visible = not control_center.visible
+      notif_center_widget():toggle()
     end,
     {
       description = "Show notification center",
