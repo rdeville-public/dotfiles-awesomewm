@@ -334,18 +334,31 @@ local cpu_widget = require("widgets.cpu")
   theme.date_shape  = shapes.powerline_inv
 local date_widget = require("widgets.date")
 
--- notif_center widget variables
+-- Control Center widget variables
 -- ------------------------------------------------------------------------
-  theme.notif_center_icon  = " "
-  theme.notif_center_fg    = theme.fg_normal
-  theme.notif_center_bg    = theme.bg_dark
-  theme.notif_center_shape = shapes.powerline_inv
+  theme.control_center_icon   = " "
+  theme.control_center_fg    = theme.fg_normal
+  theme.control_center_bg    = theme.bg_dark
+  theme.control_center_shape = shapes.powerline_inv
 
-  theme.notif_center_popup_fg    = theme.fg_normal
-  theme.notif_center_popup_bg    = theme.bg_dark
-  theme.notif_center_popup_shape = shapes.rounded_rect
-  --theme.notif_center_popup_position = shapes.rounded_rect
-local notif_center_widget = require("widgets.notif_center")
+  cc_img_dir = theme.dir .. "icons/control_center/"
+  theme.cc_popup_fg    = theme.fg_normal
+  theme.cc_popup_bg    = theme.bg_darkest .. "AA"
+  theme.cc_popup_shape = shapes.rounded_rect
+  theme.cc_popup_default_btn_bg        = theme.bg_darkest
+  theme.cc_popup_default_btn_bg_active = theme.bg_darker
+  theme.cc_popup_default_btn_icon      = cc_img_dir .. "add.svg"
+
+  theme.cc_user_fg         = theme.bg_normal
+  theme.cc_user_bg         = theme.bg_darkest .. "88"
+  theme.cc_user_name       = "Tikka"
+  theme.cc_user_icon       = cc_img_dir .. "user_light.svg"
+
+  theme.cc_logout_fg       = theme.bg_normal
+  theme.cc_logout_bg       = theme.bg_darkest .. "88"
+  theme.cc_icon_power_path = cc_img_dir .. "system-shutdown.svg"
+
+  theme.cc_notif_clear_all_icon = cc_img_dir .. "clear-all.svg"
 
 -- Layoutbox widget variables
 -- ------------------------------------------------------------------------
@@ -401,7 +414,7 @@ local top_right_wibar = function(screen,tag)
     ram_widget(),
     cpu_widget(),
     date_widget(),
-    notif_center_widget(),
+    require("widgets.control_center")(screen),
     layoutbox_widget(screen,tag),
   }
 end
@@ -424,7 +437,7 @@ function theme.at_screen_connect(s)
   s.empty_top_bar = awful.wibar({
     position = "top",
     screen   = s,
-    height   = dpi(2 * theme.useless_gap),
+    height   = dpi(theme.wibar_height / 2),
     bg       = "#00000000",
   })
   -- The real top wibar

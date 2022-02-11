@@ -15,7 +15,6 @@ local browser       = require("config.apps").browser
 local explorer      = require("config.apps").explorer
 
 local rofi                = require("modules.rofi")
-local notif_center_widget = require("widgets.notif_center.notif_popup")
 
 local globalkeys =  gears.table.join(
 -- Hotkeys

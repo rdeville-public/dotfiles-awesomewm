@@ -32,8 +32,9 @@ local rounded_rect = function(cr, width, height)
 end
 
 return {
-  powerline = powerline,
-  powerline_inv = powerline_inv,
-  rectangular_tag = rectangular_tag,
+  powerline           = powerline,
+  powerline_inv       = powerline_inv,
+  rectangular_tag     = rectangular_tag,
   rectangular_tag_inv = rectangular_tag_inv,
+  rounded_rect        = rounded_rect,
 }
