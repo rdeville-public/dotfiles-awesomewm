@@ -14,98 +14,95 @@ local gears     = require('gears')
 local beautiful = require('beautiful')
 local dpi       = require('beautiful').xresources.apply_dpi
 
+-- Control Center Library
+-- ------------------------------------------------------------------------
 local clickable_container = require("widgets.clickable-container")
+local create_button    = require("widgets.control_center.buttons.create-button")
 
-local clear_all_button = wibox.widget{
+-- METHODS
+-- ========================================================================
+local time_to_seconds = function(time)
+  local hourInSec = tonumber(string.sub(time, 1, 2)) * 3600
+  local minInSec  = tonumber(string.sub(time, 4, 5)) * 60
+  local getSec    = tonumber(string.sub(time, 7, 8))
+  return (hourInSec + minInSec + getSec)
+end
+
+local scroller = function(widget)
+    widget:buttons(
+      gears.table.join(
+        awful.button({}, 4, nil,
+          function()
+            if #widget.children == 1 then return end
+            widget:insert(1, widget.children[#widget.children])
+            widget:remove(#widget.children)
+          end),
+        awful.button({}, 5, nil,
+          function()
+            if #widget.children == 1 then return end
+            widget:insert(#widget.children + 1, widget.children[1])
+            widget:remove(1)
+        end)
+      )
+    )
+end
+
+
+-- WIDGETS
+-- ========================================================================
+local notif_center_title = wibox.widget {
   {
-    {
-      {
-        image = beautiful.icon_clear_all,
-        resize = true,
-        forced_height = dpi(20),
-        forced_width = dpi(20),
-        widget = wibox.widget.imagebox
-      },
-      {
-        text = "Clear all",
-        font = beautiful.font_extra_small,
-        widget = wibox.widget.textbox
-      },
-      margins = dpi(2),
-      widget = wibox.container.margin
-    },
-    widget = clickable_container
+    align  = "center",
+    valign = "center",
+    widget = wibox.widget.textbox,
+    font   = beautiful.font_name .. " " .. beautiful.font_size * 1.25,
+    text   = "Notifications",
   },
-
---  bg = beautiful.bg_button,
---  border_width = beautiful.btn_border_width,
---  border_color = beautiful.border_button,
-  widget = wibox.container.background
+  widget = wibox.container.margin(_, dpi(15), dpi(15), 0, 0),
 }
 
-clear_all_button:connect_signal("button::press", function (_, _, _, button)
+local notif_center_clear_all_button = create_button.small({
+  icon   = beautiful.cc_notif_clear_all_icon,
+  bg     = beautiful.cc_popup_default_btn_bg .. "44",
+  width  = dpi(50),
+  height = dpi(50),
+  --label  = "Clear All",
+})
+
+notif_center_clear_all_button:connect_signal("button::press", function (_, _, _, button)
   if button == 1 then
     _G.reset_notifbox_layout()
   end
 end)
 
-
-local time_to_seconds = function(time)
-  local hourInSec = tonumber(string.sub(time, 1, 2)) * 3600
-  local minInSec = tonumber(string.sub(time, 4, 5)) * 60
-  local getSec = tonumber(string.sub(time, 7, 8))
-  return (hourInSec + minInSec + getSec)
-end
-
-
 local empty_notifbox = wibox.widget {
+  {
     {
-        layout = wibox.layout.fixed.vertical,
-        spacing = dpi(5),
-        {
-            expand = 'none',
-            layout = wibox.layout.align.horizontal,
-            nil,
-            {
-                image = beautiful.icon_empty_notibox,
-                resize = true,
-                forced_height = dpi(64),
-                forced_width = dpi(64),
-        opacity = .1,
-                widget = wibox.widget.imagebox
-            },
-            nil
-        },
-        {
-            markup = 'You have no new notification',
-            font = beautiful.font,
-            align = 'center',
-            valign = 'center',
-      opacity = .1,
-            widget = wibox.widget.textbox
-        }
+      {
+        image         = beautiful.cc_notif_empty_icon,
+        forced_height = dpi(32),
+        forced_width  = dpi(32),
+        opacity       = 0.5,
+        widget        = wibox.widget.imagebox,
+      },
+      {
+        text   = 'You have no new notification',
+        align  = 'center',
+        valign = 'center',
+        widget = wibox.widget.textbox,
+      },
+      layout  = wibox.layout.fixed.horizontal,
+      spacing = dpi(5),
     },
-    margins = dpi(20),
-    widget = wibox.container.margin
-
+    widget = wibox.container.margin(_, 0, 0, 20, 20),
+  },
+  valing = "center",
+  aling  = "center",
+  widget = wibox.container.place,
 }
 
-
-local scroller = function(widget)
-    widget:buttons(gears.table.join(awful.button({}, 4, nil, function()
-        if #widget.children == 1 then return end
-        widget:insert(1, widget.children[#widget.children])
-        widget:remove(#widget.children)
-    end), awful.button({}, 5, nil, function()
-        if #widget.children == 1 then return end
-        widget:insert(#widget.children + 1, widget.children[1])
-        widget:remove(1)
-    end)))
-end
-
-
 local create_notifbox =  function (n)
-    local pop_time = os.date("%H:%M:%S")
+  local pop_time = os.date("%H:%M:%S")
   local exact_time = os.date('%I:%M %p')
   local exact_date_time = os.date('%b %d, %I:%M %p')
 
@@ -360,4 +357,17 @@ naughty.connect_signal("added", function(n)
   notifbox_layout:insert(1,create_notifbox(n))
 end)
 
-return notifbox_layout
+
+local notif_center = wibox.widget {
+  {
+    notif_center_title,
+    nil,
+    notif_center_clear_all_button,
+    layout = wibox.layout.align.horizontal,
+  },
+  nil,
+  notifbox_layout,
+  layout = wibox.layout.align.vertical,
+}
+
+return notif_center

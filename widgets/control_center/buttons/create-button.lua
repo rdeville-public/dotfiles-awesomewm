@@ -18,7 +18,7 @@ function create_button.small(args)
   local old_cursor
   local old_wibox
 
-  local button = wibox.widget {
+  local button_img = {
     {
       {
         id            = "icon",
@@ -40,6 +40,25 @@ function create_button.small(args)
     fg            = args.fg,
     shape         = gears.shape.circle,
     widget        = wibox.container.background,
+  }
+
+  local button_label
+  if args.label then
+    button_label = {
+      {
+        id     = "label",
+        text   = args.label,
+        widget = wibox.widget.textbox
+      },
+      widget       = wibox.container.place
+    }
+  end
+
+  local button = wibox.widget {
+    button_img,
+    button_label,
+    spacing = dpi(6),
+    layout = wibox.layout.fixed.vertical
   }
 
   button:connect_signal("mouse::enter", function(c)

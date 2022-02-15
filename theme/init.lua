@@ -183,7 +183,6 @@ local systray_widget = require("widgets.systray")
   theme.taglist_bg_volatile = theme.bg_volatile
   theme.taglist_shape       = shapes.powerline
   theme.taglist_spacing     = -dpi(5)
-local taglist = require("widgets.taglist")
 
 -- Tasklist
 -- ------------------------------------------------------------------------
@@ -209,7 +208,6 @@ local taglist = require("widgets.taglist")
   theme.tasklist_ontop             = "ﱓ "
   theme.tasklist_floating          = " "
   theme.tasklist_maximized         = " "
-local tasklist = require("widgets.tasklist")
 
 -- Battery widget
 -- ------------------------------------------------------------------------
@@ -240,7 +238,6 @@ local tasklist = require("widgets.tasklist")
   theme.bat_icon_charging_3       = '  '
   theme.bat_icon_charging_4       = ' '
   theme.bat_icon_charging_5       = ' '
-local bat_widget = require("widgets.bat")
 
 -- Keyboard Layout widget
 -- ------------------------------------------------------------------------
@@ -248,7 +245,6 @@ local bat_widget = require("widgets.bat")
   theme.keyboardlayout_bg    = theme.bg_dark
   theme.keyboardlayout_icon  = " "
   theme.keyboardlayout_shape = shapes.powerline_inv
-local keyboardlayout_widget = require("widgets.keyboardlayout")
 
 -- IP widget
 -- ------------------------------------------------------------------------
@@ -258,7 +254,6 @@ local keyboardlayout_widget = require("widgets.keyboardlayout")
   theme.ip_icon     = " "
   theme.ip_icon     = " "
   theme.ip_icon_vpn = "旅"
-local ip_widget = require("widgets.ip")
 
 -- Uptime widget
 -- ------------------------------------------------------------------------
@@ -266,7 +261,6 @@ local ip_widget = require("widgets.ip")
   theme.uptime_fg    = theme.fg_normal
   theme.uptime_shape = shapes.powerline_inv
   theme.uptime_icon  = " "
-local uptime_widget = require("widgets.uptime")
 
 -- Disk widget
 -- ------------------------------------------------------------------------
@@ -280,7 +274,6 @@ local uptime_widget = require("widgets.uptime")
   theme.disk_tier2_clr = colors.yellow_500
   theme.disk_tier3_clr = colors.orange_500
   theme.disk_tier4_clr = colors.red_500
-local disk_widget    = require("widgets.disk")
 
 -- Net widget variables
 -- ------------------------------------------------------------------------
@@ -296,7 +289,6 @@ local disk_widget    = require("widgets.disk")
   theme.net_tier2_clr    = colors.yellow_500
   theme.net_tier3_clr    = colors.orange_500
   theme.net_tier4_clr    = colors.red_500
-local net_widget = require("widgets.net")
 
 -- Ram widget variables
 -- ------------------------------------------------------------------------
@@ -310,7 +302,6 @@ local net_widget = require("widgets.net")
   theme.ram_tier2_clr = colors.yellow_500
   theme.ram_tier3_clr = colors.orange_500
   theme.ram_tier4_clr = colors.red_500
-local ram_widget = require("widgets.ram")
 
 -- CPU widget variables
 -- ------------------------------------------------------------------------
@@ -324,7 +315,6 @@ local ram_widget = require("widgets.ram")
   theme.cpu_tier2_clr = colors.yellow_500
   theme.cpu_tier3_clr = colors.orange_500
   theme.cpu_tier4_clr = colors.red_500
-local cpu_widget = require("widgets.cpu")
 
 -- Date widget variables
 -- ------------------------------------------------------------------------
@@ -332,7 +322,6 @@ local cpu_widget = require("widgets.cpu")
   theme.date_fg     = theme.fg_normal
   theme.date_bg     = theme.bg_darker
   theme.date_shape  = shapes.powerline_inv
-local date_widget = require("widgets.date")
 
 -- Control Center widget variables
 -- ------------------------------------------------------------------------
@@ -359,6 +348,7 @@ local date_widget = require("widgets.date")
   theme.cc_icon_power_path = cc_img_dir .. "system-shutdown.svg"
 
   theme.cc_notif_clear_all_icon = cc_img_dir .. "clear-all.svg"
+  theme.cc_notif_empty_icon     = cc_img_dir .. "notifications.svg"
 
 -- Layoutbox widget variables
 -- ------------------------------------------------------------------------
@@ -383,12 +373,11 @@ local date_widget = require("widgets.date")
   theme.layout_bg        = theme.bg_main   .. "00"
   theme.layout_shape     = shapes.powerline_inv
   theme_assets.recolor_layout(theme, theme.fg_normal)
-local layoutbox_widget = require("widgets.layouts")
 
 local top_left_wibar = function(screen)
   return { -- Left widgets
     systray,
-    taglist(screen),
+    require("widgets.taglist")(screen),
     spacing = -dpi(theme.wibar_height/4),
     layout  = wibox.layout.fixed.horizontal,
   }
@@ -396,7 +385,7 @@ end
 
 local top_center_wibar = function(screen)
   return { -- Middle widgets
-    tasklist(screen),
+    require("widgets.tasklist")(screen),
     layout  = wibox.layout.flex.horizontal,
   }
 end
@@ -405,17 +394,17 @@ local top_right_wibar = function(screen,tag)
   return { -- Right widgets
     spacing = -dpi(theme.wibar_height/4),
     layout  = wibox.layout.fixed.horizontal,
-    bat_widget(),
-    keyboardlayout_widget(),
-    ip_widget(),
-    uptime_widget(),
-    disk_widget(),
-    net_widget(),
-    ram_widget(),
-    cpu_widget(),
-    date_widget(),
+    require("widgets.bat")(),
+    require("widgets.keyboardlayout")(),
+    require("widgets.ip")(),
+    require("widgets.uptime")(),
+    require("widgets.disk")(),
+    require("widgets.net")(),
+    require("widgets.ram")(),
+    require("widgets.cpu")(),
+    require("widgets.date")(),
     require("widgets.control_center")(screen),
-    layoutbox_widget(screen,tag),
+    require("widgets.layouts")(screen,tag),
   }
 end
 

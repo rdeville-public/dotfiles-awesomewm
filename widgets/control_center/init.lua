@@ -140,15 +140,22 @@ local control_center = function (s)
     top = dpi(20),
     widget = wibox.container.margin
   }
-  --table.insert(rows, notif_center)
 
+  notification = require("naughty").notify({
+    preset     = fs_notification_preset,
+    text       = "Notitication text",
+    title      = "Notification Title",
+    icon       = beautiful.cc_popup_default_btn_icon,
+    timeout    = 5,
+    screen     = mouse.screen,
+  })
 
   local rows = {
     session_widget,
     control_buttons,
     space,
     slider_contols,
-   -- notif_center,
+    notif_center,
     layout = wibox.layout.fixed.vertical,
   }
 

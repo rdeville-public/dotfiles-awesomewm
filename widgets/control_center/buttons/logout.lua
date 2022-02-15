@@ -20,7 +20,7 @@ local logout_button = wibox.widget{
   {
     {
       align  = "center",
-      valign  = "center",
+      valign = "center",
       widget = wibox.widget.textbox,
       font   = beautiful.font_name .. " " .. beautiful.font_size * 1.25,
       text   = "Sign out",
