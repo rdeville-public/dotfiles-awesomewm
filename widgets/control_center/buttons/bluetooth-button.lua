@@ -1,8 +1,8 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
-local default_apps = require("configurations.default-apps")
-local settings = require("configurations.settings")
-local create_button = require("widgets.buttons.create-button")
+local apps = require("config.apps")
+local settings = require("tmp.configurations.settings")
+local create_button = require("widgets.control_center.buttons.create-button")
 
 local bluetooth_button = create_button.circle_big(beautiful.icon_bluetooth)
 
@@ -37,7 +37,7 @@ if settings.is_bluetooth_presence then
 						if output == '' or  output == nil then
 							label:set_text('On')
 							background:set_bg(beautiful.button_active)
-						else 
+						else
 							label:set_text(output)
 							background:set_bg(beautiful.button_active)
 						end
@@ -58,14 +58,14 @@ bluetooth_button:connect_signal(
 				if stdout:match("Soft blocked: yes") then
 					awful.spawn.single_instance("rfkill unblock bluetooth")
 					label:set_text("Turning on...")
-				else 
+				else
 					awful.spawn.single_instance("rfkill block bluetooth")
 					label:set_text("Turning off...")
 				end
 			end)
 		end
 		if button == 3 then
-			awful.spawn.single_instance(default_apps.bluetooth_manager)
+			awful.spawn.single_instance(beautiful.cc_bluetooth_app)
 		end
 	end
 )

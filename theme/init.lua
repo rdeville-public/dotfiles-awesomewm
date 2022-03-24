@@ -152,7 +152,7 @@ local theme = {}
   theme.notification_border_color = theme.focus
   theme.notification_shape        = gears.shape.rect
   theme.notification_opacity      = 90
-  theme.notification_margin       = 50
+  theme.notification_margin       = 10
 
 -- Wibar
 -- ------------------------------------------------------------------------
@@ -331,24 +331,52 @@ local systray_widget = require("widgets.systray")
   theme.control_center_shape = shapes.powerline_inv
 
   cc_img_dir = theme.dir .. "icons/control_center/"
-  theme.cc_popup_fg    = theme.fg_normal
-  theme.cc_popup_bg    = theme.bg_darkest .. "AA"
-  theme.cc_popup_shape = shapes.rounded_rect
+  theme.cc_popup_fg                    = theme.fg_normal
+  theme.cc_popup_bg                    = theme.bg_darkest .. "AA"
+  theme.cc_popup_shape                 = shapes.rounded_rect
   theme.cc_popup_default_btn_bg        = theme.bg_darkest
   theme.cc_popup_default_btn_bg_active = theme.bg_darker
   theme.cc_popup_default_btn_icon      = cc_img_dir .. "add.svg"
 
-  theme.cc_user_fg         = theme.bg_normal
-  theme.cc_user_bg         = theme.bg_darkest .. "88"
-  theme.cc_user_name       = "Tikka"
-  theme.cc_user_icon       = cc_img_dir .. "user_light.svg"
+  theme.cc_user_fg   = theme.bg_normal
+  theme.cc_user_bg   = theme.bg_darkest .. "88"
+  theme.cc_user_name = "Tikka"
+  theme.cc_user_icon = cc_img_dir .. "user_light.svg"
 
   theme.cc_logout_fg       = theme.bg_normal
   theme.cc_logout_bg       = theme.bg_darkest .. "88"
   theme.cc_icon_power_path = cc_img_dir .. "system-shutdown.svg"
 
+  theme.cc_default_bg_button = colors.grey_500 .. "88"
+  theme.cc_default_bg_button_inactive = colors.grey_700 .. "88"
+  theme.cc_default_bg_button_active   = colors.green_500 .. "88"
+
+  theme.cc_button_do_not_disturb_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_do_not_disturb_active   = theme.cc_default_bg_button_active
+  theme.cc_do_not_disturb_icon_path      = cc_img_dir .. "notifications.svg"
+
+  theme.cc_button_redshift_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_redshift_active   = theme.cc_default_bg_button_active
+  theme.cc_redshift_icon_path       = cc_img_dir .. "redshift.svg"
+
+  theme.cc_button_airplaine_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_airplaine_active   = theme.cc_default_bg_button_active
+  theme.cc_airplaine_icon_path       = cc_img_dir .. "airplane.svg"
+
+  theme.cc_brightness_icon_path = cc_img_dir .. "brightness.svg"
+  theme.cc_brightness_bg_button = theme.cc_default_bg_button
+
+  theme.cc_volume_normal_icon_path = cc_img_dir .. "volume-normal.svg"
+  theme.cc_volume_normal_color     = theme.bg_focus
+  theme.cc_volume_muted_icon_path  = cc_img_dir .. "volume-muted.svg"
+  theme.cc_volume_muted_color      = theme.cc_default_bg_button
+  theme.cc_volume_bg_button        = theme.cc_default_bg_button
+
   theme.cc_notif_clear_all_icon = cc_img_dir .. "clear-all.svg"
   theme.cc_notif_empty_icon     = cc_img_dir .. "notifications.svg"
+  theme.cc_notif_dismiss        = cc_img_dir .. "remove.svg"
+  theme.cc_notif_dismiss_bg     = colors.red_500 .. "88"
+  theme.cc_notif_default_bg     = theme.bg_normal .. "44"
 
 -- Layoutbox widget variables
 -- ------------------------------------------------------------------------

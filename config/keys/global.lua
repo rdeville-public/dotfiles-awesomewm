@@ -27,7 +27,7 @@ local globalkeys =  gears.table.join(
 -- personal widget notification center
   awful.key({ modkey }, "d",
     function()
-      notif_center_widget():toggle()
+      awesome.emit_signal("control-center::toggle")
     end,
     {
       description = "Show notification center",
@@ -245,13 +245,19 @@ local globalkeys =  gears.table.join(
 -- BRIGHTNESS
 -- ==========================================================================
   awful.key({ }, "XF86MonBrightnessUp",
-    function () os.execute("xbacklight -inc 10") end,
+    function ()
+      os.execute("xbacklight -inc 10")
+      awesome.emit_signal("update::brightness")
+    end,
     {
       description = "\t\tIncrease backlight +10%",
       group = "Hotkeys"
     }),
   awful.key({ }, "XF86MonBrightnessDown",
-    function () os.execute("xbacklight -dec 10") end,
+    function ()
+      os.execute("xbacklight -dec 10")
+      awesome.emit_signal("update::brightness")
+    end,
     {
       description = "\t\tDecrease backlight -10%",
       group = "Hotkeys"
@@ -262,7 +268,7 @@ local globalkeys =  gears.table.join(
   awful.key({ }, "XF86AudioRaiseVolume",
     function ()
       os.execute(string.format("pulsemixer --change-volume +5"))
-      if beautiful.volume then beautiful.volume.update() end
+      awesome.emit_signal("update::volume")
     end,
     {
       description = "\t\tVolume up",
@@ -271,7 +277,7 @@ local globalkeys =  gears.table.join(
   awful.key({ }, "XF86AudioLowerVolume",
     function ()
       os.execute(string.format("pulsemixer --change-volume -5"))
-      if beautiful.volume then beautiful.volume.update() end
+      awesome.emit_signal("update::volume")
     end,
     {
       description = "\t\tVolume down",
@@ -279,8 +285,7 @@ local globalkeys =  gears.table.join(
     }),
   awful.key({ }, "XF86AudioMute",
     function ()
-      os.execute(string.format("pulsemixer --toggle-mute"))
-      if beautiful.volume then beautiful.volume.update() end
+      awesome.emit_signal("toggle::mute")
     end,
     {
       description = "\t\tToggle mute",

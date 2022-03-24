@@ -24,7 +24,6 @@ local btn_container    = require("widgets.clickable-container")
 
 --local network_widget = require("widgets.buttons.network-button")
 --local battery_widget = require("widgets.buttons.battery")
---local volume_widget = require("widgets.volume-slider-and-indicator")
 
 local control_center = function (s)
   -- Widget to show on panel
@@ -65,15 +64,14 @@ local control_center = function (s)
 
   --- Control buttons
   local button_row_1= wibox.widget{
-    --network_widget.network_button,
-    --require("widgets.buttons.dnd"),
-    --require("widgets.buttons.redshift"),
-    --require("widgets.buttons.airplane"),
+    require("widgets.control_center.buttons.do_not_disturb"),
+    require("widgets.control_center.buttons.redshift"),
+    require("widgets.control_center.buttons.airplane"),
+    require("widgets.control_center.buttons.bluetooth-button"),
     spacing = beautiful.widget_margin,
     layout = wibox.layout.fixed.horizontal
   }
   local button_row_2 = wibox.widget{
-    --require("widgets.buttons.bluetooth-button"),
     --require("widgets.buttons.global-floating-mode"),
     --require("widgets.buttons.screen-shot")(s),
     --require("widgets.buttons.microphone"),
@@ -81,7 +79,6 @@ local control_center = function (s)
     spacing = beautiful.widget_margin,
     layout = wibox.layout.fixed.horizontal
   }
-
 
   local control_buttons = wibox.widget{
     {
@@ -114,12 +111,13 @@ local control_center = function (s)
      return t
   end
   --]]
+  --
 
   local slider_contols = wibox.widget{
+    require("widgets.control_center.sliders.brightness"),
+    require("widgets.control_center.sliders.volume"),
     layout = wibox.layout.fixed.vertical,
     spacing = dpi(10),
-    --volume_widget.slider,
-    --require("widgets.brightness-slider"),
   }
 
 
@@ -201,6 +199,9 @@ local control_center = function (s)
     end
   end)
 
+  awesome.connect_signal("control-center::toggle", function ()
+    control_popup.visible = not control_popup.visible
+  end)
 
   awesome.connect_signal("control-center::hide", function ()
     control_popup.visible = false
@@ -212,6 +213,5 @@ local control_center = function (s)
 
   return control_widget
 end
-
 
 return control_center
