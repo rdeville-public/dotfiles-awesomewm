@@ -67,15 +67,15 @@ local control_center = function (s)
     require("widgets.control_center.buttons.do_not_disturb"),
     require("widgets.control_center.buttons.redshift"),
     require("widgets.control_center.buttons.airplane"),
-    require("widgets.control_center.buttons.bluetooth-button"),
-    spacing = beautiful.widget_margin,
+    require("widgets.control_center.buttons.bluetooth"),
+    require("widgets.control_center.buttons.network"),
+    require("widgets.control_center.buttons.microphone"),
+    spacing = dpi(10),
     layout = wibox.layout.fixed.horizontal
   }
   local button_row_2 = wibox.widget{
     --require("widgets.buttons.global-floating-mode"),
     --require("widgets.buttons.screen-shot")(s),
-    --require("widgets.buttons.microphone"),
-    --require("widgets.buttons.software-update"),
     spacing = beautiful.widget_margin,
     layout = wibox.layout.fixed.horizontal
   }
@@ -98,21 +98,6 @@ local control_center = function (s)
     widget = wibox.container.margin
   }
 
-  --[[
-  -- Function to split sting
-  function str_split (inputstr, sep)
-     if sep == nil then
-         sep = "%s"
-     end
-     local t={}
-     for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-         table.insert(t, str)
-     end
-     return t
-  end
-  --]]
-  --
-
   local slider_contols = wibox.widget{
     require("widgets.control_center.sliders.brightness"),
     require("widgets.control_center.sliders.volume"),
@@ -125,13 +110,6 @@ local control_center = function (s)
     widget = wibox.container.margin,
     top = dpi(10)
   }
-
-  --[[
-  table.insert(rows, session_widget)
-  table.insert(rows, control_buttons)
-  table.insert(rows, space)
-  table.insert(rows, slider_contols)
-  --]]
 
   local notif_center = wibox.widget{
     require("widgets.control_center.notif_center"),

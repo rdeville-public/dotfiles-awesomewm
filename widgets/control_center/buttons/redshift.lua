@@ -9,28 +9,18 @@ redshift.pkill = "/bin/pkill"
 redshift.config = ""                    -- config file, passed to init()
 redshift.state = 1                      -- 1 = running, 0 = not running
 
-redshift.start = function()
-    if redshift.state == 0
-    then
-        awful.util.spawn(redshift.path .. " -c " .. redshift.config)
-        redshift.state = 1
-    end
-end
-
-redshift.stop = function()
-    if redshift.state == 1
-    then
-        awful.util.spawn(redshift.pkill .. " redshift ")
-        redshift.state = 0
-    end
-end
-
 redshift.toggle = function()
     if redshift.state == 0
     then
-        redshift.start()
+      if not redshift.config == nil then
+        awful.util.spawn(redshift.path .. " -c " .. redshift.config)
+      else
+        awful.util.spawn(redshift.path)
+      end
+        redshift.state = 1
     else
-        redshift.stop()
+        awful.util.spawn(redshift.pkill .. " redshift ")
+        redshift.state = 0
     end
 end
 

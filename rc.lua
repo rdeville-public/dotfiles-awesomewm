@@ -64,7 +64,7 @@ require("config.ruled.client")
 -- STARTUP RUN ONCE
 -- ========================================================================
 run_once({
-  --"picom --experimental-backends --dbus --config \"${HOME}/.config/awesome/picom.conf\"",
+  "picom --experimental-backends --dbus --config \"${HOME}/.config/awesome/picom.conf\"",
   --"xcompmgr",        -- Composite manager, make term transparent
   "redshift",        -- redshift to avoid blue light at night
   "keynav",          -- manipulation of mouse with keyboard

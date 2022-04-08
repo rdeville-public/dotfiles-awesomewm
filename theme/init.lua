@@ -348,8 +348,9 @@ local systray_widget = require("widgets.systray")
   theme.cc_icon_power_path = cc_img_dir .. "system-shutdown.svg"
 
   theme.cc_default_bg_button = colors.grey_500 .. "88"
-  theme.cc_default_bg_button_inactive = colors.grey_700 .. "88"
-  theme.cc_default_bg_button_active   = colors.green_500 .. "88"
+  theme.cc_default_bg_button_inactive  = colors.grey_700 .. "88"
+  theme.cc_default_bg_button_active    = colors.green_500 .. "88"
+  theme.cc_default_bg_button_connected = colors.red_500 .. "88"
 
   theme.cc_button_do_not_disturb_inactive = theme.cc_default_bg_button_inactive
   theme.cc_button_do_not_disturb_active   = theme.cc_default_bg_button_active
@@ -362,6 +363,26 @@ local systray_widget = require("widgets.systray")
   theme.cc_button_airplaine_inactive = theme.cc_default_bg_button_inactive
   theme.cc_button_airplaine_active   = theme.cc_default_bg_button_active
   theme.cc_airplaine_icon_path       = cc_img_dir .. "airplane.svg"
+
+  theme.cc_button_bluetooth_presence = true
+  theme.cc_button_bluetooth_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_bluetooth_active   = theme.cc_default_bg_button_active
+  theme.cc_button_bluetooth_paired   = theme.cc_default_bg_button_connected
+  theme.cc_bluetooth_icon_path       = cc_img_dir .. "bluetooth.svg"
+
+  theme.cc_button_network_inactive     = theme.cc_default_bg_button_inactive
+  theme.cc_button_network_active       = theme.cc_default_bg_button_active
+  theme.cc_button_network_paired       = theme.cc_default_bg_button_connected
+  theme.cc_network_wlan_interface      = "wlp1s0"
+  theme.cc_network_lan_interface       = ""
+  theme.cc_network_lan_down_icon_path  = cc_img_dir .. "network-lan-down.svg"
+  theme.cc_network_lan_up_icon_path    = cc_img_dir .. "network-lan-up.svg"
+  theme.cc_network_wifi_down_icon_path = cc_img_dir .. "network-wifi-down.svg"
+  theme.cc_network_wifi_up_icon_path   = cc_img_dir .. "network-wifi-up.svg"
+
+  theme.cc_micro_active    = theme.cc_default_bg_button_active
+  theme.cc_micro_inactive  = theme.cc_default_bg_button_inactive
+  theme.cc_micro_icon_path = cc_img_dir .. "microphone.svg"
 
   theme.cc_brightness_icon_path = cc_img_dir .. "brightness.svg"
   theme.cc_brightness_bg_button = theme.cc_default_bg_button
