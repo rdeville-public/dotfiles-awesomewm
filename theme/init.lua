@@ -152,7 +152,7 @@ local theme = {}
   theme.notification_border_color = theme.focus
   theme.notification_shape        = gears.shape.rect
   theme.notification_opacity      = 90
-  theme.notification_margin       = 50
+  theme.notification_margin       = 10
 
 -- Wibar
 -- ------------------------------------------------------------------------
@@ -183,7 +183,6 @@ local systray_widget = require("widgets.systray")
   theme.taglist_bg_volatile = theme.bg_volatile
   theme.taglist_shape       = shapes.powerline
   theme.taglist_spacing     = -dpi(5)
-local taglist = require("widgets.taglist")
 
 -- Tasklist
 -- ------------------------------------------------------------------------
@@ -209,7 +208,6 @@ local taglist = require("widgets.taglist")
   theme.tasklist_ontop             = "ﱓ "
   theme.tasklist_floating          = " "
   theme.tasklist_maximized         = " "
-local tasklist = require("widgets.tasklist")
 
 -- Battery widget
 -- ------------------------------------------------------------------------
@@ -240,7 +238,6 @@ local tasklist = require("widgets.tasklist")
   theme.bat_icon_charging_3       = '  '
   theme.bat_icon_charging_4       = ' '
   theme.bat_icon_charging_5       = ' '
-local bat_widget = require("widgets.bat")
 
 -- Keyboard Layout widget
 -- ------------------------------------------------------------------------
@@ -248,7 +245,6 @@ local bat_widget = require("widgets.bat")
   theme.keyboardlayout_bg    = theme.bg_dark
   theme.keyboardlayout_icon  = " "
   theme.keyboardlayout_shape = shapes.powerline_inv
-local keyboardlayout_widget = require("widgets.keyboardlayout")
 
 -- IP widget
 -- ------------------------------------------------------------------------
@@ -258,7 +254,6 @@ local keyboardlayout_widget = require("widgets.keyboardlayout")
   theme.ip_icon     = " "
   theme.ip_icon     = " "
   theme.ip_icon_vpn = "旅"
-local ip_widget = require("widgets.ip")
 
 -- Uptime widget
 -- ------------------------------------------------------------------------
@@ -266,7 +261,6 @@ local ip_widget = require("widgets.ip")
   theme.uptime_fg    = theme.fg_normal
   theme.uptime_shape = shapes.powerline_inv
   theme.uptime_icon  = " "
-local uptime_widget = require("widgets.uptime")
 
 -- Disk widget
 -- ------------------------------------------------------------------------
@@ -280,7 +274,6 @@ local uptime_widget = require("widgets.uptime")
   theme.disk_tier2_clr = colors.yellow_500
   theme.disk_tier3_clr = colors.orange_500
   theme.disk_tier4_clr = colors.red_500
-local disk_widget    = require("widgets.disk")
 
 -- Net widget variables
 -- ------------------------------------------------------------------------
@@ -296,7 +289,6 @@ local disk_widget    = require("widgets.disk")
   theme.net_tier2_clr    = colors.yellow_500
   theme.net_tier3_clr    = colors.orange_500
   theme.net_tier4_clr    = colors.red_500
-local net_widget = require("widgets.net")
 
 -- Ram widget variables
 -- ------------------------------------------------------------------------
@@ -310,7 +302,6 @@ local net_widget = require("widgets.net")
   theme.ram_tier2_clr = colors.yellow_500
   theme.ram_tier3_clr = colors.orange_500
   theme.ram_tier4_clr = colors.red_500
-local ram_widget = require("widgets.ram")
 
 -- CPU widget variables
 -- ------------------------------------------------------------------------
@@ -324,7 +315,6 @@ local ram_widget = require("widgets.ram")
   theme.cpu_tier2_clr = colors.yellow_500
   theme.cpu_tier3_clr = colors.orange_500
   theme.cpu_tier4_clr = colors.red_500
-local cpu_widget = require("widgets.cpu")
 
 -- Date widget variables
 -- ------------------------------------------------------------------------
@@ -332,20 +322,82 @@ local cpu_widget = require("widgets.cpu")
   theme.date_fg     = theme.fg_normal
   theme.date_bg     = theme.bg_darker
   theme.date_shape  = shapes.powerline_inv
-local date_widget = require("widgets.date")
 
--- notif_center widget variables
+-- Control Center widget variables
 -- ------------------------------------------------------------------------
-  theme.notif_center_icon  = " "
-  theme.notif_center_fg    = theme.fg_normal
-  theme.notif_center_bg    = theme.bg_dark
-  theme.notif_center_shape = shapes.powerline_inv
+  theme.control_center_icon   = " "
+  theme.control_center_fg    = theme.fg_normal
+  theme.control_center_bg    = theme.bg_dark
+  theme.control_center_shape = shapes.powerline_inv
 
-  theme.notif_center_popup_fg    = theme.fg_normal
-  theme.notif_center_popup_bg    = theme.bg_dark
-  theme.notif_center_popup_shape = shapes.rounded_rect
-  --theme.notif_center_popup_position = shapes.rounded_rect
-local notif_center_widget = require("widgets.notif_center")
+  cc_img_dir = theme.dir .. "icons/control_center/"
+  theme.cc_popup_fg                    = theme.fg_normal
+  theme.cc_popup_bg                    = theme.bg_darkest .. "AA"
+  theme.cc_popup_shape                 = shapes.rounded_rect
+  theme.cc_popup_default_btn_bg        = theme.bg_darkest
+  theme.cc_popup_default_btn_bg_active = theme.bg_darker
+  theme.cc_popup_default_btn_icon      = cc_img_dir .. "add.svg"
+
+  theme.cc_user_fg   = theme.bg_normal
+  theme.cc_user_bg   = theme.bg_darkest .. "88"
+  theme.cc_user_name = "Tikka"
+  theme.cc_user_icon = cc_img_dir .. "user_light.svg"
+
+  theme.cc_logout_fg       = theme.bg_normal
+  theme.cc_logout_bg       = theme.bg_darkest .. "88"
+  theme.cc_icon_power_path = cc_img_dir .. "system-shutdown.svg"
+
+  theme.cc_default_bg_button = colors.grey_500 .. "88"
+  theme.cc_default_bg_button_inactive  = colors.grey_700 .. "88"
+  theme.cc_default_bg_button_active    = colors.green_500 .. "88"
+  theme.cc_default_bg_button_connected = colors.red_500 .. "88"
+
+  theme.cc_button_do_not_disturb_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_do_not_disturb_active   = theme.cc_default_bg_button_active
+  theme.cc_do_not_disturb_icon_path      = cc_img_dir .. "notifications.svg"
+
+  theme.cc_button_redshift_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_redshift_active   = theme.cc_default_bg_button_active
+  theme.cc_redshift_icon_path       = cc_img_dir .. "redshift.svg"
+
+  theme.cc_button_airplaine_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_airplaine_active   = theme.cc_default_bg_button_active
+  theme.cc_airplaine_icon_path       = cc_img_dir .. "airplane.svg"
+
+  theme.cc_button_bluetooth_presence = true
+  theme.cc_button_bluetooth_inactive = theme.cc_default_bg_button_inactive
+  theme.cc_button_bluetooth_active   = theme.cc_default_bg_button_active
+  theme.cc_button_bluetooth_paired   = theme.cc_default_bg_button_connected
+  theme.cc_bluetooth_icon_path       = cc_img_dir .. "bluetooth.svg"
+
+  theme.cc_button_network_inactive     = theme.cc_default_bg_button_inactive
+  theme.cc_button_network_active       = theme.cc_default_bg_button_active
+  theme.cc_button_network_paired       = theme.cc_default_bg_button_connected
+  theme.cc_network_wlan_interface      = "wlp1s0"
+  theme.cc_network_lan_interface       = ""
+  theme.cc_network_lan_down_icon_path  = cc_img_dir .. "network-lan-down.svg"
+  theme.cc_network_lan_up_icon_path    = cc_img_dir .. "network-lan-up.svg"
+  theme.cc_network_wifi_down_icon_path = cc_img_dir .. "network-wifi-down.svg"
+  theme.cc_network_wifi_up_icon_path   = cc_img_dir .. "network-wifi-up.svg"
+
+  theme.cc_micro_active    = theme.cc_default_bg_button_active
+  theme.cc_micro_inactive  = theme.cc_default_bg_button_inactive
+  theme.cc_micro_icon_path = cc_img_dir .. "microphone.svg"
+
+  theme.cc_brightness_icon_path = cc_img_dir .. "brightness.svg"
+  theme.cc_brightness_bg_button = theme.cc_default_bg_button
+
+  theme.cc_volume_normal_icon_path = cc_img_dir .. "volume-normal.svg"
+  theme.cc_volume_normal_color     = theme.bg_focus
+  theme.cc_volume_muted_icon_path  = cc_img_dir .. "volume-muted.svg"
+  theme.cc_volume_muted_color      = theme.cc_default_bg_button
+  theme.cc_volume_bg_button        = theme.cc_default_bg_button
+
+  theme.cc_notif_clear_all_icon = cc_img_dir .. "clear-all.svg"
+  theme.cc_notif_empty_icon     = cc_img_dir .. "notifications.svg"
+  theme.cc_notif_dismiss        = cc_img_dir .. "remove.svg"
+  theme.cc_notif_dismiss_bg     = colors.red_500 .. "88"
+  theme.cc_notif_default_bg     = theme.bg_normal .. "44"
 
 -- Layoutbox widget variables
 -- ------------------------------------------------------------------------
@@ -370,12 +422,11 @@ local notif_center_widget = require("widgets.notif_center")
   theme.layout_bg        = theme.bg_main   .. "00"
   theme.layout_shape     = shapes.powerline_inv
   theme_assets.recolor_layout(theme, theme.fg_normal)
-local layoutbox_widget = require("widgets.layouts")
 
 local top_left_wibar = function(screen)
   return { -- Left widgets
     systray,
-    taglist(screen),
+    require("widgets.taglist")(screen),
     spacing = -dpi(theme.wibar_height/4),
     layout  = wibox.layout.fixed.horizontal,
   }
@@ -383,7 +434,7 @@ end
 
 local top_center_wibar = function(screen)
   return { -- Middle widgets
-    tasklist(screen),
+    require("widgets.tasklist")(screen),
     layout  = wibox.layout.flex.horizontal,
   }
 end
@@ -392,17 +443,17 @@ local top_right_wibar = function(screen,tag)
   return { -- Right widgets
     spacing = -dpi(theme.wibar_height/4),
     layout  = wibox.layout.fixed.horizontal,
-    bat_widget(),
-    keyboardlayout_widget(),
-    ip_widget(),
-    uptime_widget(),
-    disk_widget(),
-    net_widget(),
-    ram_widget(),
-    cpu_widget(),
-    date_widget(),
-    notif_center_widget(),
-    layoutbox_widget(screen,tag),
+    require("widgets.bat")(),
+    require("widgets.keyboardlayout")(),
+    require("widgets.ip")(),
+    require("widgets.uptime")(),
+    require("widgets.disk")(),
+    require("widgets.net")(),
+    require("widgets.ram")(),
+    require("widgets.cpu")(),
+    require("widgets.date")(),
+    require("widgets.control_center")(screen),
+    require("widgets.layouts")(screen,tag),
   }
 end
 
@@ -424,7 +475,7 @@ function theme.at_screen_connect(s)
   s.empty_top_bar = awful.wibar({
     position = "top",
     screen   = s,
-    height   = dpi(2 * theme.useless_gap),
+    height   = dpi(theme.wibar_height / 2),
     bg       = "#00000000",
   })
   -- The real top wibar
