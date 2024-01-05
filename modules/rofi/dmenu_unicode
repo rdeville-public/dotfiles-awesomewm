@@ -29,7 +29,7 @@ notify(){
   notify-send \
     -u ${urgency} \
     -i "${icon}" \
-    "${urgency} ${icon} ${title}" "${msg}" &
+    "${title}" "${msg}" &
 }
 check_requirement(){
   # Must have xclip installed to even show menu.
@@ -57,7 +57,7 @@ main(){
   [[ -n "${chosen}" ]] || exit
 
   c=$(echo "$chosen" | sed "s/ .*//")
-  notify "low" "Rofi" "'$c' Copied to clipboard and primary." &
+  notify "low" "Rofi Unicode" "$c Copied to clipboard." &
   echo "$c" | tr -d '\n' | xclip -selection clipboard
 }
 
