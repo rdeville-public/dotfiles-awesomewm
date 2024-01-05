@@ -43,7 +43,7 @@ local theme = {}
 
 -- Base beautiful variables
 -- ------------------------------------------------------------------------
-  theme.font_name   = "FiraCode Nerd Font"
+  theme.font_name   = "FiraMono Nerd Font"
   theme.font_size   = 10
   theme.font        = theme.font_name .. " " .. theme.font_size
   theme.useless_gap = dpi(5)
@@ -153,6 +153,7 @@ local theme = {}
   theme.notification_shape        = gears.shape.rect
   theme.notification_opacity      = 90
   theme.notification_margin       = 10
+  theme.notification_icon_size    = 64
 
 -- Wibar
 -- ------------------------------------------------------------------------
@@ -401,6 +402,7 @@ local systray_widget = require("widgets.systray")
 
 -- Layoutbox widget variables
 -- ------------------------------------------------------------------------
+--
   -- Image location
   layout_img_dir          = theme.dir .. "/icons/layouts/"
   theme.layout_cornernw   = layout_img_dir .. "cornernw.png"

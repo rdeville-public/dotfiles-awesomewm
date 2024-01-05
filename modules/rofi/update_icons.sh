@@ -13,7 +13,7 @@ update_unicode(){
 }
 
 update_gitmoji(){
-  local url="https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json"
+  local url="https://raw.githubusercontent.com/carloscuesta/gitmoji/master/packages/gitmojis/src/gitmojis.json"
   local out="${SCRIPTPATH}/gitmoji.txt"
   curl --silent --compressed "${url}" | \
     jq '.gitmojis[] | .emoji + " " + .code + " " + .description ' | \
@@ -38,7 +38,7 @@ update_nerdfont_glyphs(){
 
   # Iterate through relevant files in nerd-fonts
   echo "" > "${out}"
-  for i in ${nerdfont_dir}/bin/scripts/lib/i_{dev,fae,fa,iec,linux,oct,ple,pom,seti,material,weather}.sh
+  for i in ${nerdfont_dir}/bin/scripts/lib/i_{dev,fae,fa,iec,oct,ple,pom,seti,material,weather}.sh
   do
     # Transform to <unicodeChar,name_with_underscores>
     sed -n -r "s/^\s*i='(.*)'\s*i_(.*)=.*/\1,\2/p" $i |
@@ -61,4 +61,3 @@ main(){
 }
 
 main "$@"
-

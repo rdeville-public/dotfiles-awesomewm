@@ -48,12 +48,12 @@ local globalkeys =  gears.table.join(
       description = "\t\t\tView next tag",
       group = "Tags"
     }),
-  awful.key({ modkey, }, "Tab",
-    awful.tag.history.restore,
-    {
-      description = "\t\t\tSwitch with last used tag",
-      group = "Tags"
-    }),
+  --[[ awful.key({ modkey, }, "Tab",
+    [   awful.tag.history.restore,
+     [   {
+     [     description = "\t\t\tSwitch with last used tag",
+     [     group = "Tags"
+     [   }), ]]
   awful.key({ modkey, shiftkey }, "r",
     function ()
       local screen = awful.screen.focused()

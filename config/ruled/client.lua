@@ -186,10 +186,10 @@ ruled.client.append_rules {
     rule_any   = { type = { "dialog" } },
     properties = {
       floating          = true,
-      titlebars_enabled = true,
+      titlebars_enabled = false,
       width             = dpi(640),
       shape             = function(cr, width, height)
-        return gears.shape.rounded_rect(cr, width, height, dpi(20))
+        return gears.shape.rounded_rect(cr, width, height, dpi(5))
       end,
     },
     callback = function(c)
@@ -200,9 +200,9 @@ ruled.client.append_rules {
   {
     rule_any   = { type = { "floating" } },
     properties = {
-      titlebars_enabled = true,
+      titlebars_enabled = false,
       shape             = function(cr, width, height)
-        return gears.shape.rounded_rect(cr, width, height, dpi(20))
+        return gears.shape.rounded_rect(cr, width, height, dpi(5))
       end,
     },
   },

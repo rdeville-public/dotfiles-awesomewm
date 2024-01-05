@@ -13,7 +13,7 @@ local gears         = require("gears")
 -- Awesome wm notification library
 local naughty       = require("naughty")
 -- Main awesome rules library
-local ruled         = require("ruled")
+local ruled         = require("awful.rules")
 -- Awesome wm theme library
 local beautiful     = require("beautiful")
 
@@ -64,11 +64,10 @@ require("config.ruled.client")
 -- STARTUP RUN ONCE
 -- ========================================================================
 run_once({
-  "picom --experimental-backends --dbus --config \"${HOME}/.config/awesome/picom.conf\"",
-  --"xcompmgr",        -- Composite manager, make term transparent
-  "redshift",        -- redshift to avoid blue light at night
-  "keynav",          -- manipulation of mouse with keyboard
+  "picom",
+  --"redshift",        -- redshift to avoid blue light at night
+  --"keynav",          -- manipulation of mouse with keyboard
   "nextcloud",       -- nextcloud client
+  "AgentAntidote",        -- Antidote client
   --"xautolock -time 180 -locker ~/.bin/lock &" , -- lock the screen after 180 sec on inactivity
 })
-

@@ -1040,50 +1040,6 @@
 ⏽ nf iec power on
 ⏾ nf iec sleep mode
 ⭘ nf iec power off
- nf linux alpine
- nf linux aosc
- nf linux apple
- nf linux archlinux
- nf linux centos
- nf linux coreos
- nf linux debian
- nf linux devuan
- nf linux docker
- nf linux elementary
- nf linux fedora
- nf linux fedora inverse
- nf linux freebsd
- nf linux gentoo
- nf linux linuxmint
- nf linux linuxmint inverse
- nf linux mageia
- nf linux mandriva
- nf linux manjaro
- nf linux nixos
- nf linux opensuse
- nf linux raspberry pi
- nf linux redhat
- nf linux sabayon
- nf linux slackware
- nf linux slackware inverse
- nf linux tux
- nf linux ubuntu
- nf linux ubuntu inverse
- nf linux flathub
- nf linux gnu guix
- nf linux snappy
- nf linux void
- nf linux zorin
- nf linux budgie
- nf linux deepin
- nf linux illumos
- nf linux openbsd
- nf linux solus
- nf linux archlabs
- nf linux ferris
- nf linux pop os
- nf linux artix
- nf linux kali linux
 ♥ nf oct heart
 ⚡ nf oct zap
  nf oct light bulb
@@ -1092,23 +1048,23 @@
  nf oct repo push
  nf oct repo pull
  nf oct book
- nf oct octoface
+ nf oct accessibility
  nf oct git pull request
  nf oct mark github
- nf oct cloud download
- nf oct cloud upload
- nf oct keyboard
- nf oct gist
+ nf oct download
+ nf oct upload
+ nf oct accessibility inset
+ nf oct alert fill
  nf oct file code
- nf oct file text
+ nf oct apps
  nf oct file media
  nf oct file zip
- nf oct file pdf
+ nf oct archive
  nf oct tag
  nf oct file directory
  nf oct file submodule
  nf oct person
- nf oct jersey
+ nf oct arrow both
  nf oct git commit
  nf oct git branch
  nf oct git merge
@@ -1122,19 +1078,19 @@
  nf oct alert
  nf oct search
  nf oct gear
- nf oct radio tower
+ nf oct arrow down left
  nf oct tools
  nf oct sign out
  nf oct rocket
  nf oct rss
- nf oct clippy
+ nf oct paste
  nf oct sign in
  nf oct organization
  nf oct device mobile
  nf oct unfold
  nf oct check
  nf oct mail
- nf oct mail read
+ nf oct read
  nf oct arrow up
  nf oct arrow right
  nf oct arrow down
@@ -1148,14 +1104,14 @@
  nf oct ruby
  nf oct broadcast
  nf oct key
- nf oct repo force push
+ nf oct arrow down right
  nf oct repo clone
  nf oct diff
  nf oct eye
  nf oct comment discussion
- nf oct mail reply
- nf oct primitive dot
- nf oct primitive square
+ nf oct arrow switch
+ nf oct dot fill
+ nf oct square fill
  nf oct device camera
  nf oct device camera video
  nf oct pencil
@@ -1178,14 +1134,14 @@
  nf oct diff modified
  nf oct diff renamed
  nf oct horizontal rule
- nf oct arrow small right
+ nf oct arrow up left
  nf oct milestone
  nf oct checklist
  nf oct megaphone
  nf oct chevron right
  nf oct bookmark
- nf oct settings
- nf oct dashboard
+ nf oct sliders
+ nf oct meter
  nf oct history
  nf oct link external
  nf oct mute
@@ -1194,7 +1150,7 @@
  nf oct pulse
  nf oct sync
  nf oct telescope
- nf oct gist secret
+ nf oct arrow up right
  nf oct home
  nf oct stop
  nf oct bug
@@ -1204,11 +1160,11 @@
  nf oct server
  nf oct diff ignored
  nf oct ellipsis
- nf oct no newline
+ nf oct bell fill
  nf oct hubot
- nf oct arrow small up
- nf oct arrow small down
- nf oct arrow small left
+ nf oct bell slash
+ nf oct blocked
+ nf oct bookmark fill
  nf oct chevron up
  nf oct chevron down
  nf oct chevron left
@@ -1228,12 +1184,12 @@
  nf oct dash
  nf oct fold
  nf oct inbox
- nf oct trashcan
- nf oct paintcan
+ nf oct trash
+ nf oct paintbrush
  nf oct flame
  nf oct briefcase
  nf oct plug
- nf oct circuit board
+ nf oct bookmark slash fill
  nf oct mortar board
  nf oct law
  nf oct thumbsup
@@ -1241,21 +1197,159 @@
  nf oct desktop download
  nf oct beaker
  nf oct bell
- nf oct watch
+ nf oct cache
  nf oct shield
  nf oct bold
- nf oct text size
+ nf oct check circle
  nf oct italic
  nf oct tasklist
  nf oct verified
  nf oct smiley
  nf oct unverified
- nf oct ellipses
+ nf oct check circle fill
  nf oct file
  nf oct grabber
- nf oct plus small
+ nf oct checkbox
  nf oct reply
- nf oct device desktop
+ nf oct device desktop
+ nf oct circle
+ nf oct clock fill
+ nf oct cloud
+ nf oct cloud offline
+ nf oct code of conduct
+ nf oct code review
+ nf oct code square
+ nf oct codescan
+ nf oct codescan checkmark
+ nf oct codespaces
+ nf oct columns
+ nf oct command palette
+ nf oct commit
+ nf oct container
+ nf oct copilot
+ nf oct copilot error
+ nf oct copilot warning
+ nf oct copy
+ nf oct cpu
+ nf oct cross reference
+ nf oct dependabot
+ nf oct diamond
+ nf oct discussion closed
+ nf oct discussion duplicate
+ nf oct discussion outdated
+ nf oct dot
+ nf oct duplicate
+ nf oct eye closed
+ nf oct feed discussion
+ nf oct feed forked
+ nf oct feed heart
+ nf oct feed merged
+ nf oct feed person
+ nf oct feed repo
+ nf oct feed rocket
+ nf oct feed star
+ nf oct feed tag
+ nf oct feed trophy
+ nf oct file added
+ nf oct file badge
+ nf oct file diff
+ nf oct file directory fill
+ nf oct file directory open fill
+ nf oct file moved
+ nf oct file removed
+ nf oct filter
+ nf oct fiscal host
+ nf oct fold down
+ nf oct fold up
+ nf oct git merge queue
+ nf oct git pull request closed
+ nf oct git pull request draft
+ nf oct goal
+ nf oct hash
+ nf oct heading
+ nf oct heart fill
+ nf oct home fill
+ nf oct hourglass
+ nf oct id badge
+ nf oct image
+ nf oct infinity
+ nf oct issue draft
+ nf oct issue tracked by
+ nf oct issue tracks
+ nf oct iterations
+ nf oct kebab horizontal
+ nf oct key asterisk
+ nf oct log
+ nf oct moon
+ nf oct move to bottom
+ nf oct move to end
+ nf oct move to start
+ nf oct move to top
+ nf oct multi select
+ nf oct no entry
+ nf oct north star
+ nf oct note
+ nf oct number
+ nf oct package dependencies
+ nf oct package dependents
+ nf oct paper airplane
+ nf oct paperclip
+ nf oct passkey fill
+ nf oct people
+ nf oct person add
+ nf oct person fill
+ nf oct play
+ nf oct plus circle
+ nf oct project
+ nf oct project roadmap
+ nf oct project symlink
+ nf oct project template
+ nf oct rel file path
+ nf oct repo deleted
+ nf oct repo locked
+ nf oct repo template
+ nf oct report
+ nf oct rows
+ nf oct screen full
+ nf oct screen normal
+ nf oct share
+ nf oct share android
+ nf oct shield check
+ nf oct shield lock
+ nf oct shield slash
+ nf oct shield x
+ nf oct sidebar collapse
+ nf oct sidebar expand
+ nf oct single select
+ nf oct skip
+ nf oct skip fill
+ nf oct sort asc
+ nf oct sort desc
+ nf oct sparkle fill
+ nf oct sponsor tiers
+ nf oct square
+ nf oct stack
+ nf oct star fill
+ nf oct stopwatch
+ nf oct strikethrough
+ nf oct sun
+ nf oct tab
+ nf oct tab external
+ nf oct table
+ nf oct telescope fill
+ nf oct trophy
+ nf oct typography
+ nf oct unlink
+ nf oct unlock
+ nf oct unread
+ nf oct video
+ nf oct webhook
+ nf oct workflow
+ nf oct x circle
+ nf oct x circle fill
+ nf oct zoom in
+ nf oct zoom out
+ nf oct bookmark slash
  nf pl branch
  nf pl line number
  nf pl hostname
@@ -1313,7 +1407,7 @@
  nf custom folder
  nf seti stylus
  nf seti project
- nf seti play arrow
+ nf custom play arrow
  nf seti sass
  nf seti rails
  nf seti ruby
@@ -1329,12 +1423,12 @@
  nf seti mustache
  nf seti gulp
  nf seti grunt
- nf seti default
+ nf custom default
  nf seti folder
  nf seti css
  nf seti config
  nf seti npm
- nf seti home
+ nf custom home
  nf seti ejs
  nf seti xml
  nf seti bower
@@ -1360,7 +1454,136 @@
  nf custom electron
  nf custom crystal
  nf custom purescript
- nf custom puppet
+ nf seti puppet
+ nf custom emacs
+ nf custom orgmode
+ nf custom kotlin
+ nf seti apple
+ nf seti argdown
+ nf seti asm
+ nf seti audio
+ nf seti babel
+ nf seti bazel
+ nf seti bicep
+ nf seti bsl
+ nf seti cake php
+ nf seti cake
+ nf seti checkbox
+ nf seti checkbox unchecked
+ nf seti clock
+ nf seti clojure
+ nf seti code climate
+ nf seti code search
+ nf seti coldfusion
+ nf seti cpp
+ nf seti crystal embedded
+ nf seti c sharp
+ nf seti c
+ nf seti csv
+ nf seti cu
+ nf seti dart
+ nf seti db
+ nf seti default
+ nf seti deprecation cop
+ nf seti docker
+ nf seti d
+ nf seti editorconfig
+ nf seti elixir script
+ nf seti error
+ nf seti eslint
+ nf seti ethereum
+ nf seti firebase
+ nf seti firefox
+ nf seti font
+ nf seti f sharp
+ nf seti github
+ nf seti gitlab
+ nf seti git
+ nf seti go2
+ nf seti godot
+ nf seti gradle
+ nf seti grails
+ nf seti graphql
+ nf seti hacklang
+ nf seti haml
+ nf seti happenings
+ nf seti haxe
+ nf seti hex
+ nf seti ignored
+ nf seti illustrator
+ nf seti info
+ nf seti ionic
+ nf seti jade
+ nf seti java
+ nf seti jenkins
+ nf seti jinja
+ nf seti liquid
+ nf seti livescript
+ nf seti lock
+ nf seti makefile
+ nf seti maven
+ nf seti mdo
+ nf seti new file
+ nf seti nim
+ nf seti notebook
+ nf seti nunjucks
+ nf seti ocaml
+ nf seti odata
+ nf seti pddl
+ nf seti pdf
+ nf seti perl
+ nf seti photoshop
+ nf seti pipeline
+ nf seti plan
+ nf seti platformio
+ nf seti powershell
+ nf seti prisma
+ nf seti prolog
+ nf seti pug
+ nf seti reasonml
+ nf seti rescript
+ nf seti rollup
+ nf seti r
+ nf seti rust
+ nf seti salesforce
+ nf seti sbt
+ nf seti scala
+ nf seti search
+ nf seti settings
+ nf seti shell
+ nf seti slim
+ nf seti smarty
+ nf seti spring
+ nf seti stylelint
+ nf seti sublime
+ nf seti svelte
+ nf seti svg
+ nf seti swift
+ nf seti terraform
+ nf seti tex
+ nf seti todo
+ nf seti tsconfig
+ nf seti vala
+ nf seti video
+ nf seti vue
+ nf seti wasm
+ nf seti wat
+ nf seti webpack
+ nf seti wgt
+ nf seti word
+ nf seti xls
+ nf seti yarn
+ nf seti yml
+ nf seti zig
+ nf seti zip
+ nf custom asm
+ nf custom v lang
+ nf custom folder oct
+ nf custom neovim
+ nf custom fennel
+ nf custom common lisp
+ nf custom scheme
+ nf custom toml
  nf mdi vector square
  nf mdi access point
  nf mdi access point network
@@ -3518,7 +3741,7 @@
  nf weather night alt rain mix
  nf weather night alt rain wind
  nf weather night alt rain
- nf weather night alt rain mix
+ nf weather night alt showers
  nf weather night alt snow
  nf weather night alt sprinkle
  nf weather night alt storm showers

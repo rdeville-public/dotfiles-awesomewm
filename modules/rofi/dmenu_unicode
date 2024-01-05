@@ -11,12 +11,12 @@ notify(){
   local icon="$4"
   if [[ -z ${icon} ]]
   then
-    case urgency in
+    case ${urgency} in
       critical)
         icon="${SCRIPTPATH}/../../theme/icons/dialog-error.svg"
         ;;
       low)
-        icon="${SCRIPTPATH}/../../theme/icons/dialog-information.svg"
+        icon="${SCRIPTPATH}/../../theme/icons/dialog-info.svg"
         ;;
       *)
         icon="${SCRIPTPATH}/../../theme/icons/dialog-warning.svg"
@@ -29,7 +29,7 @@ notify(){
   notify-send \
     -u ${urgency} \
     -i "${icon}" \
-    "${title}" "${msg}" &
+    "${urgency} ${icon} ${title}" "${msg}" &
 }
 check_requirement(){
   # Must have xclip installed to even show menu.
@@ -57,7 +57,7 @@ main(){
   [[ -n "${chosen}" ]] || exit
 
   c=$(echo "$chosen" | sed "s/ .*//")
-  notify "low" "Rofi" "'$c' Copied to clipboard and primary." "rofi" &
+  notify "low" "Rofi" "'$c' Copied to clipboard and primary." &
   echo "$c" | tr -d '\n' | xclip -selection clipboard
 }
 

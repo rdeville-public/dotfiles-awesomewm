@@ -9,7 +9,8 @@
 💄 :lipstick: add or update the ui and style files.
 🎉 :tada: begin a project.
 ✅ :white_check_mark: add, update, or pass tests.
-🔒️ :lock: fix security issues.
+🔒️ :lock: fix security or privacy issues.
+🔐 :closed_lock_with_key: add or update secrets.
 🔖 :bookmark: release / version tags.
 🚨 :rotating_light: fix compiler / linter warnings.
 🚧 :construction: work in progress.
@@ -63,7 +64,10 @@
 🧐 :monocle_face: data exploration/inspection.
 ⚰️ :coffin: remove dead code.
 🧪 :test_tube: add a failing test.
-👔 :necktie: add or update business logic
+👔 :necktie: add or update business logic.
 🩺 :stethoscope: add or update healthcheck.
 🧱 :bricks: infrastructure related changes.
-🧑‍💻 :technologist: improve developer experience
+🧑‍💻 :technologist: improve developer experience.
+💸 :money_with_wings: add sponsorships or money related infrastructure.
+🧵 :thread: add or update code related to multithreading or concurrency.
+🦺 :safety_vest: add or update code related to validation.

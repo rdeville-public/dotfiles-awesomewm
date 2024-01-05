@@ -66,7 +66,6 @@ local notif_center_clear_all_button = create_button.small({
   bg     = beautiful.cc_popup_default_btn_bg .. "44",
   width  = dpi(50),
   height = dpi(50),
-  --label  = "Clear All",
 })
 
 notif_center_clear_all_button:connect_signal("button::press", function (_, _, _, button)
@@ -128,7 +127,6 @@ local create_notifbox =  function (notif)
         image         = notif.app_icon,
         resize        = true,
         forced_height = dpi(16),
-        clip_shape    = gears.shape.circle,
         forced_width  = dpi(16),
         widget        = wibox.widget.imagebox
       }
@@ -271,7 +269,6 @@ local create_notifbox =  function (notif)
   local notibox = wibox.widget{
       app_icon_with_name_and_dismiss_btn,
       {
-        icon,
         title_area_and_message,
         spacing = beautiful.notification_margin,
         layout  = wibox.layout.fixed.horizontal

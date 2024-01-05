@@ -94,30 +94,30 @@ awesome_log()
 main(){
   cd "${SCRIPTPATH}" || exit 1
 
-  if git remote -v | grep -q 'rdeville.private'
-  then
-    for i_node in "${!NODES[@]}"
-    do
-      src="${i_node}"
-      dest="${NODES[${i_node}]}"
+  git clone https://github.com/BlingCorp/bling
 
-      if ! [[ -d "$(dirname "${dest}")" ]]
-      then
-        mkdir -p "$(dirname "${dest}")"
-      fi
 
-      if [[ -e "${dest}" ]] && ! [[ -L "${dest}" ]]
-      then
-        awesome_log "ERROR" "Bootstrap: Something already exists for **${dest/${HOME}/\~}**."
-      elif ! [[ -L "${dest}" ]]
-      then
-        awesome_log "INFO" "Bootstrap: Create symlink to **${dest/${HOME}/\~}**."
-        ln -s "${src}" "${dest}"
-      else
-        awesome_log "INFO" "Bootstrap: Symlink to **${dest/${HOME}/\~}** already exists."
-      fi
-    done
-  fi
+  for i_node in "${!NODES[@]}"
+  do
+    src="${i_node}"
+    dest="${NODES[${i_node}]}"
+
+    if ! [[ -d "$(dirname "${dest}")" ]]
+    then
+      mkdir -p "$(dirname "${dest}")"
+    fi
+
+    if [[ -e "${dest}" ]] && ! [[ -L "${dest}" ]]
+    then
+      awesome_log "ERROR" "Bootstrap: Something already exists for **${dest/${HOME}/\~}**."
+    elif ! [[ -L "${dest}" ]]
+    then
+      awesome_log "INFO" "Bootstrap: Create symlink to **${dest/${HOME}/\~}**."
+      ln -s "${src}" "${dest}"
+    else
+      awesome_log "INFO" "Bootstrap: Symlink to **${dest/${HOME}/\~}** already exists."
+    fi
+  done
 }
 
 main "$@"

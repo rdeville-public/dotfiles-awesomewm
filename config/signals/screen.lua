@@ -15,5 +15,3 @@ screen.connect_signal("property::geometry",
     end
   end
 )
-
-

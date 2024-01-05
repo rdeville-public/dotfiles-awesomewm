@@ -19,4 +19,3 @@ naughty.connect_signal("added",
     file:write(n.title .. ": " .. n.message .. "\n")
     file:close()
   end)
-

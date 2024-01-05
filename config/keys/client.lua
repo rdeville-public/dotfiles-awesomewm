@@ -1,5 +1,6 @@
 local awful    = require("awful")
 local rofi     = require("modules.rofi")
+local bling = require("bling")
 
 local modkey   = require("config.keys.mod").modkey
 local altkey   = require("config.keys.mod").altkey
@@ -88,12 +89,12 @@ return awful.util.table.join(
       description = "\t\tMove to next screen",
       group = "Client"
     }),
-  awful.key({ modkey }, "t",
-    function (c) c.ontop = not c.ontop end,
-    {
-      description = "\t\tToggle keep on top",
-      group = "Client"
-    }),
+  --[[ awful.key({ modkey }, "t",
+     [   function (c) c.ontop = not c.ontop end,
+     [   {
+     [     description = "\t\tToggle keep on top",
+     [     group = "Client"
+     [   }), ]]
   awful.key({ modkey }, "s",
     function (c) c.sticky = not c.sticky end,
     {
@@ -131,6 +132,21 @@ return awful.util.table.join(
     {
       description = "\t\tMaximize",
       group = "Client"
+    }),
+  awful.key({ modkey }, "t",
+    function(c)
+      bling.module.tabbed.pick_with_dmenu()
+    end,
+    {
+      description = "pick client to add to tab group",
+      group = "Client"
+    }),
+  awful.key({ modkey }, "Tab",
+    function(c)
+      bling.module.tabbed.iter()
+    end,
+    {
+      description = "pick client to add to tab group",
+      group = "Client"
     })
 )
-

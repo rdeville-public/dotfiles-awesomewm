@@ -167,5 +167,3 @@ update_volume()
 update_volume_icon()
 
 return slider_wrapped
-
-

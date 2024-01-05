@@ -14,4 +14,3 @@ ruled.notification.connect_signal("request::rules",
     }
   end
 )
-
