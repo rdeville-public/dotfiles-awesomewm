@@ -117,14 +117,14 @@ local control_center = function (s)
     widget = wibox.container.margin
   }
 
-  notification = require("naughty").notify({
-    preset     = fs_notification_preset,
-    text       = "Notitication text",
-    title      = "Notification Title",
-    icon       = beautiful.cc_popup_default_btn_icon,
-    timeout    = 5,
-    screen     = mouse.screen,
-  })
+  --[[ notification = require("naughty").notify({
+     [   preset     = fs_notification_preset,
+     [   text       = "Notitication text",
+     [   title      = "Notification Title",
+     [   icon       = beautiful.cc_popup_default_btn_icon,
+     [   timeout    = 5,
+     [   screen     = mouse.screen,
+     [ }) ]]
 
   local rows = {
     session_widget,
@@ -143,7 +143,8 @@ local control_center = function (s)
     shape     = beautiful.cc_popup_shape,
     width     = beautiful.cc_popup_width,
     ontop     = true,
-    visible   = true,
+    -- Hide control center by default
+    visible   = false,
     screen    = s,
     placement = function (w)
       awful.placement.top_right(w, {

@@ -43,8 +43,36 @@ ruled.client.append_rules {
       size_hints_honor = false,
     },
   },
+  -- Add titles bars to dialog client
   {
-    rule_any   = { class = { "st", "terminator", "xterm" } },
+    rule_any   = { type = { "dialog" } },
+    properties = {
+      tag = awful.screen.focused().selected_tag,
+      floating          = true,
+      titlebars_enabled = false,
+      width             = dpi(640),
+      shape             = function(cr, width, height)
+        return gears.shape.rounded_rect(cr, width, height, dpi(5))
+      end,
+    },
+    callback = function(c, properties)
+      c:move_to_tag(client.focus.screen.tags[awful.tag.getidx()])
+      awful.placement.centered(c, nil)
+    end,
+  },
+  -- Add titles bars to floating client
+  {
+    rule_any   = { type = { "floating" } },
+
+    properties = {
+      titlebars_enabled = false,
+      shape             = function(cr, width, height)
+        return gears.shape.rounded_rect(cr, width, height, dpi(5))
+      end,
+    },
+  },
+  {
+    rule_any   = { class = { "st", "terminator", "xterm", "alacritty" } },
     properties = {
       tag            = tagname.terminal,
       switch_to_tags = true,
@@ -58,7 +86,7 @@ ruled.client.append_rules {
     },
   },
   {
-    rule = { class = "Thunderbird" },
+    rule_any = { class = { "Mail", "thunderbird" } },
     callback   = function(c, properties)
       if properties then
         default_callback(properties.screen, properties.tag, properties.volatile)
@@ -69,32 +97,44 @@ ruled.client.append_rules {
       switch_to_tags = true,
       screen         = set_screen(3,1), -- left or center
       new_tag        = {
+        index    = 10,
         name     = tagname.mail,
         layout   = awful.layout.suit.tile,
         volatile = true,
-      },
+      }
     },
   },
-  --[[
   {
-    rule_any   = { class = {"keepassxc", "KeePassXC" } },
+    rule_any   = {
+      class = "KeePassXC"
+    },
+    except_any = {
+      {
+        name = "Auto-Type - KeePassXC"
+      },
+      {
+        name = "Unlock Database - KeePassXC"
+      }
+    },
     callback   = function(c, properties)
       if properties then
         default_callback(properties.screen, properties.tag, properties.volatile)
       end
     end,
     properties = {
+      name       = tagname.pass,
       tag            = tagname.pass,
       switch_to_tags = true,
+      index      = 4,
       screen         = set_screen(3,1), -- left or center
       new_tag        = {
+        index      = 4,
         name     = tagname.pass,
         layout   = awful.layout.suit.tile,
         volatile = true,
       },
     },
   },
-  --]]
   {
     rule_any   = { class = { "libreoffice", "libreoffice-startcenter" } },
     callback   = function(c, properties)
@@ -122,6 +162,7 @@ ruled.client.append_rules {
     properties = {
       tag            = tagname.filemanager,
       switch_to_tags = true ,
+      index    = 5,
       new_tag        = {
         name     = tagname.filemanager,
         layout   = awful.layout.suit.tile,
@@ -139,9 +180,29 @@ ruled.client.append_rules {
     properties = {
       tag            = tagname.steam,
       switch_to_tags = true,
+      index    = 6,
       screen         = set_screen(3,1), -- left or center
       new_tag        = {
         name     = tagname.steam,
+        layout   = awful.layout.suit.tile,
+        volatile = true,
+      },
+    },
+  },
+  {
+    rule_any   = { class = { "Signal", "whatsdesk" } } ,
+    callback   = function(c, properties)
+      if properties then
+        default_callback(properties.screen, properties.tag, properties.volatile)
+      end
+    end,
+    properties = {
+      tag            = tagname.chat,
+      switch_to_tags = true,
+      index    = 7,
+      screen         = set_screen(3,1), -- left or center
+      new_tag        = {
+        name     = tagname.chat,
         layout   = awful.layout.suit.tile,
         volatile = true,
       },
@@ -181,29 +242,5 @@ ruled.client.append_rules {
       },
     },
   },
-  -- Add titles bars to dialog client
-  {
-    rule_any   = { type = { "dialog" } },
-    properties = {
-      floating          = true,
-      titlebars_enabled = false,
-      width             = dpi(640),
-      shape             = function(cr, width, height)
-        return gears.shape.rounded_rect(cr, width, height, dpi(5))
-      end,
-    },
-    callback = function(c)
-      awful.placement.centered(c, nil)
-    end,
-  },
-  -- Add titles bars to floating client
-  {
-    rule_any   = { type = { "floating" } },
-    properties = {
-      titlebars_enabled = false,
-      shape             = function(cr, width, height)
-        return gears.shape.rounded_rect(cr, width, height, dpi(5))
-      end,
-    },
-  },
+
 }

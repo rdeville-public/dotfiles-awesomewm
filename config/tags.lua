@@ -5,6 +5,7 @@ local name = {
   pass        = " ",
   monitor     = " ",
   filemanager = " ",
+  chat        = " ",
   steam       = " ",
   inkscape    = "縉",
   gimp        = " ",
@@ -16,6 +17,8 @@ return {
   tags = {
     name.terminal,
     name.browser,
+    name.pass,
+    name.mail,
+    name.chat,
   },
 }
-
