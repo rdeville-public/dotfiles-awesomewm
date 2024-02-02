@@ -1,4 +1,3 @@
-
 local awful     = require("awful")
 local beautiful = require("beautiful")
 local ruled     = require("ruled")
@@ -11,7 +10,17 @@ local tagname       = require("config.tags").name
 
 local function default_callback(screen, tag, volatile)
   local volatile = volatile or false
-  if not awful.tag.find_by_name(screen, tag.name) then
+
+  notification = require("naughty").notify({
+    preset     = fs_notification_preset,
+    title      = "bar",
+    text       = screen.tags,
+    icon       = beautiful.cc_popup_default_btn_icon,
+    timeout    = 5,
+    screen     = mouse.screen,
+  })
+
+  if not awful.tag.find_by_name(screen, tag) then
     awful.tag.add(tag, {
       volatile = volatile,
       screen  = screen,
@@ -79,7 +88,7 @@ ruled.client.append_rules {
     },
   },
   {
-    rule_any   = { class = { "firefox", "chromium-browser" } },
+    rule_any   = { role = { "browser" } },
     properties = {
       tag            = tagname.browser,
       switch_to_tags = true,
@@ -93,20 +102,15 @@ ruled.client.append_rules {
       end
     end,
     properties = {
+      name           = tagname.mail,
       tag            = tagname.mail,
       switch_to_tags = true,
       screen         = set_screen(3,1), -- left or center
-      new_tag        = {
-        index    = 10,
-        name     = tagname.mail,
-        layout   = awful.layout.suit.tile,
-        volatile = true,
-      }
     },
   },
   {
     rule_any   = {
-      class = "KeePassXC"
+      class = { "keepassxc", "KeePassXC" }
     },
     except_any = {
       {
@@ -116,23 +120,9 @@ ruled.client.append_rules {
         name = "Unlock Database - KeePassXC"
       }
     },
-    callback   = function(c, properties)
-      if properties then
-        default_callback(properties.screen, properties.tag, properties.volatile)
-      end
-    end,
     properties = {
-      name       = tagname.pass,
       tag            = tagname.pass,
       switch_to_tags = true,
-      index      = 4,
-      screen         = set_screen(3,1), -- left or center
-      new_tag        = {
-        index      = 4,
-        name     = tagname.pass,
-        layout   = awful.layout.suit.tile,
-        volatile = true,
-      },
     },
   },
   {
