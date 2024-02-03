@@ -35,7 +35,7 @@ DATA_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}"
 CONFIG_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}"
 
 declare -A LINKS
-LINKS["${XDG_CONFIG_HOME}/awesome"]="${SCRIPTPATH}"
+LINKS["${CONFIG_DIR}/awesome"]="${SCRIPTPATH}"
 
 declare -A CRONS
 # CRONS["<PATH|CMD>"]="<RECURRENCE>"
