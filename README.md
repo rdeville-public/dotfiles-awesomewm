@@ -1,99 +1,82 @@
-<!-- markdownlint-disable MD041 MD002 -->
-<div align="center" style="text-align: center;">
+<!-- BEGIN DOTGIT-SYNC BLOCK MANAGED -->
+# 👋 Welcome to AwesomeRC
 
-  <!-- Project Title -->
-  <a href="https://framagit.org/rdeville.private/my_dotfiles/awesomewm">
-    <img src="docs/assets/img/meta/awesomewm_logo.png" width="100px">
-    <h1>Awesomewm</h1>
-  </a>
+<center>
 
-  <!-- Project Badges -->
-  [![License][license_badge]][license]
-  [![Build Status][build_status_badge]][build_status]
+> ⚠️ IMPORTANT !
+>
+> Main repo is on [framagit.org](https://framagit.org/rdeville-public/dotfiles/awesome).
+>
+> On other online git platforms, they are just mirror of the main repo.
+>
+> Any issues, pull/merge requests, etc., might not be considered on those other
+> platforms.
 
---------------------------------------------------------------------------------
+</center>
 
-TODO: Short description as written in `docs/_data/repo.yaml`
+---
 
---------------------------------------------------------------------------------
+<center>
 
-  <b>
-IMPORTANT !
+[![Licenses: (MIT OR BEERWARE)][license_badge]][license_url]
+[![Changelog][changelog_badge]][changelog_badge_url]
+[![Build][build_badge]][build_badge_url]
+[![Release][release_badge]][release_badge_url]
 
-Main repo is on [ Framagit][repo_url].<br>
-On other online git platforms, they are just mirror of the main repo.<br>
-Any issues, pull/merge requests, etc., might not be considered on those other
-platforms.
-  </b>
-</div>
+</center>
 
---------------------------------------------------------------------------------
+[build_badge]: https://framagit.org/rdeville-public/dotfiles/awesome/badges/main/pipeline.svg
+[build_badge_url]: https://framagit.org/rdeville-public/dotfiles/awesome/-/commits/main
+[release_badge]: https://framagit.org/rdeville-public/dotfiles/awesome/-/badges/release.svg
+[release_badge_url]: https://framagit.org/rdeville-public/dotfiles/awesome/-/releases/
+[license_badge]: https://img.shields.io/badge/Licenses-MIT%20OR%20BEERWARE-blue
+[license_url]: https://framagit.org/rdeville-public/dotfiles/awesome/blob/main/LICENSE
+[changelog_badge]: https://img.shields.io/badge/Changelog-Python%20Semantic%20Release-yellow
+[changelog_badge_url]: https://github.com/python-semantic-release/python-semantic-release
 
-[repo_url]: https://framagit.org/rdeville.private/my_dotfiles/awesomewm
-[license_badge]: https://img.shields.io/badge/License-MIT%2FBeer%20Ware-blue?style=flat-square&logo=open-source-initiative
-[license]: LICENSE
-[build_status_badge]: https://framagit.org/rdeville.private/my_dotfiles/awesomewm/badges/master/pipeline.svg?style=flat-square&logo=appveyor
-[build_status]: https://framagit.org/rdeville.private/my_dotfiles/awesomewm/commits/master
+My Awesome Windows Manager configuration
 
-## Table of Content
+---
+<!-- BEGIN DOTGIT-SYNC BLOCK EXCLUDED CUSTOM_README -->
+<!-- YOU CAN REPLACE THIS COMMENT AND PUT CUSTOM CONTENT HERE -->
+<!-- YOUR CUSTOM CONTENT WILL NOT BE OVERRIDDEN -->
+## 📌 Prerequisites
 
-* [Project Documentation](#project-documentation)
+## ⚙️ Install
 
+## 🚀 Usage
 
-<!-- BEGIN MKDOCS TEMPLATE -->
-<!--
-     WARNING, DO NOT UPDATE CONTENT BETWEEN MKDOCS TEMPLATE TAG !
-     Modified content will be overwritten when updating
--->
+## ✅ Run tests
 
-## Project Documentation
+<!-- END DOTGIT-SYNC BLOCK EXCLUDED CUSTOM_README -->
+## 🤝 Contributing
 
-The complete documentation of the project can be accessed via its [Online
-Documentation][online_doc].
+Contributions, issues and feature requests are welcome!
 
-If, for any reason, the link to the [Online Documentation][online_doc] is
-broken, you can generate its documention locally on your computer (since the
-documentation is jointly stored within the repository).
+Feel free to check [issues page][issues_pages].
 
-To do so, you will need the following requirements:
+You can also take a look at the [CONTRIBUTING.md][contributing].
 
-  * Python >= 3.8
-  * Pip3 with Python >= 3.8
+[issues_pages]: https://framagit.org/rdeville-public/dotfiles/awesome/-/issues
+[contributing]: https://framagit.org/rdeville-public/dotfiles/awesome/blob/main/CONTRIBUTING.md
 
-First setup a temporary python virtual environment and activate it:
+## 👤 Maintainers
 
-```bash
-# Create the temporary virtual environment
-python3 -m venv .temporary_venv
-# Activate it
-source .temporary_venv/bin/activate
-```
+* 📧 [**Romain Deville** \<code@romaindeville.fr\>](mailto:code@romaindeville.fr)
+  * Website: [https://romaindeville.fr](https://romaindeville.fr)
+  * Github: [@rdeville](https://github.com/rdeville)
+  * Gitlab: [@r.deville](https://gitlab.com/r.deville)
+  * Framagit: [@rdeville](https://framagit.org/rdeville)
 
-Now, install required dependencies to render the documentation using
-[mkdocs][mkdocs] in the python virtual environment:
+## 📝 License
 
-```bash
-pip3 install -r requirements.docs.txt
-```
+Copyright © 2021 - 2024 [Romain Deville](code@romaindeville.fr)
 
-Now you can easily render the documentation using [mkdocs][mkdocs] through the
-usage of the following command (some logs will be outputed to stdout):
+This project is under following licenses (**OR**) :
 
-```bash
-# Assuming you are at the root of the repo
-# If there is a `mkdocs.local.yml`
-mkdocs serve -f mkdocs.local.yml
-# If there is no `mkdocs.local.yml`, only `mkdocs.yml`
-mkdocs serve
-```
+* [MIT][main_license]
+* [BEERWARE][beerware_license]
 
-You can now browse the full documentation by visiting
-[http://localhost:8000][localhost].
-
-[localhost]: https://localhost:8000
-[mkdocs]: https://www.mkdocs.org/
-
-<!-- END MKDOCS TEMPLATE -->
-
-
-[online_doc]: https://docs.romaindeville.fr/rdeville.private/my_dotfiles/awesomewm/index.html
+[main_license]: https://framagit.org/rdeville-public/dotfiles/awesome/blob/main/LICENSE
+[beerware_license]: https://framagit.org/rdeville-public/dotfiles/awesome/blob/main/LICENSE.BEERWARE
+<!-- END DOTGIT-SYNC BLOCK MANAGED -->
