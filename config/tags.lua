@@ -1,15 +1,15 @@
 local name = {
-  terminal    = " ",
-  browser     = "爵",
-  mail        = " ",
-  pass        = " ",
-  monitor     = " ",
+  terminal = " ",
+  browser = " ",
+  mail = " ",
+  pass = " ",
   filemanager = " ",
-  chat        = " ",
-  steam       = " ",
-  inkscape    = "縉",
-  gimp        = " ",
-  office      = " ",
+  chat = "󰍡 ",
+  monitor = " ",
+  steam = " ",
+  inkscape = " ",
+  gimp = " ",
+  office = "󱔗 ",
 }
 
 return {
