@@ -31,16 +31,14 @@ function rofi.spawn(parameters)
   awful.spawn(rofi.invocation(parameters))
 end
 
-local function strip_newline(value)
-  return value:gsub("\n", "")
-end
-
 function rofi.prompt(args, callback)
-  local args  = args        or {}
-  args.show   = args.show   or ""
-  local function rofi_finished(stdout, stderr, reason, exit_code)
-    if exit_code ~= 0 then return end
-    entered_name = stdout:gsub("\n", "")
+  args = args or {}
+  args.show = args.show or ""
+  local function rofi_finished(stdout, _, _, exit_code)
+    if exit_code ~= 0 then
+      return
+    end
+    local entered_name = stdout:gsub("\n", "")
     if #entered_name ~= 0 then
       callback(entered_name)
     end
