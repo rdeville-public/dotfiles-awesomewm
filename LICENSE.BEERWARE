@@ -1,14 +1,11 @@
-"THE BEER-WARE LICENSE" (Revision 42):
+# BEGIN DOTGIT-SYNC BLOCK MANAGED
+AwesomeRC - My Awesome Windows Manager configuration
 
-Romain Deville <code@romaindeville.fr> wrote this project.
+Copyright © 2021 - 2024 Romain Deville
 
+Licensed under the "THE BEER-WARE LICENSE" (Revision 42):
+Romain Deville wrote this file.
 As long as you retain this notice you can do whatever you want with this stuff.
-If we meet some day, and you think this stuff is worth it, you can buy me a
-beer in return.
-
-<!-- BEGIN MKDOCS TEMPLATE -->
-<!--
-WARNING, DO NOT UPDATE CONTENT BETWEEN MKDOCS TEMPLATE TAG !
-Modified content will be overwritten when updating
--->
-<!-- END MKDOCS TEMPLATE -->
+If we meet some day, and you think this stuff is worth it, you can buy me a beer
+or coffee in return.
+# END DOTGIT-SYNC BLOCK MANAGED

@@ -15,13 +15,14 @@ local initial_action = function(button)
   end
 end
 
-local onclick_action = function ()
+local onclick_action = function()
   naughty.suspended = not naughty.suspended
 end
 
-local dnd_button = create_button.circle_big(beautiful.cc_do_not_disturb_icon_path)
+local dnd_button =
+  create_button.circle_big(beautiful.cc_do_not_disturb_icon_path)
 
-dnd_button:connect_signal("button::press", function (self, _, _, button)
+dnd_button:connect_signal("button::press", function(self, _, _, button)
   if button == 1 then
     onclick_action()
     initial_action(self)
@@ -31,4 +32,3 @@ end)
 initial_action(dnd_button)
 
 return dnd_button
-

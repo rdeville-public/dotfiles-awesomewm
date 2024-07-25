@@ -1,46 +1,40 @@
--- DESCRIPTION
--- ========================================================================
--- Widget to show the taglist
-
--- LIBRARY
--- ========================================================================
-local awful     = require("awful")
-local wibox     = require("wibox")
-local gears     = require("gears")
+local awful = require("awful")
+local wibox = require("wibox")
 local beautiful = require("beautiful")
-local naughty   = require("naughty")
-local dpi          = require("beautiful.xresources").apply_dpi
+local dpi = require("beautiful.xresources").apply_dpi
 
 -- VARIABLES
 -- ========================================================================
 local taglist = {}
 
 local function factory(screen)
-  return awful.widget.taglist {
-    screen  = screen,
-    filter  = awful.widget.taglist.filter.all,
-    buttons = require("config.buttons.taglist") ,
+  return awful.widget.taglist({
+    screen = screen,
+    filter = awful.widget.taglist.filter.all,
+    buttons = require("config.buttons.taglist"),
     layout = {
-      spacing = -dpi(beautiful.wibar_height/2),
-      layout  = wibox.layout.flex.horizontal,
+      spacing = -dpi(beautiful.wibar_height / 2),
+      layout = wibox.layout.flex.horizontal,
     },
     widget_template = {
       {
         {
-          id     = 'tag_content',
+          id = "tag_content",
           widget = wibox.widget.textbox,
         },
-        left   = 18,
+        left = 18,
         widget = wibox.container.margin,
       },
-      id           = 'background_role',
+      id = "background_role",
       forced_width = dpi(beautiful.wibar_height * 4),
-      widget       = wibox.container.background,
+      widget = wibox.container.background,
       -- Add support for hover colors and an index label
       create_callback = function(self, tag, index, objects)
-        self:update_callback(tag,index,objects)
+        self:update_callback(tag, index, objects)
       end,
-      update_callback = function(self, tag, index, objects) --luacheck: no unused args
+      update_callback = function(self, tag, index, _) --luacheck: no unused args
+        local fg_color
+
         if tag.selected then
           fg_color = beautiful.taglist_fg_focus
         elseif next(tag:clients()) == nil then
@@ -52,15 +46,20 @@ local function factory(screen)
         else
           fg_color = beautiful.taglist_fg_empty
         end
-        self:get_children_by_id('tag_content')[1].markup =
-          "<span foreground='"..fg_color.."'>"..index.." "..tag.name.. " </span>"
+        self:get_children_by_id("tag_content")[1].markup = "<span foreground='"
+          .. fg_color
+          .. "'>"
+          .. index
+          .. " "
+          .. tag.name
+          .. " </span>"
       end,
     },
-  }
+  })
 end
 
-return setmetatable(taglist, { __call = function(_, ...)
+return setmetatable(taglist, {
+  __call = function(_, ...)
     return factory(...)
-  end })
-
--- vim: fdm=indent
+  end,
+})
