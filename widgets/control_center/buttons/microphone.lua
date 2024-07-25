@@ -1,22 +1,23 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
-local create_button    = require("widgets.control_center.buttons.create-button")
+local create_button = require("widgets.control_center.buttons.create-button")
 
-local initial_action = function (button)
+local initial_action = function(button)
   local background = button:get_children_by_id("background")[1]
   local label = button:get_children_by_id("label")[1]
 
   awful.spawn.easy_async_with_shell(
     [[sh -c amixer | grep 'Front Left: Capture' | awk -F' ' '{print $6}' | sed -e 's/\[//' -e 's/\]//']],
     function(stdout)
-      if stdout:match('on') then
+      if stdout:match("on") then
         background:set_bg(beautiful.cc_micro_active)
         label:set_text("In Use")
       else
         background:set_bg(beautiful.cc_micro_inactive)
         label:set_text("Off")
       end
-  end)
+    end
+  )
 end
 
 local onclick_action = function()
@@ -25,8 +26,7 @@ end
 
 local microphone_button = create_button.circle_big(beautiful.cc_micro_icon_path)
 
-
-microphone_button:connect_signal("button::press", function (self, _, _, button)
+microphone_button:connect_signal("button::press", function(self, _, _, button)
   if button == 1 then
     onclick_action()
     initial_action(self)
