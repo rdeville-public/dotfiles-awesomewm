@@ -1,70 +1,42 @@
 local awful = require("awful")
+local beautiful = require("widgets.theme")
+local colors = require("utils.colors")
 local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local dpi = require("beautiful.xresources").apply_dpi
 
 local net = {}
 
-local function factory(args)
-  args = args or {}
-  args.interface = args.format or "*"
-  args.font = args.font or beautiful.net_font or beautiful.font
-  args.bg = args.bg or beautiful.net_bg
-  args.shape = args.shape or beautiful.net_shape or gears.shape.rect
-  args.timeout = args.timeout or beautiful.net_timeout or 1
-  args.max_value = args.max_value or beautiful.net_max_value or 10 * 1024 * 1024
-  args.alert_value = args.alert_value
-    or beautiful.net_alert_value
-    or 7.5 * 1024 * 1024
-  args.width = args.width or beautiful.net_width or dpi(10)
-  args.height = beautiful.wibar_height
+local function factory(_)
+  local options = {
+    timeout = beautiful.net_timeout or 1,
+    clr_0 = beautiful.cpu_clr_3 or beautiful.clr_0 or beautiful.default_clr_0,
+    clr_1 = beautiful.cpu_clr_2 or beautiful.clr_1 or beautiful.default_clr_1,
+    clr_2 = beautiful.cpu_clr_1 or beautiful.clr_2 or beautiful.default_clr_2,
+    clr_3 = beautiful.cpu_clr_0 or beautiful.clr_3 or beautiful.default_clr_3,
 
-  args.up_icon = args.up_icon or beautiful.net_up_icon or ""
-  args.down_icon = args.down_icon or beautiful.net_down_icon or ""
+    val_0 = beautiful.net_val_0 or 2.5 * 1024 * 1024,
+    val_1 = beautiful.net_val_1 or 5 * 1024 * 1024,
+    val_2 = beautiful.net_val_2 or 7.5 * 1024 * 1024,
+    val_3 = beautiful.net_val_3 or 10 * 1024 * 1024,
 
-  args.online_icon = args.online_icon or beautiful.net_online_icon or ""
-  args.online_fg = args.online_fg or beautiful.net_online_fg or "#00ff00"
-
-  args.offline_icon = args.offline_icon or beautiful.net_offline_icon or ""
-  args.offline_fg = args.offline_fg or beautiful.net_offline_fg or "#ff0000"
-
-  args.ping_timeout = args.ping_timeout or beautiful.net_ping_timeout or "3"
-  args.ping_route = args.ping_route
-    or beautiful.net_ping_route
-    or "wikipedia.org"
-
-  args.tier1_clr = args.tier1_clr or beautiful.net_tier1_clr or args.fg
-  args.tier2_clr = args.tier2_clr or beautiful.net_tier2_clr or args.fg
-  args.tier3_clr = args.tier3_clr or beautiful.net_tier3_clr or args.fg
-  args.tier4_clr = args.tier4_clr or beautiful.net_tier4_clr or args.fg
-  args.tier1_val = args.tier1_val
-    or beautiful.net_tier1_val
-    or 2.5 * 1024 * 1024
-  args.tier2_val = args.tier2_val or beautiful.net_tier2_val or 5 * 1024 * 1024
-  args.tier3_val = args.tier3_val
-    or beautiful.net_tier3_val
-    or 7.5 * 1024 * 1024
-  args.tier4_val = args.tier4_val or beautiful.net_tier4_val or args.max_value
-
-  args.prev_rx = args.prev_rx or 0
-  args.prev_tx = args.prev_tx or 0
-
-  local default_command = string.format(
-    [[bash -c "cat /sys/class/net/%s/statistics/*_bytes"]],
-    args.interface
-  )
-  args.command = args.command or beautiful.net_command or default_command
+    prev_rx = 0,
+    prev_tx = 0,
+  }
+  local command = beautiful.net_command
+    or (
+      "cat /sys/class/net/"
+      .. (beautiful.net_interface or "*")
+      .. "/statistics/*_bytes"
+    )
 
   local function compute_tier_clr(value)
-    if value <= args.tier1_val then
-      return args.tier1_clr
-    elseif value <= args.tier2_val then
-      return args.tier2_clr
-    elseif value <= args.tier3_val then
-      return args.tier3_clr
+    if value <= options.val_0 then
+      return options.clr_0
+    elseif value <= options.val_1 then
+      return options.clr_1
+    elseif value <= options.val_2 then
+      return options.clr_2
     else
-      return args.tier4_clr
+      return options.clr_3
     end
   end
 
@@ -74,143 +46,41 @@ local function factory(args)
     local dim
     if bytes < 1024 then
       speed = bytes
-      dim = "b"
+      dim = " b"
     elseif bytes < 1024 ^ 2 then
       speed = bytes / 1024
-      dim = "kb"
+      dim = "Kb"
     elseif bytes < 1024 ^ 3 then
       speed = bytes / 1024 ^ 2
       dim = "Mb"
     elseif bytes < 1024 ^ 4 then
       speed = bytes / 1024 ^ 3
       dim = "Gb"
-    else
-      speed = tonumber(bytes)
-      dim = "b"
     end
     return string.format(format, math.floor(speed + 0.5), dim)
   end
 
   local function ping()
-    local return_code =
-      os.execute("ping -c 1 -w " .. args.ping_timeout .. " " .. args.ping_route)
+    local return_code = os.execute(
+      "ping -c 1 -w "
+        .. (beautiful.net_ping_timeout or 3)
+        .. " "
+        .. (beautiful.net_ping_route or "wikipedia.org")
+    )
     if return_code == 0 then
       return true
     end
     return false
   end
 
-  local function split(string_to_split, separator)
-    if separator == nil then
-      separator = "%s"
-    end
-    local t = {}
-
-    for str in string.gmatch(string_to_split, "([^" .. separator .. "]+)") do
-      table.insert(t, str)
-    end
-
-    return t
-  end
-
-  net = wibox.widget({
-    {
-      {
-        {
-          id = "down_value",
-          widget = wibox.widget.textbox,
-          -- https://awesomewm.org/apidoc/classes/wibox.widget.textbox.html
-          -- DEBUG
-          markup = "<span foreground='#FFFFFF'>"
-            .. string.format("%04.1f%s", 50, args.up_icon)
-            .. "</span>",
-          --text          = "50%",
-          ellipsize = "end", -- start, middle, end
-          wrap = "word_char", -- word, char, word_char
-          valign = "center", -- top, center, bottom
-          align = "right", -- lefte, center, right
-          font = args.down_font,
-          forced_height = dpi(args.height),
-          forced_width = dpi(args.height * 4),
-          opacity = 100,
-          visible = true,
-        },
-        {
-          id = "online_status",
-          widget = wibox.widget.textbox,
-          markup = "<span foreground='#FFFFFF'>"
-            .. string.format(" %s ", args.online_icon)
-            .. "</span>",
-        },
-        {
-          id = "up_value",
-          widget = wibox.widget.textbox,
-          -- https://awesomewm.org/apidoc/classes/wibox.widget.textbox.html
-          -- DEBUG
-          markup = "<span foreground='#FFFFFF'>"
-            .. string.format("%s%04.1f", args.down_icon, 50)
-            .. "</span>",
-          --text          = "50%",
-          ellipsize = "end", -- start, middle, end
-          wrap = "word_char", -- word, char, word_char
-          valign = "center", -- top, center, bottom
-          align = "left", -- lefte, center, right
-          font = args.up_font,
-          forced_height = dpi(args.height),
-          forced_width = dpi(args.height * 4),
-          opacity = 100,
-          visible = true,
-        },
-        layout = wibox.layout.align.horizontal,
-      },
-      widget = wibox.container.margin(nil, 15, 15, 0, 0),
-    },
-    font = args.font,
-    bg = args.bg,
-    shape = args.shape,
-    widget = wibox.container.background,
-    set_net = function(self, bytes, widget_name)
-      -- Compute values
-      local speed = bytes
-      local clr_value = compute_tier_clr(speed)
-      local text_value = content(speed, "%04.1f%s")
-      -- Update widget values
-      if widget_name == "up" then
-        self:get_children_by_id("up_value")[1].markup = "<span foreground='"
-          .. clr_value
-          .. "'>"
-          .. string.format("%s%s", args.up_icon, text_value)
-          .. "</span>"
-      elseif widget_name == "down" then
-        self:get_children_by_id("down_value")[1].markup = "<span foreground='"
-          .. clr_value
-          .. "'>"
-          .. string.format("%s %s", text_value, args.down_icon)
-          .. "</span>"
-      end
-
-      if ping then
-        self:get_children_by_id("online_status")[1].markup = "<span foreground='"
-          .. args.online_fg
-          .. "'>"
-          .. string.format(" %s ", args.online_icon)
-          .. "</span>"
-      else
-        self:get_children_by_id("online_status")[1].markup = "<span foreground='"
-          .. args.offline_fg
-          .. "'>"
-          .. string.format(" %s ", args.online_icon)
-          .. "</span>"
-      end
-    end,
-  })
-
-  local update_widget = function(widget, stdout, _, _, _)
-    local cur_vals = split(stdout, "\r\n")
+  local update_widget = function(widget)
+    local cur_vals = split(os.capture(command, true), "\r\n")
     local cur_rx = 0
     local cur_tx = 0
     local speed_rx = 0
     local speed_tx = 0
+    local color = ""
+    local text = ""
 
     for i, _ in ipairs(cur_vals) do
       if i % 2 == 1 then
@@ -221,17 +91,81 @@ local function factory(args)
       end
     end
 
-    speed_rx = cur_rx - args.prev_rx
-    speed_tx = cur_tx - args.prev_tx
+    speed_rx = cur_rx - options.prev_rx
+    speed_tx = cur_tx - options.prev_tx
 
-    widget:set_net(speed_rx, "down")
-    widget:set_net(speed_tx, "up")
+    color = compute_tier_clr(speed_rx)
+    text = content(speed_rx, "%05.1f%s")
+    widget:get_children_by_id("down")[1].fg = color
+    widget:get_children_by_id("down_value")[1].text =
+      string.format("%s %s ", text, beautiful.net_down_icon or " ")
 
-    args.prev_rx = cur_rx
-    args.prev_tx = cur_tx
+    color = compute_tier_clr(speed_tx)
+    text = content(speed_tx, "%05.1f%s")
+    widget:get_children_by_id("up")[1].fg = color
+    widget:get_children_by_id("up_value")[1].text =
+      string.format(" %s %s", beautiful.net_up_icon or " ", text)
+
+    if ping then
+      widget:get_children_by_id("online")[1].fg = (
+        beautiful.net_online_fg or colors.green_500
+      )
+      widget:get_children_by_id("online_status")[1].text = (
+        beautiful.net_online_icon or "󰲝 "
+      )
+    else
+      widget:get_children_by_id("offline")[1].fg = (
+        beautiful.net_offline_fg or colors.red_500
+      )
+      widget:get_children_by_id("offline_status")[1].text = (
+        beautiful.net_offline_icon or "󰲜 "
+      )
+    end
+
+    options.prev_rx = cur_rx
+    options.prev_tx = cur_tx
   end
 
-  awful.widget.watch(args.command, args.timeout, update_widget, net)
+  net = wibox.widget({
+    {
+      {
+        {
+          {
+            id = "down_value",
+            align = "right",
+            widget = wibox.widget.textbox,
+          },
+          id = "down",
+          widget = wibox.container.background,
+        },
+        {
+          {
+            id = "online_status",
+            widget = wibox.widget.textbox,
+          },
+          id = "online",
+          widget = wibox.container.background,
+        },
+        {
+          {
+            id = "up_value",
+            align = "left",
+            widget = wibox.widget.textbox,
+          },
+          id = "up",
+          widget = wibox.container.background,
+        },
+        layout = wibox.layout.align.horizontal,
+      },
+      widget = wibox.container.margin(nil, 15, 15, 0, 0),
+    },
+    bg = beautiful.net_bg or beautiful.widget_default_bg,
+    font = beautiful.net_font or beautiful.font,
+    shape = beautiful.net_shape or beautiful.widget_default_shape_right,
+    widget = wibox.container.background,
+  })
+
+  awful.widget.watch("echo &>/dev/null", options.timeout, update_widget, net)
 
   return net
 end
@@ -241,5 +175,3 @@ return setmetatable(net, {
     return factory(...)
   end,
 })
-
--- vim: fdm=indent
