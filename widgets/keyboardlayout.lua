@@ -1,36 +1,31 @@
 local awful = require("awful")
+local beautiful = require("widgets.theme")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 
 local keyboardlayout = {}
 
-local function factory(args)
-  args = args or {}
-
-  return wibox.widget({
+local function factory(_)
+  keyboardlayout = wibox.widget({
     {
       {
         {
-          markup = ""
-            .. "<span foreground='"
-            .. beautiful.keyboardlayout_fg
-            .. "'>"
-            .. beautiful.keyboardlayout_icon
-            .. "</span>",
+          id = "icon",
+          text = beautiful.keyboardlayout_icon or " ",
           widget = wibox.widget.textbox,
         },
         awful.widget.keyboardlayout,
         layout = wibox.layout.align.horizontal,
       },
-      widget = wibox.container.margin(nil, 15, 15, 0, 0),
+      widget = wibox.container.margin(nil, 15, 10, 0, 0),
     },
-    fg = beautiful.keyboardlayout_fg,
-    bg = beautiful.keyboardlayout_bg,
-    --buttons      = require("config.buttons.keyboardlayout"),
-    font = beautiful.font,
-    shape = beautiful.keyboardlayout_shape,
+    fg = beautiful.keyboardlayout_fg or beautiful.widget_default_fg,
+    bg = beautiful.keyboardlayout_bg or beautiful.widget_default_bg,
+    font = beautiful.keyboardlayout_font or beautiful.font,
+    shape = beautiful.keyboardlayout_shape or beautiful.widget_default_shape_right,
     widget = wibox.container.background,
   })
+
+  return keyboardlayout
 end
 
 return setmetatable(keyboardlayout, {
