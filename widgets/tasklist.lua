@@ -1,44 +1,45 @@
 local awful = require("awful")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local beautiful = require("widgets.theme")
+local colors = require("utils.colors")
 local dpi = require("beautiful.xresources").apply_dpi
+local shapes = require("utils.shapes")
+local wibox = require("wibox")
 
 local tasklist = {}
 
-local function factory(screen)
-  return awful.widget.tasklist({
+local function factory(screen, spacing)
+  tasklist = awful.widget.tasklist({
     screen = screen,
     filter = awful.widget.tasklist.filter.currenttags,
     buttons = require("config.buttons.tasklist"),
+    shape = beautiful.tasklist_shape or shapes.powerline,
+    font = beautiful.tasklist_font or beautiful.font,
     layout = {
       layout = wibox.layout.fixed.horizontal,
-      spacing = dpi(2),
+      spacing = spacing,
     },
-    -- Notice that there is *NO* wibox.wibox prefix, it is a template,
-    -- not a widget instance.
     widget_template = {
       {
         {
           nil,
           {
             {
-              awful.widget.clienticon,
-              left = dpi(5),
-              right = dpi(2.5),
-              widget = wibox.container.margin,
-            },
-            {
-              id = "text",
-              text = "",
+              id = "state",
               widget = wibox.widget.textbox,
             },
-            spacing = dpi(2),
+            awful.widget.clienticon,
+            {
+              id = "class",
+              widget = wibox.widget.textbox,
+            },
+            spacing = spacing,
+            forced_height = 9 * dpi(beautiful.wibar_height / 10),
             widget = wibox.layout.fixed.horizontal,
           },
           {
+            id = "bar",
+            forced_height = dpi(beautiful.wibar_height / 10),
             widget = wibox.container.background,
-            id = "background_role",
-            forced_height = dpi(beautiful.wibar_height / 5),
           },
           widget = wibox.layout.align.vertical,
         },
@@ -46,42 +47,40 @@ local function factory(screen)
         id = "background",
       },
       widget = wibox.layout.fixed.horizontal,
-      --widget = wibox.container.place,
       create_callback = function(self, c, index, objects)
         self:update_callback(c, index, objects)
       end,
       update_callback = function(self, c, _, _)
-        local widget_background = self:get_children_by_id("background_role")[1]
-        local text = ""
+        local bg, fg = "", ""
+
         if c.active then
-          widget_background.bg = beautiful.tasklist_bg_focus
+          bg = beautiful.tasklist_bg_focus or colors.green_a700
+          fg = beautiful.tasklist_fg_focus or colors.white
         elseif c.minimized then
-          widget_background.bg = beautiful.tasklist_bg_minimize
+          bg = beautiful.tasklist_bg_minimize or colors.purple_a700
+          fg = beautiful.tasklist_bg_minimize or colors.purple_a700
         elseif c.urgent then
-          widget_background.bg = beautiful.tasklist_bg_urgent
+          bg = beautiful.tasklist_bg_urgent or colors.red_a700
+          fg = beautiful.tasklist_bg_urgent or colors.red_a700
         else
-          widget_background.bg = beautiful.tasklist_bg_normal
+          bg = beautiful.tasklist_bg_normal or colors.grey_900
+          fg = beautiful.tasklist_fg_normal or colors.grey_900
         end
 
-        if c.sticky then
-          text = text .. beautiful.tasklist_sticky
-        end
-
-        if c.ontop then
-          text = text .. beautiful.tasklist_ontop
-        end
-
-        if c.floating then
-          text = text .. beautiful.tasklist_floating
-        end
-
-        if c.maximized then
-          text = text .. beautiful.tasklist_maximized
-        end
-        self:get_children_by_id("text")[1].text = text
+        self:get_children_by_id("background")[1].fg = fg
+        self:get_children_by_id("bar")[1].bg = bg
+        self:get_children_by_id("class")[1].text = c.class
+        self:get_children_by_id("state")[1].text = ""
+          .. (c.sticky and (beautiful.tasklist_sticky or " ") or "")
+          .. (c.ontop and (beautiful.tasklist_ontop or "󰝕 ") or "")
+          .. (c.floating and (beautiful.tasklist_floating or " ") or "")
+          .. (c.maximized and (beautiful.tasklist_maximized or " ") or "")
+          .. (c.minimized and (beautiful.tasklist_minimized or " ") or "")
       end,
     },
   })
+
+  return tasklist
 end
 
 return setmetatable(tasklist, {
@@ -89,5 +88,3 @@ return setmetatable(tasklist, {
     return factory(...)
   end,
 })
-
--- vim: fdm=indent
