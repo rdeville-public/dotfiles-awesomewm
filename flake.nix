@@ -21,7 +21,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # BEGIN DOTGIT-SYNC BLOCK EXCLUDED NIX_FLAKE_INPUT
-
+    awesome = {
+      url = "github:awesomeWM/awesome/master";
+      flake = false;
+    };
+    bling = {
+      url = "github:BlingCorp/bling/master";
+      flake = false;
+    };
     # END DOTGIT-SYNC BLOCK EXCLUDED NIX_FLAKE_INPUT
   };
 
@@ -64,7 +71,7 @@
     };
     packages = forAllSystems (system: rec {
       awesomerc = with import inputs.nixpkgs {inherit system;};
-        callPackage ./package.nix {};
+        callPackage ./package.nix {inherit inputs;};
       default = awesomerc;
     });
     # END DOTGIT-SYNC BLOCK EXCLUDED NIX_FLAKE_OUTPUTS_CUSTOM

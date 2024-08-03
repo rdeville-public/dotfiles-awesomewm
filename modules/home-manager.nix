@@ -8,16 +8,11 @@ self: {
 }: let
   cfg = config.awesomerc;
   awesome = let
-    extraGIPackages = with pkgs; [networkmanager upower playerctl];
+    extraGIPackages = with pkgs; [networkmanager upower];
   in
     ((pkgs.awesome.override {gtk3Support = true;}).overrideAttrs (old: {
       version = "git-main";
-      src = pkgs.fetchFromGitHub {
-        owner = "awesomeWM";
-        repo = "awesome";
-        rev = "main";
-        sha256 = "sha256-uaskBbnX8NgxrprI4UbPfb5cRqdRsJZv0YXXshfsxFU=";
-      };
+      src = self.inputs.awesome;
       patches = [];
       postPatch = ''
         patchShebangs tests/examples/_postprocess.lua
