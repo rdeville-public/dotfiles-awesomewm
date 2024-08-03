@@ -1,195 +1,92 @@
 local awful = require("awful")
+local beautiful = require("widgets.theme")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
-local dpi = require("beautiful.xresources").apply_dpi
 
 local ram = {}
 
-local function factory(args)
-  args = args or {}
-
-  local function split(string_to_split, separator)
-    if separator == nil then
-      separator = "%s"
+local function factory(_)
+  local function content(bytes)
+    local format = " %04.2f %s"
+    if bytes < 1024 then
+      return string.format(format, bytes, "b")
+    elseif bytes < 1024 ^ 2 then
+      return string.format(format, bytes / 1024, "Kib")
+    elseif bytes < 1024 ^ 3 then
+      return string.format(format, bytes / 1024 ^ 2, "Mib")
+    elseif bytes < 1024 ^ 4 then
+      return string.format(format, bytes / 1024 ^ 3, "Gib")
     end
-    local t = {}
-
-    for str in string.gmatch(string_to_split, "([^" .. separator .. "]+)") do
-      table.insert(t, str)
-    end
-
-    return t
-  end
-
-  local function content(used)
-    local dim
-    if used < 10 ^ 3 then
-      dim = "KB"
-    elseif used < 10 ^ 6 then
-      used = used / 10 ^ 3
-      dim = "MB"
-    elseif used < 10 ^ 9 then
-      used = used / 10 ^ 6
-      dim = "Gb"
-    else
-      used = tonumber(used)
-      dim = "B"
-    end
-    return string.format("%1.2f", used) .. dim
   end
 
   local function get_ram_value(stat_line)
-    local ram_data = {}
-    local raw_data = {}
+    local raw_data = split(stat_line, " ")
+    local active = tonumber(raw_data[3]) -- + tonumber(raw_data[5])
+    local total = tonumber(raw_data[2])
 
-    -- Get RAM stats
-    ------------------------------------------------------------
-    raw_data = split(stat_line, " ")
-
-    -- Calculate usage
-    ------------------------------------------------------------
-    ram_data.active = tonumber(raw_data[3]) + tonumber(raw_data[5])
-    ram_data.buffer = tonumber(raw_data[6])
-    ram_data.total = tonumber(raw_data[2])
-    ram_data.pourcent = math.floor((ram.active / ram.total) * 1000) / 10
-
-    return ram_data
+    return {
+      text = content(active),
+      percent = math.floor((active / total) * 1000) / 10,
+    }
   end
 
-  local function compute_tier_clr(value)
-    if value <= args.tier1_val then
-      return args.tier1_clr
-    elseif value <= args.tier2_val then
-      return args.tier2_clr
-    elseif value <= args.tier3_val then
-      return args.tier3_clr
-    else
-      return args.tier4_clr
-    end
+  local options = {
+    timeout = beautiful.ram_timeout or 1,
+    clr_0 = beautiful.net_clr_0 or beautiful.clr_0 or beautiful.default_clr_0,
+    clr_1 = beautiful.net_clr_1 or beautiful.clr_1 or beautiful.default_clr_1,
+    clr_2 = beautiful.net_clr_2 or beautiful.clr_2 or beautiful.default_clr_2,
+    clr_3 = beautiful.net_clr_3 or beautiful.clr_3 or beautiful.default_clr_3,
+  }
+
+  local update_widget_used = function(widget)
+    local data = get_ram_value(os.capture("free -b | grep 'Mem:'"))
+    local color = math.floor(data.percent / 25) == 4 and 3
+      or math.floor(data.percent / 25)
+
+    -- Update widget values
+    widget.fg = options["clr_" .. color]
+    widget:get_children_by_id("ram_bar")[1].value = data.percent
+    widget:get_children_by_id("ram_bar")[1].color = options["clr_" .. color]
+    widget:get_children_by_id("ram_value")[1].text = data.text
   end
-
-  args.max_value = get_ram_value(os.capture("free | grep 'Mem:'")).total
-
-  args.font = args.font or beautiful.ram_font or beautiful.font
-  args.bg = args.bg or beautiful.ram_bg or "#000000"
-  args.fg = args.fg or beautiful.ram_fg or "#FFFFFF"
-  args.height = args.height or beautiful.ram_height or 24
-  args.icon = args.icon or beautiful.ram_icon or "RAM: "
-  args.timeout = args.timeout or beautiful.ram_timeout or 1
-
-  args.shape = args.shape or beautiful.ram_shape
-
-  args.bar_shape = args.bar_shape or beautiful.ram_bar_shape
-  args.bar_width = args.bar_width or beautiful.ram_bar_width or 10
-  args.bar_fg = args.bar_fg or beautiful.ram_bar_fg or args.fg
-  args.bar_bg = args.bar_bg or beautiful.ram_bar_bg or args.bg
-
-  args.alert_value = args.alert_value
-    or beautiful.ram_alert_value
-    or args.max_value * 0.8
-  args.tier1_clr = args.tier1_clr or beautiful.ram_tier1_clr or args.fg
-  args.tier2_clr = args.tier2_clr or beautiful.ram_tier2_clr or args.fg
-  args.tier3_clr = args.tier3_clr or beautiful.ram_tier3_clr or args.fg
-  args.tier4_clr = args.tier4_clr or beautiful.ram_tier4_clr or args.fg
-  args.tier1_val = args.tier1_val
-    or beautiful.ram_tier1_val
-    or args.max_value * 0.25
-  args.tier2_val = args.tier2_val
-    or beautiful.ram_tier2_val
-    or args.max_value * 0.50
-  args.tier3_val = args.tier3_val
-    or beautiful.ram_tier3_val
-    or args.max_value * 0.75
-  args.tier4_val = args.tier4_val or beautiful.ram_tier4_val or args.max_value
 
   ram = wibox.widget({
     {
       {
         {
           id = "ram_icon",
-          markup = "<span"
-            .. " foreground = '"
-            .. args.fg
-            .. "'>"
-            .. args.icon
-            .. "</span>",
-          font = args.font,
+          text = beautiful.ram_icon or " ",
           widget = wibox.widget.textbox,
         },
         {
           {
             id = "ram_bar",
-            -- DEBUG
-            value = 25,
-            widget = wibox.widget.progressbar,
-            -- https://awesomewm.org/apidoc/classes/wibox.widget.progressbar.html
-            clip = true,
-            color = args.bar_fg,
-            background_color = args.bar_bg,
-            bar_shape = args.bar_fill_shape,
-            shape = args.bar_shape,
+            background_color = beautiful.ram_bar_bg
+              or beautiful.widget_default_bar_bg,
+            shape = beautiful.ram_bar_shape,
             max_value = 100,
-            forced_width = args.bar_width,
-            visible = true,
+            widget = wibox.widget.progressbar,
           },
-          forced_width = args.bar_width,
-          forced_height = args.height,
+          forced_width = beautiful.ram_bar_width
+            or beautiful.widget_bar_width
+            or beautiful.widget_default_bar_width,
           direction = "east",
           layout = wibox.container.rotate,
         },
         {
           id = "ram_value",
           widget = wibox.widget.textbox,
-          markup = "<span foreground='" .. args.fg .. "'>" .. string.format(
-            " %05.2f ",
-            50.0
-          ) .. "</span>",
-          ellipsize = "end",
-          wrap = "word_char",
-          valign = "center",
-          align = "center",
-          font = args.ram_font,
-          forced_width = dpi(args.height * 3),
-          visible = true,
         },
         layout = wibox.layout.align.horizontal,
       },
       widget = wibox.container.margin(nil, 15, 15, 0, 0),
     },
-    bg = args.bg,
-    shape = args.shape,
+    bg = beautiful.ram_bg or beautiful.widget_default_bg,
+    font = beautiful.ram_font or beautiful.font,
+    shape = beautiful.ram_shape or beautiful.widget_default_shape_right,
     widget = wibox.container.background,
-    set_ram_used = function(self, stdout)
-      -- Compute values
-      local ram_data = get_ram_value(stdout)
-      local clr_value = compute_tier_clr(ram.active)
-      local text_value = content(ram.active)
-
-      -- Update widget values
-      self:get_children_by_id("ram_icon")[1].markup = "<span foreground='"
-        .. clr_value
-        .. "'>"
-        .. args.icon
-        .. "</span>"
-      self:get_children_by_id("ram_bar")[1].value = ram_data.pourcent
-      self:get_children_by_id("ram_bar")[1].color = clr_value
-      self:get_children_by_id("ram_value")[1].markup = "<span foreground='"
-        .. clr_value
-        .. "'>"
-        .. text_value
-        .. "</span>"
-    end,
   })
 
-  local update_widget_used = function(widget, stdout, _, _, _)
-    for _, line in ipairs(split(stdout, "\r\n")) do
-      if string.find(line, "Mem:") then
-        widget:set_ram_used(line)
-      end
-    end
-  end
-
-  awful.widget.watch("free", args.timeout, update_widget_used, ram)
+  awful.widget.watch("echo &>/dev/null", options.timeout, update_widget_used, ram)
 
   return ram
 end
@@ -199,5 +96,3 @@ return setmetatable(ram, {
     return factory(...)
   end,
 })
-
--- vim: fdm=indent
