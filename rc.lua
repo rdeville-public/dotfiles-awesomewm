@@ -20,7 +20,6 @@ beautiful.init(require("theme"))
 awful.util.tagnames = require("config.tags").tags
 awful.layout.layouts = require("config.layouts")
 awful.util.tasklist_buttons = require("config.buttons.tasklist")
-require("config.titlebars")
 
 -- Virtual Desktop
 -- ------------------------------------------------------------------------

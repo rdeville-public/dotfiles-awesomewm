@@ -8,11 +8,6 @@ local shiftkey = require("config.keys.mod").shiftkey
 local ctrlkey = require("config.keys.mod").ctrlkey
 
 return awful.util.table.join(
-  awful.key({ modkey, shiftkey }, "t", awful.titlebar.toggle, {
-    description = "\t\tToggle client titlebar",
-    group = "Client",
-  }),
-
   awful.key({ modkey }, "f", function(c)
     c.fullscreen = not c.fullscreen
     c:raise()
