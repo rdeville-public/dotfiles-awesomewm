@@ -1,208 +1,206 @@
 local awful = require("awful")
+local beautiful = require("widgets.theme")
+local create_button = require("widgets.control_center.buttons.create-button")
 local gears = require("gears")
-local beautiful = require("beautiful")
 local naughty = require("naughty")
 
-local apps = require("config.apps")
-local create_button = require("widgets.control_center.buttons.create-button")
-
 -- Network button for control center
-local network_button =
-  create_button.circle_big(beautiful.cc_network_wifi_up_icon_path)
-local background = network_button:get_children_by_id("background")[1]
-local label = network_button:get_children_by_id("label")[1]
-local icon = network_button:get_children_by_id("icon")[1]
+local network_button = create_button.circle_big(
+  beautiful.cc_button_network_icon
+    or script_path() .. "../icons/network-lan-down.svg"
+)
 
-network_button.curr_state = {}
-network_button.curr_state.wireless = ""
-network_button.state = {}
+network_button.last_state = {}
 
-function network_button.notify(message, title, app_name, notif_icon)
-  naughty.notification({
-    message = message,
-    title = title,
-    app_name = app_name,
-    icon = notif_icon,
-  })
+local function get_interface_state(interface)
+  return os.capture("cat /sys/class/net/" .. interface .. "/operstate")
 end
 
--- Create wireless connection notification
-function network_button.notify_wireless_connected(essid)
-  local message = 'Wireless connected to <b>"' .. essid .. '"</b>'
-  local title = "Connection Established"
-  local app_name = "System Notification"
-  local notif_icon = beautiful.cc_network_wifi_up_icon_path
-  network_button.notify(message, title, app_name, notif_icon)
+local function get_interfaces(regexp)
+  local interfaces = {}
+  for match in os.capture("ls /sys/class/net/", true):gmatch(regexp) do
+    table.insert(interfaces, { name = match:gsub("\n", "") })
+  end
+  return interfaces
 end
 
--- Create wired connection notification
-function network_button.notify_wired_connected()
-  local message = 'Ethernet connected with <b>"'
-    .. beautiful.cc_network_lan_interface
-    .. '"</b>'
-  local title = "Connection Established"
-  local app_name = "System Notification"
-  local notif_icon = beautiful.cc_network_lan_up_icon_path
-  network_button.notify(message, title, app_name, notif_icon)
-end
+local net = {
+  foo = "bar",
+  lan = {
+    interfaces = beautiful.cc_network_wifi_interfaces
+      or get_interfaces("(e[a-zA-Z0-9]*)"),
+    up = {
+      icon = beautiful.cc_button_network_lan_up_icon
+        or script_path() .. "../icons/network-lan-up.svg",
+      bg = beautiful.cc_button_network_lan_up_bg
+        or beautiful.cc_button_active_bg
+        or beautiful.cc_button_active_default_bg,
+    },
+    down = {
+      icon = beautiful.cc_button_network_lan_down_icon
+        or script_path() .. "../icons/network-lan-down.svg",
+      bg = beautiful.cc_button_network_lan_down_bg
+        or beautiful.cc_button_inactive_bg
+        or beautiful.cc_button_inactive_default_bg,
+    },
+    connected = {
+      icon = beautiful.cc_button_network_lan_connected_icon
+        or script_path() .. "../icons/network-lan-up.svg",
+      bg = beautiful.cc_button_network_lan_connected_bg
+        or beautiful.cc_button_connected_bg
+        or beautiful.cc_button_connected_default_bg,
+    },
+  },
+  wifi = {
+    interfaces = beautiful.cc_network_wifi_interfaces
+      or get_interfaces("(wl.*)"),
+    up = {
+      icon = beautiful.cc_button_network_wifi_up_icon
+        or script_path() .. "../icons/network-wifi-up.svg",
+      bg = beautiful.cc_button_network_wifi_up_bg
+        or beautiful.cc_button_active_bg
+        or beautiful.cc_button_active_default_bg,
+    },
+    down = {
+      icon = beautiful.cc_button_network_lan_down_icon
+        or script_path() .. "../icons/network-wifi-down.svg",
+      bg = beautiful.cc_button_network_wifi_down_bg
+        or beautiful.cc_button_inactive_bg
+        or beautiful.cc_button_inactive_default_bg,
+    },
+    connected = {
+      icon = beautiful.cc_button_network_wifi_connected_icon
+        or script_path() .. "../icons/network-wifi-up.svg",
+      bg = beautiful.cc_button_network_wifi_connected_bg
+        or beautiful.cc_button_connected_bg
+        or beautiful.cc_button_connected_default_bg,
+    },
+  },
+}
 
-function network_button.notify_wireless_disconnected()
-  local message = "Wi-Fi network has been disconnected"
-  local title = "Connection Disconnected"
-  local app_name = "System Notification"
-  local notif_icon = beautiful.cc_network_wifi_down_icon_path
-  network_button.notify(message, title, app_name, notif_icon)
-end
+local function set_status()
+  local background = network_button:get_children_by_id("background")[1]
+  local label = network_button:get_children_by_id("label")[1]
+  local icon = network_button:get_children_by_id("icon")[1]
+  local wlan_state = "Down"
+  local curr_state = {}
 
-function network_button.notify_wired_disconnected()
-  local message = "Ethernet network has been disconnected"
-  local title = "Connection Disconnected"
-  local app_name = "System Notification"
-  local notif_icon = beautiful.cc_network_lan_down_icon_path
-  network_button.notify(message, title, app_name, notif_icon)
-end
+  -- Create wireless connection notification
+  local function notify_wireless_connected(essid)
+    naughty.notify({
+      title = "Connection Established",
+      message = "Wireless connected to <b>" .. essid .. "</b>",
+      app_name = "System Notification",
+      icon = net.wifi.up.icon,
+    })
+  end
+  -- Create wired connection notification
+  local function notify_wired_connected(lan)
+    naughty.notify({
+      title = "Connection Established",
+      message = 'Ethernet connected with <b>"' .. lan .. '"</b>',
+      app_name = "System Notification",
+      notif_icon = net.lan.up.icon,
+    })
+  end
+  local function notify_wireless_disconnected()
+    naughty.notify({
+      title = "Connection Disconnected",
+      message = "Wi-Fi network has been disconnected",
+      app_name = "System Notification",
+      notif_icon = net.wifi.down.icon,
+    })
+  end
+  local function notify_wired_disconnected()
+    naughty.notify({
+      title = "Connection Disconnected",
+      message = "Ethernet network has been disconnected",
+      app_name = "System Notification",
+      notif_icon = net.lan.down.icon,
+    })
+  end
 
--- Get wifi essid
-function network_button.set_essid(widget)
-  return awful.spawn.easy_async_with_shell(
-    "iw dev " .. beautiful.cc_network_wlan_interface .. " link",
-    function(stdout)
-      local essid = stdout:match("SSID: (.-)\n") or "N/A"
-      widget:set_text(essid)
+  local state = nil
+  -- If ethernet interface exists, check if connected. If so, deactivate
+  -- wireless.
+  for _, value in ipairs(net.lan.interfaces) do
+    state = get_interface_state(value.name)
+    if
+      state == "up"
+      and os.capture("ip addr show " .. value.name, true)
+        :match("(inet.*brd)")
+        :match(
+          "([0-9]?[0-9]?[0-9]?%.[0-9][0-9]?[0-9]?%.[0-9][0-9]?[0-9]?%.[0-9][0-9]?[0-9]?)"
+        )
+    then
+      label.text = "Connected"
+      background.bg = net.lan.connected.bg
+      icon.image = net.lan.connected.icon
+      awful.spawn.with_shell("rfkill block wlan")
     end
-  )
-end
+  end
 
-local update_button = function()
-  awful.spawn.easy_async_with_shell([=[
-    wireless="]=] .. tostring(beautiful.cc_network_wlan_interface) .. [=["
-    wired="]=] .. tostring(beautiful.cc_network_lan_interface) .. [=["
-    net="/sys/class/net/"
-    wired_state="down"
-    wireless_state="down"
-    network_mode=""
-    # Check network state
-    function check_network_state() {
-      # Check what interface is up
-      network_mode=''
-      if [[ "${wireless_state}" == "up" ]];
-      then
-        network_mode+="wireless\n"
-        if iw dev "${wireless}" link | grep -q "Not"
-        then
-          network_mode+="No internet connection\n"
-        else
-          network_mode+="$(iw dev ${wireless} link | grep SSID | cut -d ":" -f 2)"
-        fi
-      fi
-      if [[ "${wired_state}" == "up" ]];
-      then
-        network_mode+='wired\n'
-      fi
-      if [[ "${wireless_state}" == "down" && "${wired_state}" == "down" ]]
-      then
-        network_mode+='No internet connection\n'
-      fi
-    }
-    # Check if network directory exist
-    function check_network_directory() {
-      if rfkill list wlan | grep -q "Soft blocked: no"
-      then
-        wireless_state="up"
-      else
-        wireless_state="down"
-      fi
-      if [[ -n "${wired}" && -d "${net}${wired}" ]]; then
-        wired_state="$(cat "${net}${wired}/operstate")"
-      fi
-      check_network_state
-    }
-    # Start script
-    function print_network_mode() {
-      # Call to check network dir
-      check_network_directory
-      # Print network mode
-      printf "${network_mode}"
-    }
-    print_network_mode
-    ]=], function(stdout)
-    local mode = {}
-    for match in (stdout):gmatch("(.-)" .. "%\n") do
-      table.insert(mode, match)
+  if state == nil or state ~= "up" then
+    state = os.capture("rfkill list wlan")
+    if state:match("Soft blocked: yes") or state:match("Hard blocked: yes") then
+      awful.spawn.with_shell("rfkill unblock wlan")
     end
-    for idx_mode = 1, #mode do
-      if idx_mode == 1 then
-        if not mode[idx_mode] == "wireless" then
-          network_button.curr_state.wireless = "down"
-        elseif mode[idx_mode + 1] == "wired" then
-          network_button.curr_state.wireless = "up"
-        else
-          idx_mode = idx_mode + 1
-          network_button.curr_state.wireless = mode[idx_mode]
-        end
-        if mode[idx_mode] == "wired" then
-          network_button.curr_state.wired = "up"
-        end
-      end
-    end
-    if stdout:match("No internet connection") then
-      network_button.curr_state.is_connected = false
-      label:set_text("Offline")
-      if stdout:match("wireless") then
-        background:set_bg(beautiful.cc_button_network_active)
-        icon:set_image(beautiful.cc_network_wifi_down_icon_path)
-      elseif stdout:match("wired") then
-        background:set_bg(beautiful.cc_button_network_inactive)
-        icon:set_image(beautiful.cc_network_lan_down_icon_path)
-      end
-    else
-      network_button.curr_state.is_connected = true
-      if stdout:match("wireless") then
-        network_button.set_essid(label)
-        background:set_bg(beautiful.cc_button_network_paired)
-        icon:set_image(beautiful.cc_network_wifi_up_icon_path)
-      else
-        background:set_bg(beautiful.cc_button_network_paired)
-        label:set_text("Connected")
-        icon:set_image(beautiful.cc_network_lan_up_icon_path)
-      end
-    end
-    if network_button.state.is_connected == nil then
-      for key, val in pairs(network_button.curr_state) do
-        network_button.state[key] = val
-      end
-    else
-      if
-        not network_button.state.is_connected
-        == network_button.curr_state.is_connected
-      then
-        if network_button.curr_state.is_connected then
-          if
-            not network_button.curr_state.wireless
-            == network_button.state.wireless
-          then
-            network_button.notify_wired_connected()
-          else
-            network_button.notify_wireless_connected(
-              network_button.curr_state.wireless
-            )
+    -- Update wireless interfaces and set buttons if one of the interfaces
+    -- is connected
+    for _, value in ipairs(net.wifi.interfaces) do
+      state = get_interface_state(value.name)
+      if os.capture("rfkill list wlan"):match("Soft blocked: no") then
+        value.state = "up"
+        if state == "up" then
+          local essid = os.capture("iw dev " .. value.name .. " link", true)
+            :match("SSID: ([a-zA-z0-9-_]*)\n") or "N/A"
+          wlan_state = "Up"
+
+          if essid ~= "N/A" then
+            label.text = essid
+            background.bg = net.wifi.connected.bg
+            icon.image = net.wifi.connected.icon
+
+            curr_state = {
+              state = "connected",
+              interface = value.name,
+              type = "wireless",
+            }
+            if not table_equals(network_button.last_state, curr_state) then
+              network_button.last_state = curr_state
+              notify_wireless_connected(essid)
+            end
+            return
           end
         else
-          if
-            not network_button.curr_state.wireless
-            == network_button.state.wireless
-          then
-            network_button.notify_wired_disconnected()
-          else
-            network_button.notify_wireless_disconnected()
-          end
+          value.state = "down"
         end
       end
+      -- Default button configuration
+      label.text = wlan_state
+      background.bg = net.wifi[string.lower(wlan_state)].bg
+      icon.image = net.wifi[string.lower(wlan_state)].icon
+      curr_state = {
+        state = "wlan_state",
+        interface = "any",
+        type = "wireless",
+      }
     end
-    for key, val in pairs(network_button.curr_state) do
-      network_button.state[key] = val
+  end
+
+  if not table_equals(network_button.last_state, curr_state) then
+    if curr_state.type == network_button.last_state.type == "wireless" then
+      notify_wireless_disconnected()
     end
-  end)
+    if
+      curr_state.type ~= network_button.last_state.type
+      and network_button.last_state == "wireless"
+      and curr_state.state == "connected"
+    then
+      notify_wired_connected(curr_state.interface)
+    end
+    network_button.last_state = curr_state
+  end
 end
 
 gears.timer({
@@ -210,28 +208,22 @@ gears.timer({
   autostart = true,
   call_now = true,
   callback = function()
-    update_button()
+    set_status()
   end,
 })
 
-update_button()
-
-network_button:connect_signal("button::press", function(_, _, _, button)
-  if button == 1 then
-    awful.spawn.easy_async_with_shell("rfkill list wifi", function(stdout)
-      if stdout:match("Soft blocked: yes") then
-        awful.spawn.single_instance("rfkill unblock wifi")
-        label:set_text("Go on...")
-      else
-        awful.spawn.single_instance("rfkill block wifi")
-        label:set_text("Go off...")
-      end
-    end)
-  end
-
-  if button == 3 then
-    awful.spawn.single_instance(apps.network_manager)
-  end
+network_button:connect_signal("button::press", function(self)
+  awful.spawn.easy_async_with_shell("rfkill list wifi", function(stdout)
+    if stdout:match("Soft blocked: yes") then
+      awful.spawn.with_shell("rfkill unblock wifi")
+      self:get_children_by_id("icon")[1].text = "Go on..."
+    else
+      awful.spawn.with_shell("rfkill block wifi")
+      self:get_children_by_id("icon")[1].text = "Go off..."
+    end
+  end)
 end)
+
+set_status()
 
 return network_button

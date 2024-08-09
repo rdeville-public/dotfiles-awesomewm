@@ -1,7 +1,6 @@
 local awful = require("awful")
-local beautiful = require("beautiful")
+local beautiful = require("widgets.theme")
 local create_button = require("widgets.control_center.buttons.create-button")
-local colors = require("utils.colors")
 
 local lock_button = create_button.circle_big(
   beautiful.cc_button_lock_icon or script_path() .. "../icons/lock.svg"
@@ -11,7 +10,9 @@ local function set_status(button)
   local background = button:get_children_by_id("background")[1]
   local label = button:get_children_by_id("label")[1]
 
-  background.bg = beautiful.cc_lock_bg or beautiful.cc_bg or colors.grey_800
+  background.bg = beautiful.cc_button_lock_inactive_bg
+    or beautiful.cc_button_inactive_bg
+    or beautiful.cc_button_inactive_default_bg
   label.text = "Lock"
 end
 

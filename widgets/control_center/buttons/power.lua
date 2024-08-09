@@ -1,21 +1,26 @@
----@diagnostic disable undefined-global
-local beautiful = require("beautiful")
-local dpi = require("beautiful.xresources").apply_dpi
-
+local awful = require("awful")
+local beautiful = require("widgets.theme")
 local create_button = require("widgets.control_center.buttons.create-button")
 
-local power_button = create_button.small({
-  icon = beautiful.cc_icon_power_path,
-  bg = beautiful.cc_popup_default_btn_bg .. "44",
-  width = dpi(50),
-  height = dpi(50),
-})
+local power_button = create_button.circle_big(
+  beautiful.cc_button_power_icon
+    or script_path() .. "../icons/system-shutdown.svg"
+)
 
-power_button:connect_signal("button::press", function(_, _, _, button)
-  if button == 1 then
-    awesome.emit_signal("control-center::hide")
-    awesome.emit_signal("module::exit_screen:show")
-  end
+local function set_status(button)
+  local background = button:get_children_by_id("background")[1]
+  local label = button:get_children_by_id("label")[1]
+
+  background.bg = beautiful.cc_button_power_bg
+    or beautiful.cc_button_inactive_bg
+    or beautiful.cc_button_inactive_default_bg
+  label.text = "Power Off"
+end
+
+power_button:connect_signal("button::press", function()
+  awful.spawn.easy_sync("poweroff")
 end)
+
+set_status(power_button)
 
 return power_button

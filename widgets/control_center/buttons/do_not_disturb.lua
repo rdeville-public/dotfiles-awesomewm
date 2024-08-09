@@ -1,34 +1,34 @@
-local naughty = require("naughty")
-local beautiful = require("beautiful")
+local beautiful = require("widgets.theme")
 local create_button = require("widgets.control_center.buttons.create-button")
+local naughty = require("naughty")
 
-local initial_action = function(button)
+local dnd_button = create_button.circle_big(
+  beautiful.cc_button_do_not_disturb_icon
+    or script_path() .. "../icons/notifications.svg"
+)
+
+local function set_status(button)
   local background = button:get_children_by_id("background")[1]
   local label = button:get_children_by_id("label")[1]
 
   if naughty.suspended then
-    background:set_bg(beautiful.cc_button_do_not_disturb_inactive)
-    label:set_text("Off")
+    background.bg = beautiful.cc_button_do_not_disturb_inactive
+      or beautiful.cc_button_inactive_bg
+      or beautiful.cc_button_inactive_default_bg
+    label.text = "Off"
   else
-    background:set_bg(beautiful.cc_button_do_not_disturb_active)
-    label:set_text("On")
+    background.bg = beautiful.cc_button_do_not_disturb_active
+      or beautiful.cc_button_active_bg
+      or beautiful.cc_button_active_default_bg
+    label.text = "On"
   end
 end
 
-local onclick_action = function()
+dnd_button:connect_signal("button::press", function(self)
   naughty.suspended = not naughty.suspended
-end
-
-local dnd_button =
-  create_button.circle_big(beautiful.cc_do_not_disturb_icon_path)
-
-dnd_button:connect_signal("button::press", function(self, _, _, button)
-  if button == 1 then
-    onclick_action()
-    initial_action(self)
-  end
+  set_status(self)
 end)
 
-initial_action(dnd_button)
+set_status(dnd_button)
 
 return dnd_button
