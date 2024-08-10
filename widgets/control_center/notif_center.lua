@@ -1,23 +1,20 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
-local colors = require("utils.colors")
+local clickable_container =
+  require("widgets.control_center.clickable-container")
 local dpi = require("beautiful").xresources.apply_dpi
 local gears = require("gears")
 local naughty = require("naughty")
 local wibox = require("wibox")
 
--- Control Center Library
-local clickable_container = require("widgets.control_center.clickable-container")
-local create_button = require("widgets.control_center.buttons.create-button")
-
-local time_to_seconds = function(time)
+local function time_to_seconds(time)
   local hourInSec = tonumber(string.sub(time, 1, 2)) * 3600
   local minInSec = tonumber(string.sub(time, 4, 5)) * 60
   local getSec = tonumber(string.sub(time, 7, 8))
   return (hourInSec + minInSec + getSec)
 end
 
-local scroller = function(widget)
+local function scroller(widget)
   widget:buttons(gears.table.join(
     awful.button({}, 4, nil, function()
       if #widget.children == 1 then
@@ -36,45 +33,19 @@ local scroller = function(widget)
   ))
 end
 
-local notif_center_title = wibox.widget({
-  {
-    align = "center",
-    valign = "center",
-    widget = wibox.widget.textbox,
-    font = beautiful.font,
-    text = "Notifications",
-  },
-  widget = wibox.container.margin(nil, dpi(15), dpi(15), 0, 0),
-})
-
-local notif_center_clear_all_button = create_button.small({
-  icon = beautiful.cc_notif_clear_all_icon,
-  bg = beautiful.cc_popup_default_btn_bg or colors.grey_800 .. "88",
-  width = dpi(50),
-  height = dpi(50),
-})
-
-notif_center_clear_all_button:connect_signal(
-  "button::press",
-  function(_, _, _, button)
-    if button == 1 then
-      _G.reset_notifbox_layout()
-    end
-  end
-)
-
 local empty_notifbox = wibox.widget({
   {
     {
       {
-        image = beautiful.cc_notif_empty_icon,
+        image = beautiful.cc_notif_empty_icon
+          or script_path() .. "icons/notifications.svg",
         forced_height = dpi(32),
         forced_width = dpi(32),
         opacity = 0.5,
         widget = wibox.widget.imagebox,
       },
       {
-        text = "You have no new notification",
+        markup = "<b>You have no more notification</b>",
         align = "center",
         valign = "center",
         widget = wibox.widget.textbox,
@@ -89,83 +60,105 @@ local empty_notifbox = wibox.widget({
   widget = wibox.container.place,
 })
 
-local create_notifbox = function(notif)
+local notifbox_layout = wibox.widget({
+  empty_notifbox,
+  spacing = dpi(10),
+  widget = wibox.layout.fixed.vertical,
+})
+
+local function create_notifbox(notif)
   local pop_time = os.date("%H:%M:%S")
   local exact_time = os.date("%I:%M %p")
-  local exact_date_time = os.date("%b %d, %I:%M %p")
+  local exact_date_time = os.date("%b %d, %H:%M:%S")
 
-  local icon = wibox.widget({
-    image = notif.icon,
-    resize = false,
-    valign = "center",
-    halign = "center",
-    forced_height = dpi(42),
-    forced_width = dpi(42),
-    --clip_shape          = gears.shape.circle,
-    vertical_fit_policy = "filt",
-    horizontal_fit_policy = "filt",
-    max_scaling_factor = 2,
-    widget = wibox.widget.imagebox,
-  })
-
-  local app_icon = function()
-    local widget = nil
-
-    if notif.app_icon ~= nil then
-      widget = wibox.widget({
-        image = notif.app_icon,
-        resize = true,
-        forced_height = dpi(16),
-        forced_width = dpi(16),
-        widget = wibox.widget.imagebox,
-      })
-    else
-      widget = wibox.widget({
-        image = beautiful.cc_notif_empty_icon,
-        resize = true,
-        forced_height = dpi(16),
-        clip_shape = gears.shape.circle,
-        forced_width = dpi(16),
-        widget = wibox.widget.imagebox,
-      })
-    end
-    return widget
-  end
-
-  local dismiss_button = wibox.widget({
+  local box = wibox.widget({
     {
       {
         {
-          image = beautiful.cc_notif_dismiss,
-          resize = true,
-          forced_height = dpi(16),
-          widget = wibox.widget.imagebox,
+          {
+            {
+              image = notif.app_icon,
+              resize = true,
+              forced_height = dpi(16),
+              forced_width = dpi(16),
+              widget = wibox.widget.imagebox,
+            },
+            {
+              markup = "<b>" .. (notif.app_name or "System Notification") .. "</b>" ,
+              align = "center",
+              valign = "center",
+              widget = wibox.widget.textbox,
+            },
+            spacing = dpi(10),
+            layout = wibox.layout.fixed.horizontal,
+          },
+          nil,
+          {
+            {
+              id = "notifbox_time",
+              text = pop_time,
+              font = beautiful.font,
+              widget = wibox.widget.textbox,
+            },
+            {
+              {
+                {
+                  image = beautiful.cc_notif_dismiss
+                    or script_path() .. "icons/remove.svg",
+                  resize = true,
+                  forced_height = dpi(16),
+                  widget = wibox.widget.imagebox,
+                },
+                bg = beautiful.cc_button_notif_dismiss_bg
+                  or beautiful.cc_button_urgent_bg
+                  or beautiful.cc_button_urgent_default_bg,
+                shape = gears.shape.circle,
+                widget = wibox.container.background,
+              },
+              id = "notifbox_dismiss",
+              visible = false,
+              widget = clickable_container,
+            },
+            layout = wibox.layout.align.horizontal,
+          },
+          id = "notifbox_header",
+          expand = "inside",
+          layout = wibox.layout.align.horizontal,
         },
-        margins = dpi(1),
-        widget = wibox.container.margin,
+        {
+          markup = "<b>" .. notif.title .. "</b>",
+          widget = wibox.widget.textbox,
+        },
+        {
+          text = notif.message,
+          widget = wibox.widget.textbox,
+        },
+        spacing = dpi(5),
+        layout = wibox.layout.fixed.vertical,
       },
-      bg = beautiful.cc_notif_dismiss_bg,
-      border_width = beautiful.btn_border_width,
-      border_color = beautiful.cc_popup_default_btn_bg,
-      shape = gears.shape.circle,
-      widget = wibox.container.background,
+      widget = wibox.container.margin(nil, 5, 5, 5, 5),
     },
-    widget = clickable_container,
+    bg = notif.bg,
+    fg = notif.fg,
+    shape = beautiful.cc_notifbox_shape,
+    widget = wibox.container.background,
   })
 
-  local app_name = wibox.widget({
-    markup = notif.app_name or "System Notification",
-    font = beautiful.font_bold,
-    align = "center",
-    valign = "center",
-    widget = wibox.widget.textbox,
-  })
+  box:connect_signal("mouse::enter", function()
+    box:get_children_by_id("notifbox_dismiss")[1].visible = true
+    box:get_children_by_id("notifbox_time")[1].visible = false
+  end)
 
-  local notification_time = wibox.widget({
-    text = "",
-    font = beautiful.font,
-    widget = wibox.widget.textbox,
-  })
+  box:connect_signal("mouse::leave", function()
+    box:get_children_by_id("notifbox_dismiss")[1].visible = false
+    box:get_children_by_id("notifbox_time")[1].visible = true
+  end)
+
+  box
+    :get_children_by_id("notifbox_dismiss")[1]
+    :connect_signal("button::press", function(_)
+      notifbox_layout:remove_widgets(box)
+    end)
 
   -- Update notification time
   gears.timer({
@@ -180,172 +173,105 @@ local create_notifbox = function(notif)
       time_difference = tonumber(time_difference)
 
       if time_difference < 60 then
-        notification_time:set_text("now")
+        box:get_children_by_id("notifbox_time").text = "now"
       elseif time_difference >= 60 and time_difference < 3600 then
-        local time_in_minutes = math.floor(time_difference / 60)
-        notification_time:set_text(time_in_minutes .. "m ago")
+        box:get_children_by_id("notifbox_time").text = math.floor(
+          time_difference / 60
+        ) .. "m ago"
       elseif time_difference >= 3600 and time_difference < 86400 then
-        notification_time:set_text(exact_time)
+        box:get_children_by_id("notifbox_time").text = exact_time
       elseif time_difference >= 86400 then
-        notification_time:set_text(exact_date_time)
-        return false
+        box:get_children_by_id("notifbox_time").text = exact_date_time
       end
 
       collectgarbage("collect")
     end,
   })
 
-  local app_icon_with_name_and_dismiss_btn = wibox.widget({
-    {
-      app_icon(),
-      app_name,
-      spacing = beautiful.notification_margin,
-      layout = wibox.layout.fixed.horizontal,
-    },
-    nil,
-    notification_time,
-    expand = "inside",
-    spacing = beautiful.notification_margin,
-    layout = wibox.layout.align.horizontal,
-  })
-
-  local action_list = wibox.widget({
-    notification = notif,
-    base_layout = wibox.widget({
-      spacing = beautiful.notification_margin,
-      layout = wibox.layout.fixed.horizontal,
-    }),
-    widget_template = {
-      {
-        {
-          {
-            id = "text_role",
-            align = "center",
-            valign = "center",
-            widget = wibox.widget.textbox,
-          },
-          top = dpi(4),
-          bottom = dpi(4),
-          left = dpi(10),
-          right = dpi(10),
-          widget = wibox.container.margin,
-        },
-        bg = beautiful.cc_popup_default_btn_bg,
-        shape = gears.shape.rounded_bar,
-        widget = wibox.container.background,
-      },
-      widget = clickable_container,
-    },
-    style = { underline_normal = false, underline_selected = true },
-    widget = naughty.list.actions,
-  })
-
-  local title_area_and_message = wibox.widget({
-    {
-      markup = "<b>" .. notif.title .. "</b>",
-      font = beautiful.font,
-      widget = wibox.widget.textbox,
-    },
-    {
-      markup = notif.message,
-      font = beautiful.font,
-      widget = wibox.widget.textbox,
-    },
-    forced_width = dpi(500),
-    layout = wibox.layout.align.vertical,
-  })
-
-  local notibox = wibox.widget({
-    app_icon_with_name_and_dismiss_btn,
-    {
-      title_area_and_message,
-      spacing = beautiful.notification_margin,
-      layout = wibox.layout.fixed.horizontal,
-    },
-    spacing = beautiful.notification_margin,
-    layout = wibox.layout.fixed.vertical,
-  })
-
-  local box = wibox.widget({
-    {
-      {
-        notibox,
-        action_list,
-        spacing = beautiful.notification_margin,
-        widget = wibox.layout.fixed.vertical,
-      },
-      margins = beautiful.notification_margin,
-      widget = wibox.container.margin,
-    },
-    bg = beautiful.cc_notif_default_bg,
-    shape = beautiful.widget_shape,
-    widget = wibox.container.background,
-  })
-
-  box:connect_signal("mouse::enter", function()
-    app_icon_with_name_and_dismiss_btn.third = dismiss_button
-  end)
-
-  box:connect_signal("mouse::leave", function()
-    app_icon_with_name_and_dismiss_btn.third = notification_time
-  end)
-
-  dismiss_button:connect_signal("button::press", function(_, _, _, button)
-    if button == 1 then
-      _G.remove_notifbox(box)
-    end
-  end)
-
   collectgarbage("collect")
 
   return box
 end
 
-local notifbox_layout = wibox.layout.fixed.vertical()
-scroller(notifbox_layout)
-notifbox_layout.spacing = dpi(10)
+local notif_center = wibox.widget({
+  {
+    {
+      align = "center",
+      valign = "center",
+      widget = wibox.widget.textbox,
+      font = beautiful.cc_font or beautiful.font,
+      text = "Notifications",
+    },
+    nil,
+    {
+      {
+        {
+          {
+            id = "icon",
+            image = beautiful.cc_notif_clear_all_icon
+              or script_path() .. "/icons/clear-all.svg",
+            resize = true,
+            forced_height = dpi(16),
+            forced_width = dpi(16),
+            widget = wibox.widget.imagebox,
+          },
+          margins = dpi(4),
+          widget = wibox.container.margin,
+        },
+        id = "icon_bg",
+        bg = beautiful.cc_button_clear_all_notif_bg
+          or beautiful.cc_button_urgent_bg
+          or beautiful.cc_button_urgent_default_bg,
+        shape = gears.shape.circle,
+        widget = wibox.container.background,
+      },
+      widget = clickable_container,
+    },
+    top = dpi(25),
+    widget = wibox.container.margin,
+    layout = wibox.layout.align.horizontal,
+  },
+  notifbox_layout,
+  spacing = dpi(15),
+  layout = wibox.layout.fixed.vertical,
+})
 
-reset_notifbox_layout = function()
-  notifbox_layout:reset(notifbox_layout)
-  notifbox_layout:insert(1, empty_notifbox)
-  remove_notifbox_empty = true
-end
-
-remove_notifbox = function(box)
-  notifbox_layout:remove_widgets(box)
-
-  if #notifbox_layout.children == 0 then
+notif_center
+  :get_children_by_id("icon_bg")[1]
+  :connect_signal("button::press", function(_)
+    notifbox_layout:reset(notifbox_layout)
     notifbox_layout:insert(1, empty_notifbox)
-    remove_notifbox_empty = true
-  end
-end
+  end)
 
-notifbox_layout:insert(1, empty_notifbox)
+scroller(notifbox_layout)
 
 naughty.connect_signal("added", function(notif)
-  if #notifbox_layout.children == 1 and remove_notifbox_empty then
-    notifbox_layout:reset(notifbox_layout)
-    remove_notifbox_empty = false
+  if notif.app_icon == nil or not file_exists(notif.app_icon) then
+    notif.app_icon = beautiful.cc_notif_empty_icon
+      or script_path() .. "icons/notifications.svg"
   end
 
-  local notifbox_color = beautiful.bg_normal
   if notif.urgency == "critical" then
-    notifbox_color = beautiful.bg_urgent
+    notif.fg = beautiful.cc_notif_critical_fg
+      or beautiful.cc_notif_critical_default_fg
+    notif.bg = beautiful.cc_notif_critical_bg
+      or beautiful.cc_notif_critical_default_bg
+    notif.border_color = beautiful.cc_notif_critical_bg
+      or beautiful.cc_notif_critical_default_bg
+  else
+    notif.fg = beautiful.cc_notif_normal_fg
+      or beautiful.cc_notif_normal_default_fg
+    notif.bg = beautiful.cc_notif_normal_bg
+      or beautiful.cc_notif_normal_default_bg
+    notif.border_color = beautiful.cc_notif_normal_bg
+      or beautiful.cc_notif_normal_default_bg
   end
+
+  notif.shape = beautiful.cc_notif_shape or gears.shape.rounded_rect
+  notif.max_width = beautiful.cc_notif_max_width or dpi(250)
+  -- notif.image = gears.surface.load_from_shape(dpi(32), dpi(32), notif.image)
 
   notifbox_layout:insert(1, create_notifbox(notif))
 end)
-
-local notif_center = wibox.widget({
-  {
-    notif_center_title,
-    nil,
-    notif_center_clear_all_button,
-    layout = wibox.layout.align.horizontal,
-  },
-  nil,
-  notifbox_layout,
-  layout = wibox.layout.align.vertical,
-})
 
 return notif_center
