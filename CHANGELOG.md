@@ -1,6 +1,37 @@
 <!-- markdownlint-disable-file -->
 # CHANGELOG
 
+## v0.3.0 (2024-08-12)
+
+### ✨ Minor
+
+  * ✨(theme): Improve theme structure and allow per host config by Romain Deville ([`44228a0`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/44228a04369cdb554ba3ed5edb7a66305a107d8e)) 🔏
+
+### 🩹 Patch
+
+  * ⚡️ Improve overall widgets, config, scripts and packaging (!2) by Romain Deville ([`bc30c9d`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/bc30c9d477f4615d32497cf8cfde94dcf8c66c01))
+  * ⚡️(widget/cc): Update control center structure by Romain Deville ([`cf2146f`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/cf2146fc0f5ba4cf1aaeb74db2b79fd43d033588)) 🔏
+  * ⚡️(widget/cc/sliders): Improver overall control center sliders by Romain Deville ([`2ca15ab`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/2ca15ab80bfb67758a8218c9a56af2a7976c8476)) 🔏
+  * ⚡️(widgets/cc/buttons): Improve overall control center button by Romain Deville ([`ac97666`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/ac97666047d1c6fecca85444637b1b072e7f7e94)) 🔏
+  * ⚡️(widgets/uptime): Improve perf and reduce code qtty by Romain Deville ([`a8c0e26`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/a8c0e26e6cf0e858dfa75555a6474057f8e65690)) 🔏
+  * ⚡️(widgets/tasklist): Improve perf and reduce code qtty by Romain Deville ([`58f57eb`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/58f57eb2f16565a1fac5e51cbffc1dc052157757)) 🔏
+  * ⚡️(widgets/taglist): Improve perf and reduce code qtty by Romain Deville ([`4d2798a`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/4d2798a30e1c0d9719683b4f086f28a5d991b4e6)) 🔏
+  * ⚡️(widgets/systray): Improve perf and reduce code qtty by Romain Deville ([`2dbac64`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/2dbac64c3c1ec319a880f2b4a08ddb50af8d9272)) 🔏
+  * ⚡️(widgets/ram): Improve perf and reduce code qtty by Romain Deville ([`408c98c`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/408c98ceb308ca7dca864a9d0928aab912937d1f)) 🔏
+  * ⚡️(widgets/net): Improve perf and reduce code qtty by Romain Deville ([`c3f15b0`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/c3f15b0ad65a72b50b75bee2636354088a1ebbb8)) 🔏
+  * ⚡️(widget/layouts): Improve perf and reduce code qtty by Romain Deville ([`fc5ef60`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/fc5ef6044d6e9d94b8ccea28b14f44d1fb0fc6b5)) 🔏
+  * ⚡️(widget/keyboardlayout): Improve perf and reduce code qtty by Romain Deville ([`1ab21de`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/1ab21de56d0ff5dbffeb0a580570f6ae075b4c3c)) 🔏
+  * ⚡️(widgets/date): Improve perf and reduce code qtty by Romain Deville ([`75e10b4`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/75e10b42b545680c41eda9220e63ea846e5ea01a)) 🔏
+  * ⚡️(widgets/cpu): Improve perf and reduce code qtty by Romain Deville ([`ebfca6e`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/ebfca6efc04edcf3ceee57ee277962349dfaa795)) 🔏
+  * ⚡️(widgets/bat): Improve perf and reduce code qtty by Romain Deville ([`a27d5b4`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/a27d5b4889ac46ff00b65241c192dfee735c974a)) 🔏
+  * 📦️(nix): Update nix packaging with flake inputs by Romain Deville ([`f217f16`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/f217f16908b4087217e7f8b13c349a3084b13e16)) 🔏
+  * 🔧 Update rc.lua by Romain Deville ([`4504ac9`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/4504ac9f32e2c0cbb1e088d70582f4e683f7a577)) 🔏
+  * 🔧(config): Update keys configuration by Romain Deville ([`35e30f4`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/35e30f498610b6db941ec36e5d6fa405867ed90b)) 🔏
+
+### 🔊 Others
+
+  * 🔥(theme): Remove icons from theme as they are in widgets by Romain Deville ([`026d051`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/026d051f9a1e2005c1635a9c825585ce8f47c38f)) 🔏
+
 ## v0.2.0 (2024-07-26)
 
 ### ✨ Minor
@@ -15,8 +46,6 @@
   * 🔧 Add markdownlint config from DGS template by Romain Deville ([`d96a14d`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/d96a14dd7fa437e6d6e59f492f154834ffa4a69a)) 🔏
   * 🔧 Add semantic release config from DGS template by Romain Deville ([`f2ab5a3`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/f2ab5a3bf5545ed8e073d854c562cc477a6a1cb2)) 🔏
   * 🔧 Add commitlint config from DGS template by Romain Deville ([`bff9e98`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/bff9e98e53984921cdf5586c4bf594fafab2bf15)) 🔏
-  * 🔧 Add cspell configuration from DGS template by Romain Deville ([`7f63330`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/7f633309ab0c6224f7068b8304346002b62b7469)) 🔏
-  * 🔧 Add editorconfig from DGS template by Romain Deville ([`bba4578`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/bba45783a2ad2b88c8ffe36f5d75b11c66cff0ad)) 🔏
 
 ### 🔊 Others
 
@@ -28,6 +57,7 @@
   * 🎨 Rework config keys code format by Romain Deville ([`5d672da`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/5d672da5c61e31a821aa4ad8bb057f6321d340cf)) 🔏
   * 🎨 Format config buttons by Romain Deville ([`a697f6b`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/a697f6b357bf3114046ccf0a223bd733ec1eac13)) 🔏
   * 👷 Add Gitlab CI from DGS template by Romain Deville ([`0c62c42`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/0c62c420e945046a3b23466f56c5384724e3aa48)) 🔏
+  * 🔖 v0.2.0 (NO-CI) by Python Semantic Release [bot] ([`16aff02`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/16aff02cceb4a14b3a0b3cb962d6d556ea51f97a))
   * 🔨 Add test.sh script to test new awesome config by Romain Deville ([`835cf69`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/835cf6972a1e7231d85a6dba97d29588cdfe3b08)) 🔏
   * 🔨 Add devbox config from DGS template by Romain Deville ([`5b48395`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/5b48395fbe58183af571211090ca83e96e98dbf2)) 🔏
   * 🚚 Move modules to utils and improve codes by Romain Deville ([`013e2f3`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/013e2f3f52cac01ac006638577ae335d891c332f)) 🔏
@@ -42,7 +72,6 @@
   * 🔧✨ Update key/signal config, WIP on notification center by Romain Deville ([`6140f64`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/6140f648d1d08e43dc93f805a3f055857b8f968e)) 🔏
   * ✨ Add buttons configuration by Romain Deville ([`942e323`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/942e323b1ccd1532c702294817454f151af3e25a)) 🔏
   * ✨ Introduce battery widget and minor typos fix by Romain Deville ([`393bba0`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/393bba0efec555157c708bc506d1e576f7b8a78d)) 🔏
-  * ✨ Start working on buttons (WIP) by Romain Deville ([`009303c`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/009303c81396d57938feb704086cdb04727d80de)) 🔏
 
 ### 🩹 Patch
 
@@ -57,7 +86,6 @@
 
 ### 🔊 Others
 
-  * ✏ Fixing typo (wrong shape call) by Romain Deville ([`0cda4b2`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/0cda4b262e6f896b9bd542d42b940ddb1fce5e06)) 🔏
   * ♻️  Refacto by Romain Deville ([`8a942ae`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/8a942ae54e416de253295b5eacc047f4f24cffe9)) 🔏
   * 🔀 feature-control-center into develop by Romain Deville ([`83a63e6`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/83a63e6891f592fe04c6c2c98e7429c0babc1574)) 🔏
   * 🚧 WIP: Finish first working draft of control center by Romain Deville ([`a5093e8`](https://framagit.org/rdeville-public/dotfiles/awesome/-/commit/a5093e8145726afa2a6db4f831a5825381bb8f2f)) 🔏
