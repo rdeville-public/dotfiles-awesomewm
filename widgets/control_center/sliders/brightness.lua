@@ -1,59 +1,67 @@
+local awful = require("awful")
+local beautiful = require("widgets.theme")
+local clickable_container =
+  require("widgets.control_center.clickable-container")
+local dpi = beautiful.xresources.apply_dpi
 local wibox = require("wibox")
 local gears = require("gears")
-local awful = require("awful")
-local beautiful = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
-
-local widget_icon = wibox.widget({
-  {
-    {
-      id = "icon",
-      image = beautiful.cc_brightness_icon_path,
-      resize = true,
-      forced_height = dpi(16),
-      forced_width = dpi(16),
-      widget = wibox.widget.imagebox,
-    },
-    margins = dpi(4),
-    widget = wibox.container.margin,
-  },
-  bg = beautiful.cc_brightness_bg_button,
-  shape = gears.shape.circle,
-  widget = wibox.container.background,
-})
-
--- slider var
-local widget_slider = wibox.widget({
-  bar_shape = gears.shape.rounded_rect,
-  bar_height = dpi(3),
-  bar_color = beautiful.bg_focus .. "55",
-  bar_active_color = beautiful.bg_focus,
-
-  handle_shape = gears.shape.circle,
-  handle_width = dpi(12),
-  handle_color = beautiful.bg_focus,
-
-  value = 100,
-  minimum = 0,
-  maximum = 100,
-  forced_height = dpi(20),
-  widget = wibox.widget.slider,
-})
-
-local widget_value = wibox.widget({
-  text = "100%",
-  widget = wibox.widget.textbox,
-})
 
 local slider_wrapped = wibox.widget({
   {
-    widget_icon,
+    {
+      {
+        {
+          id = "icon",
+          image = beautiful.cc_slider_brightness_icon_path
+            or script_path() .. "../icons/brightness.svg",
+          resize = true,
+          forced_height = dpi(16),
+          forced_width = dpi(16),
+          widget = wibox.widget.imagebox,
+        },
+        margins = dpi(4),
+        widget = wibox.container.margin,
+      },
+      bg = beautiful.cc_slider_brightness_inactive
+        or beautiful.cc_slider_inactive_bg
+        or beautiful.cc_slider_inactive_default_bg,
+      shape = gears.shape.circle,
+      widget = wibox.container.background,
+    },
     right = dpi(25),
     widget = wibox.container.margin,
   },
-  widget_slider,
   {
-    widget_value,
+    {
+      id = "slider",
+      bar_shape = gears.shape.rounded_rect,
+      bar_height = dpi(3),
+      bar_color = beautiful.cc_slider_brightness_bar_inactive_bg
+        or beautiful.cc_slider_inactive_bg
+        or beautiful.cc_slider_inactive_default_bg,
+      bar_active_color = beautiful.cc_slider_brightness_bar_active_bg
+        or beautiful.cc_slider_active_bg
+        or beautiful.cc_slider_active_default_bg,
+
+      handle_shape = gears.shape.circle,
+      handle_width = dpi(12),
+      handle_color = beautiful.cc_slider_brightness_bar_active_bg
+        or beautiful.cc_slider_active_bg
+        or beautiful.cc_slider_active_default_bg,
+
+      value = 100,
+      minimum = 0,
+      maximum = 100,
+      forced_height = dpi(20),
+      widget = wibox.widget.slider,
+    },
+    widget = clickable_container,
+  },
+  {
+    {
+      id = "value",
+      widget = wibox.widget.textbox,
+    },
     left = dpi(25),
     widget = wibox.container.margin,
   },
@@ -61,40 +69,22 @@ local slider_wrapped = wibox.widget({
   layout = wibox.layout.align.horizontal,
 })
 
-local set_brightness = function(value)
-  awful.spawn.with_shell("xbacklight -set " .. value)
-  widget_value.text = value .. "%"
-end
-
-local update_brightness = function()
+local function update_brightness()
   awful.spawn.easy_async_with_shell("xbacklight -get", function(stdout)
-    widget_slider.value = stdout
-    widget_value.text = math.floor(stdout) .. "%"
+    slider_wrapped:get_children_by_id("slider")[1].value = stdout
+    slider_wrapped:get_children_by_id("value")[1].text = math.floor(stdout)
+      .. "%"
   end)
 end
 
--- Hover thingy
-widget_slider:connect_signal("mouse::enter", function(c)
-  local wb = mouse.current_wibox
-  old_cursor, old_wibox = wb.cursor, wb
-  wb.cursor = "hand1"
-end)
-
-widget_slider:connect_signal("mouse::leave", function(c)
-  if old_wibox then
-    old_wibox.cursor = old_cursor
-    old_wibox = nil
-  end
-end)
-
 -- When sliding happens
-widget_slider:connect_signal("property::value", function(_, value)
-  set_brightness(value)
-end)
-
-awesome.connect_signal("update::brightness", function()
-  update_brightness()
-end)
+slider_wrapped
+  :get_children_by_id("slider")[1]
+  :connect_signal("property::value", function(_, value)
+    awful.spawn.with_shell("xbacklight -set " .. value)
+    slider_wrapped:get_children_by_id("value")[1].text = math.floor(value)
+      .. "%"
+  end)
 
 update_brightness()
 

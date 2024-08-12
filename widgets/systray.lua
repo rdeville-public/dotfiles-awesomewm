@@ -1,26 +1,24 @@
+local beautiful = require("widgets.theme")
+local colors = require("utils.colors")
 local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local dpi = require("beautiful.xresources").apply_dpi
 
 local systray = {}
 
-local function factory(args)
-  args = args or {}
-  args.bg = args.bg or beautiful.systray_bg or gears.bg.rect
-  args.shape = args.shape or beautiful.systray_shape or gears.shape.rect
+beautiful.bg_systray = beautiful.bg_systray
+  or beautiful.systray_bg
+  or colors.brown_500
 
-  return wibox.container.background({
+local function factory(_)
+  systray = wibox.widget({
     {
       wibox.widget.systray(),
-      left = dpi(beautiful.wibar_height),
-      right = dpi(beautiful.wibar_height),
-      widget = wibox.container.margin,
+      widget = wibox.container.margin(nil, 15, 15, 0, 0),
     },
-    bg = args.bg,
-    shape = args.shape,
+    bg = beautiful.bg_systray,
+    shape = beautiful.cpu_shape or beautiful.widget_default_shape_left,
     widget = wibox.container.background,
   })
+  return systray
 end
 
 return setmetatable(systray, {

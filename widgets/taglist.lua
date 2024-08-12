@@ -1,61 +1,64 @@
 local awful = require("awful")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local beautiful = require("widgets.theme")
+local colors = require("utils.colors")
 local dpi = require("beautiful.xresources").apply_dpi
+local wibox = require("wibox")
 
--- VARIABLES
--- ========================================================================
 local taglist = {}
 
 local function factory(screen)
-  return awful.widget.taglist({
+  taglist = awful.widget.taglist({
     screen = screen,
     filter = awful.widget.taglist.filter.all,
     buttons = require("config.buttons.taglist"),
     layout = {
-      spacing = -dpi(beautiful.wibar_height / 2),
+      spacing = -dpi(2),
       layout = wibox.layout.flex.horizontal,
     },
+    font = beautiful.taglist_font or beautiful.font,
     widget_template = {
       {
         {
-          id = "tag_content",
+          id = "tag",
           widget = wibox.widget.textbox,
         },
-        left = 18,
+        left = 15,
+        right = 10,
         widget = wibox.container.margin,
       },
-      id = "background_role",
-      forced_width = dpi(beautiful.wibar_height * 4),
+      shape = beautiful.layout_shape or beautiful.widget_default_shape_left,
+      forced_width = dpi(beautiful.wibar_height * 3.25),
       widget = wibox.container.background,
-      -- Add support for hover colors and an index label
       create_callback = function(self, tag, index, objects)
         self:update_callback(tag, index, objects)
       end,
-      update_callback = function(self, tag, index, _) --luacheck: no unused args
-        local fg_color
-
+      update_callback = function(self, tag, index)
+        local fg, bg = colors.white, colors.black
         if tag.selected then
-          fg_color = beautiful.taglist_fg_focus
+          fg = beautiful.taglist_fg_focus or colors.black
+          bg = beautiful.taglist_bg_focus or colors.light_green_a400
         elseif next(tag:clients()) == nil then
-          fg_color = beautiful.taglist_fg_empty
+          fg = beautiful.taglist_fg_empty or colors.white
+          bg = beautiful.taglist_bg_empty or colors.green_300 .. "44"
         elseif next(tag:clients()) ~= nil then
-          fg_color = beautiful.taglist_fg_occupied
+          fg = beautiful.taglist_fg_occupied or colors.black
+          bg = beautiful.taglist_bg_occupied or colors.orange_a400
         elseif tag.volatile then
-          fg_color = beautiful.taglist_fg_volatile
-        else
-          fg_color = beautiful.taglist_fg_empty
+          fg = beautiful.taglist_fg_volatile or colors.black
+          bg = beautiful.taglist_bg_volatile or colors.cyan_a400
+        elseif tag.urgent then
+          fg = beautiful.taglist_fg_urgent or colors.black
+          bg = beautiful.taglist_bg_urgent or colors.red_500
         end
-        self:get_children_by_id("tag_content")[1].markup = "<span foreground='"
-          .. fg_color
-          .. "'>"
-          .. index
-          .. " "
-          .. tag.name
-          .. " </span>"
+
+        self.fg = fg
+        self.bg = bg
+        self:get_children_by_id("tag")[1].text = index .. " " .. tag.name
       end,
     },
   })
+
+  return taglist
 end
 
 return setmetatable(taglist, {

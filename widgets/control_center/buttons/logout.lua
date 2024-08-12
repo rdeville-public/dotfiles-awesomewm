@@ -1,30 +1,25 @@
----@diagnostic disable undefined-global
-local gears = require("gears")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local dpi = require("beautiful.xresources").apply_dpi
+local beautiful = require("widgets.theme")
+local create_button = require("widgets.control_center.buttons.create-button")
 
-local logout_button = wibox.widget({
-  {
-    {
-      align = "center",
-      valign = "center",
-      widget = wibox.widget.textbox,
-      font = beautiful.font_name .. " " .. beautiful.font_size * 1.25,
-      text = "Sign out",
-    },
-    widget = wibox.container.margin(nil, dpi(15), dpi(15), 0, 0),
-  },
-  fg = beautiful.cc_logout_fg,
-  bg = beautiful.cc_logout_bg,
-  shape = gears.shape.rounded_bar,
-  widget = wibox.container.background,
-})
+local logout_button = create_button.circle_big(
+  beautiful.cc_button_logout_icon or script_path() .. "../icons/logout.svg"
+)
 
-logout_button:connect_signal("button::press", function(_, _, _, button)
-  if button == 1 then
-    awesome.quit()
-  end
+local function initial_action(button)
+  local background = button:get_children_by_id("background")[1]
+  local label = button:get_children_by_id("label")[1]
+
+  background.bg = beautiful.cc_button_logout_inactive_bg
+    or beautiful.cc_button_inactive_bg
+    or beautiful.cc_button_inactive_default_bg
+  label.text = "Sign Out"
+end
+
+logout_button:connect_signal("button::press", function()
+  ---@diagnostic disable-next-line:undefined-global
+  awesome.quit()
 end)
+
+initial_action(logout_button)
 
 return logout_button

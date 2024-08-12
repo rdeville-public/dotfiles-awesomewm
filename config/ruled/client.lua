@@ -58,7 +58,6 @@ ruled.client.append_rules({
     properties = {
       tag = awful.screen.focused().selected_tag,
       floating = true,
-      titlebars_enabled = false,
       width = dpi(640),
       shape = function(cr, width, height)
         return gears.shape.rounded_rect(cr, width, height, dpi(5))
@@ -74,7 +73,6 @@ ruled.client.append_rules({
     rule_any = { type = { "floating" } },
 
     properties = {
-      titlebars_enabled = false,
       shape = function(cr, width, height)
         return gears.shape.rounded_rect(cr, width, height, dpi(5))
       end,

@@ -1,45 +1,39 @@
+local beautiful = require("widgets.theme")
+local dpi = require("beautiful.xresources").apply_dpi
 local gears = require("gears")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
-local awful = require("awful")
-local dpi = require("beautiful.xresources").apply_dpi
-
-local username = wibox.widget({
-  text = beautiful.cc_user_name or "Devops",
-  font = beautiful.font_name .. " " .. beautiful.font_size * 1.25,
-  valign = "center",
-  align = "center",
-  widget = wibox.widget.textbox,
-})
-
-if not beautiful.cc_user_name then
-  awful.spawn.easy_async("whoami", function(stdout)
-    username:set_text(stdout:gsub("^%l", string.upper):gsub("%s+", ""))
-  end)
-end
 
 local user = wibox.widget({
   {
     {
       {
         image = beautiful.cc_user_icon
-          or gears.filesystem.get_configuration_dir()
-            .. "theme/icons/control_center/default_user.svg",
+          or script_path() .. "../icons/default_user.svg",
         resize = true,
-        forced_width = dpi(42),
-        forced_height = dpi(42),
-        clip_shape = gears.shape.circle,
+        forced_width = dpi(38),
+        forced_height = dpi(38),
         widget = wibox.widget.imagebox,
       },
-      username,
-      spacing = dpi(10),
-      layout = wibox.layout.fixed.horizontal,
+      {
+        markup = "<span size='x-large'>"
+          .. (beautiful.cc_user_name or os.capture("whoami"))
+          .. "</span>",
+        font = beautiful.cc_user_font or beautiful.cc_font or beautiful.font,
+        valign = "center",
+        align = "center",
+        widget = wibox.widget.textbox,
+      },
+      layout = wibox.layout.flex.horizontal,
     },
     widget = wibox.container.margin(nil, 15, 15, 5, 5),
   },
-  bg = beautiful.cc_user_bg,
-  fg = beautiful.cc_user_fg,
-  shape = gears.shape.rounded_bar,
+  bg = beautiful.cc_user_bg
+    or beautiful.cc_button_inactive_bg
+    or beautiful.cc_button_inactive_default_bg,
+  fg = beautiful.cc_user_fg
+    or beautiful.cc_button_inactive_fg
+    or beautiful.cc_button_inactive_default_fg,
+  shape = gears.shape.rounded_rect,
   widget = wibox.container.background,
 })
 

@@ -8,11 +8,6 @@ local shiftkey = require("config.keys.mod").shiftkey
 local ctrlkey = require("config.keys.mod").ctrlkey
 
 return awful.util.table.join(
-  awful.key({ modkey, shiftkey }, "t", awful.titlebar.toggle, {
-    description = "\t\tToggle client titlebar",
-    group = "Client",
-  }),
-
   awful.key({ modkey }, "f", function(c)
     c.fullscreen = not c.fullscreen
     c:raise()
@@ -119,7 +114,7 @@ return awful.util.table.join(
     group = "Client",
   }),
 
-  awful.key({ modkey }, "t", function(_)
+  awful.key({ modkey, shiftkey }, "t", function(_)
     bling.module.tabbed.pick_with_dmenu()
   end, {
     description = "\t\tPick client to add to tab group",

@@ -14,17 +14,17 @@ notify() {
   if [[ -z ${icon} ]]; then
     case ${urgency} in
     critical)
-      icon="${SCRIPTPATH}/../../theme/icons/dialog-error.svg"
+      icon="${SCRIPTPATH}/../../widgets/icons/dialog-error.svg"
       ;;
     low)
-      icon="${SCRIPTPATH}/../../theme/icons/dialog-info.svg"
+      icon="${SCRIPTPATH}/../../widgets/icons/dialog-info.svg"
       ;;
     *)
-      icon="${SCRIPTPATH}/../../theme/icons/dialog-warning.svg"
+      icon="${SCRIPTPATH}/../../widgets/icons/dialog-warning.svg"
       ;;
     esac
   elif [[ "${icon[0]}" != "/" ]]; then
-    icon="${SCRIPTPATH}/../../theme/icons/${icon}.svg"
+    icon="${SCRIPTPATH}/../../widgets/icons/${icon}.svg"
   fi
   notify-send \
     -u "${urgency}" \
@@ -56,7 +56,7 @@ main() {
   [[ -n "${chosen}" ]] || exit
 
   chosen=${chosen// */}
-  notify "low" "Rofi Unicode" "${chosen} Copied to clipboard." &
+  notify "low" "Rofi Unicode" "Emoji : ${chosen}\nCopied to clipboard." &
   echo "${chosen}" | tr -d '\n' | xclip -selection clipboard
 }
 

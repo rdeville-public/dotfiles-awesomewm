@@ -1,212 +1,87 @@
 local awful = require("awful")
+local beautiful = require("widgets.theme")
 local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
 
 local cpu = {}
 local old_cpu = { 50, 50 }
 
-local function factory(args)
-  args = args or {}
+local function factory(_)
+  local function get_cpu_value()
+    local data = split(os.capture("head -1 /proc/stat"), " ")
+    local loadavg = split(os.capture("head -1 /proc/loadavg"), " ")
+    local total = 0
+    local active = 0
 
-  local function compute_tier_clr(value)
-    if value <= args.tier1_val then
-      return args.tier1_clr
-    elseif value <= args.tier2_val then
-      return args.tier2_clr
-    elseif value <= args.tier3_val then
-      return args.tier3_clr
-    else
-      return args.tier4_clr
-    end
+    active = sum_array(data, 2, 4) + sum_array(data, 7, 11) - old_cpu[1]
+    total = sum_array(data, 5, 6) - old_cpu[2]
+    old_cpu[1] = active
+    old_cpu[2] = total
+
+    return math.floor((active / total) * 1000) / 10, loadavg
   end
 
-  local function get_cpu_value(stat_line)
-    local curr_data = {}
-    local loadavg_file = "/proc/loadavg"
-    local cpu_data = {
-      raw_data = {},
-      total = 0,
-      active = 0,
-    }
+  local options = {
+    timeout = beautiful.cpu_timeout or 1,
+    clr_0 = beautiful.cpu_clr_3 or beautiful.clr_0 or beautiful.default_clr_0,
+    clr_1 = beautiful.cpu_clr_2 or beautiful.clr_1 or beautiful.default_clr_1,
+    clr_2 = beautiful.cpu_clr_1 or beautiful.clr_2 or beautiful.default_clr_2,
+    clr_3 = beautiful.cpu_clr_0 or beautiful.clr_3 or beautiful.default_clr_3,
+  }
 
-    -- Get CPU stats
-    ------------------------------------------------------------
-    for i in string.gmatch(stat_line, "[%s]+([^%s]+)") do
-      table.insert(cpu_data.raw_data, i)
-    end
+  local update_widget = function(widget)
+    local value, loadavg = get_cpu_value()
 
-    -- Calculate usage
-    ------------------------------------------------------------
-    cpu_data.active = cpu_data.raw_data[1]
-      + cpu_data.raw_data[2]
-      + cpu_data.raw_data[3]
-      + cpu_data.raw_data[6]
-      + cpu_data.raw_data[7]
-      + cpu_data.raw_data[8]
-      + cpu_data.raw_data[9]
-      + cpu_data.raw_data[10]
-    cpu_data.total = cpu_data.active
-      + cpu_data.raw_data[4]
-      + cpu_data.raw_data[5]
-
-    curr_data.active = cpu_data.active - old_cpu[1]
-    curr_data.total = cpu_data.total - old_cpu[2]
-
-    old_cpu[1] = cpu_data.active
-    old_cpu[2] = cpu_data.total
-
-    curr_data.pourcent = math.floor((curr_data.active / curr_data.total) * 1000)
-      / 10
-
-    curr_data.loadavg = {}
-    for line in io.lines(loadavg_file) do
-      for i in string.gmatch(line, "([^ ]+)") do
-        table.insert(curr_data.loadavg, i)
-      end
-    end
-
-    return curr_data
+    widget.fg = options["clr_" .. math.floor(value / 25)]
+    widget:get_children_by_id("cpu_value")[1].text =
+      string.format(" %04.1f%%", value)
+    widget:get_children_by_id("cpu_load")[1].text =
+      string.format(" %03.2f", loadavg[1])
+    widget:get_children_by_id("cpu_bar")[1].value = value
+    widget:get_children_by_id("cpu_bar")[1].color = widget.fg
   end
-
-  args.max_value = args.max_value or beautiful.cpu_max_value or 100
-
-  args.font = args.font or beautiful.cpu_font or beautiful.font
-  args.bg = args.bg or beautiful.cpu_bg or "#000000"
-  args.fg = args.fg or beautiful.cpu_fg or "#FFFFFF"
-  args.height = args.height or beautiful.cpu_height or 24
-  args.icon = args.icon or beautiful.cpu_icon or "CPU: "
-  args.timeout = args.timeout or beautiful.cpu_timeout or 1
-
-  args.shape = args.shape or beautiful.cpu_shape or gears.shape.rect
-
-  args.bar_shape = args.bar_shape or beautiful.cpu_bar_shape
-  args.bar_width = args.bar_width or beautiful.cpu_bar_width or 10
-  args.bar_fg = args.bar_fg or beautiful.cpu_bar_fg or args.fg
-  args.bar_bg = args.bar_bg or beautiful.cpu_bar_bg or args.bg
-
-  args.alert_value = args.alert_value or beautiful.cpu_alert_value or 90
-
-  args.tier1_clr = args.tier1_clr or beautiful.cpu_tier1_clr or args.fg
-  args.tier2_clr = args.tier2_clr or beautiful.cpu_tier2_clr or args.fg
-  args.tier3_clr = args.tier3_clr or beautiful.cpu_tier3_clr or args.fg
-  args.tier4_clr = args.tier4_clr or beautiful.cpu_tier4_clr or args.fg
-  args.tier1_val = args.tier1_val or beautiful.cpu_tier1_val or 25
-  args.tier2_val = args.tier2_val or beautiful.cpu_tier2_val or 50
-  args.tier3_val = args.tier3_val or beautiful.cpu_tier3_val or 75
-  args.tier4_val = args.tier4_val or beautiful.cpu_tier4_val or args.max_value
 
   cpu = wibox.widget({
     {
       {
         {
           id = "cpu_icon",
-          markup = "<span"
-            .. " foreground = '"
-            .. args.fg
-            .. "'>"
-            .. args.icon
-            .. "</span>",
-          font = args.font,
+          text = beautiful.cpu_icon or " ",
           widget = wibox.widget.textbox,
         },
         {
           {
             id = "cpu_bar",
-            -- DEBUG
-            value = 25,
-            widget = wibox.widget.progressbar,
-            -- https://awesomewm.org/apidoc/classes/wibox.widget.progressbar.html
-            clip = true,
-            color = args.bar_fg,
-            background_color = args.bar_bg,
-            bar_shape = args.bar_fill_shape,
-            shape = args.bar_shape,
+            background_color = beautiful.cpu_bar_bg
+              or beautiful.widget_default_bar_bg,
+            shape = beautiful.cpu_bar_shape,
             max_value = 100,
-            forced_width = args.bar_width,
-            visible = true,
+            widget = wibox.widget.progressbar,
           },
-          forced_width = args.bar_width,
-          forced_height = args.height,
+          forced_width = beautiful.cpu_bar_width
+            or beautiful.widget_bar_width
+            or beautiful.widget_default_bar_width,
           direction = "east",
           layout = wibox.container.rotate,
         },
         {
-          {
-            id = "cpu_value",
-            widget = wibox.widget.textbox,
-            markup = "<span foreground='" .. args.fg .. "'>" .. string.format(
-              " %03.1f%% ",
-              50.0
-            ) .. "</span>",
-            ellipsize = "end",
-            wrap = "word_char",
-            valign = "center",
-            align = "center",
-            font = args.cpu_font,
-            forced_height = args.height,
-            visible = true,
-          },
-          {
-            id = "cpu_load",
-            widget = wibox.widget.textbox,
-            markup = "<span foreground='" .. args.fg .. "'>" .. string.format(
-              " %03.2f",
-              0.75
-            ) .. "</span>",
-            ellipsize = "end",
-            wrap = "word_char",
-            valign = "center",
-            align = "center",
-            font = args.cpu_font,
-            forced_height = args.height,
-            visible = true,
-          },
-          layout = wibox.layout.align.horizontal,
+          id = "cpu_value",
+          widget = wibox.widget.textbox,
         },
-        layout = wibox.layout.align.horizontal,
+        {
+          id = "cpu_load",
+          widget = wibox.widget.textbox,
+        },
+        layout = wibox.layout.fixed.horizontal,
       },
       widget = wibox.container.margin(nil, 15, 15, 0, 0),
     },
-    bg = args.bg,
-    shape = args.shape,
+    bg = beautiful.cpu_bg or beautiful.widget_default_bg,
+    font = beautiful.cpu_font or beautiful.font,
+    shape = beautiful.cpu_shape or beautiful.widget_default_shape_right,
     widget = wibox.container.background,
-    set_cpu_used = function(self, cpu_stdout)
-      local cpu_value = get_cpu_value(cpu_stdout)
-      local clr_value = compute_tier_clr(cpu_value.pourcent)
-      local pourcent = string.format(" %04.1f%%", cpu_value.pourcent)
-      local loadavg = string.format(" %03.2f", cpu_value.loadavg[1])
-      -- Update widget values
-      self:get_children_by_id("cpu_icon")[1].markup = "<span foreground  = '"
-        .. clr_value
-        .. "'>"
-        .. args.icon
-        .. "</span>"
-      self:get_children_by_id("cpu_bar")[1].value = cpu_value.pourcent
-      self:get_children_by_id("cpu_bar")[1].color = clr_value
-      self:get_children_by_id("cpu_value")[1].markup = "<span foreground  = '"
-        .. clr_value
-        .. "'>"
-        .. pourcent
-        .. "</span>"
-      self:get_children_by_id("cpu_load")[1].markup = "<span foreground  = '"
-        .. clr_value
-        .. "'>"
-        .. loadavg
-        .. "</span>"
-    end,
   })
 
-  local update_widget_used = function(widget, stdout, _, _, _)
-    widget:set_cpu_used(stdout)
-  end
-
-  awful.widget.watch(
-    "head -1 /proc/stat",
-    args.timeout,
-    update_widget_used,
-    cpu
-  )
+  awful.widget.watch("echo &>/dev/null", options.timeout, update_widget, cpu)
 
   return cpu
 end

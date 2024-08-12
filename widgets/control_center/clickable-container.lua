@@ -1,10 +1,10 @@
 ---@diagnostic disable undefined-global
 local wibox = require("wibox")
 
-local create_click_events = function(widget)
+return function(widget)
   local container = wibox.widget({
     widget,
-    widget = wibox.container.place,
+    widget = wibox.container.background,
   })
 
   local old_cursor, old_wibox
@@ -26,5 +26,3 @@ local create_click_events = function(widget)
 
   return container
 end
-
-return create_click_events

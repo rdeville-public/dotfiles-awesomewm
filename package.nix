@@ -1,17 +1,14 @@
 {
   stdenv,
-  pkgs,
+  inputs,
   ...
 }:
 stdenv.mkDerivation {
   name = "awesomerc";
   srcs = [
-    (pkgs.fetchFromGitHub {
-      owner = "BlingCorp";
-      repo = "bling";
-      rev = "master";
+    (builtins.path {
       name = "bling";
-      sha256 = "sha256-6NZSUb7sSBUegSIPIubQUOZG3knzXfnyfEbCoEyggtc=";
+      path = inputs.bling;
     })
     (builtins.path {
       name = "awesome";
