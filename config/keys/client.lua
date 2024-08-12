@@ -114,7 +114,7 @@ return awful.util.table.join(
     group = "Client",
   }),
 
-  awful.key({ modkey }, "t", function(_)
+  awful.key({ modkey, shiftkey }, "t", function(_)
     bling.module.tabbed.pick_with_dmenu()
   end, {
     description = "\t\tPick client to add to tab group",
