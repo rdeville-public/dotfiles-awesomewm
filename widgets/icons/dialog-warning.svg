@@ -1,49 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="32"
-   height="32"
-   viewBox="0 0 32 32"
-   version="1.1"
-   id="svg1"
-   sodipodi:docname="dialog-warning.svg"
-   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#505050"
-     bordercolor="#ffffff"
-     borderopacity="1"
-     inkscape:showpageshadow="0"
-     inkscape:pageopacity="0"
-     inkscape:pagecheckerboard="1"
-     inkscape:deskcolor="#505050"
-     inkscape:zoom="2.1953004"
-     inkscape:cx="-15.48763"
-     inkscape:cy="148.49904"
-     inkscape:window-width="1916"
-     inkscape:window-height="1046"
-     inkscape:window-x="0"
-     inkscape:window-y="30"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg1" />
-  <title
-     id="title1">
-    alert
-  </title>
-  <style
-     type="text/css"
-     id="style1">* { fill: #fc3 }</style>
-  <g
-     id="g1"
-     transform="scale(0.125)">
-    <path
-       d="M 251.41427,218.01012 147.58754,15.685216 A 23.684273,26.621698 0 0 0 128,0 23.684273,26.621698 0 0 0 108.54049,15.685216 L 4.585732,218.01012 C -6.1682084,238.87577 2.6653855,256 24.045243,256 H 231.95476 c 21.37986,0 30.21345,-17.12423 19.45951,-37.98988 z m -110.61196,-5.18044 h -25.60462 v -28.78021 h 25.60462 z m 0,-57.56043 H 115.19769 V 68.928612 h 25.60462 z"
-       id="path1"
-       style="stroke-width:13.573" />
+<svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <title>alert</title>
+  <style type="text/css">* { fill: #fc3 }</style>
+  <g transform="scale(.125)">
+    <path d="m251.41 218.01-103.83-202.32a23.684 26.622 0 0 0-19.588-15.685 23.684 26.622 0 0 0-19.46 15.685l-103.95 202.32c-10.754 20.866-1.9203 37.99 19.46 37.99h207.91c21.38 0 30.213-17.124 19.46-37.99zm-110.61-5.1804h-25.605v-28.78h25.605zm0-57.56h-25.605v-86.341h25.605z" stroke-width="13.573"/>
   </g>
 </svg>
