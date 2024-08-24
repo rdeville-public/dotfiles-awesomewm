@@ -23,6 +23,40 @@
         "type": "github"
       }
     },
+    "awesome": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1724178500,
+        "narHash": "sha256-at6Bh02z3frjVY/K7mhOFBiiaNQtW3umur+HO415UnE=",
+        "owner": "awesomeWM",
+        "repo": "awesome",
+        "rev": "67f5e7feca3c775faf98f34411ef8f65084868e7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "awesomeWM",
+        "ref": "master",
+        "repo": "awesome",
+        "type": "github"
+      }
+    },
+    "bling": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1717332532,
+        "narHash": "sha256-6NZSUb7sSBUegSIPIubQUOZG3knzXfnyfEbCoEyggtc=",
+        "owner": "BlingCorp",
+        "repo": "bling",
+        "rev": "19ccfc0daf5edda8bbc508487616d00277a9d954",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BlingCorp",
+        "ref": "master",
+        "repo": "bling",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -79,6 +113,8 @@
     "root": {
       "inputs": {
         "alejandra": "alejandra",
+        "awesome": "awesome",
+        "bling": "bling",
         "nixpkgs": "nixpkgs",
         "utils": "utils"
       }
