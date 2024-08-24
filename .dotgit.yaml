@@ -15,7 +15,7 @@ dotgit:
 # Repos description and template usage configuration
 # ------------------------------------------------------------------------------
 name: AwesomeRC
-slug: awesome
+slug: awesomerc
 description: |-
   My Awesome Windows Manager configuration
 licenses:
