@@ -55,7 +55,7 @@ local control_center = function(s)
         {
           -- Connectivity buttons and others rows
           require("widgets.control_center.buttons.airplane"),
-          require("widgets.control_center.buttons.bluetooth"),
+          -- require("widgets.control_center.buttons.bluetooth"),
           require("widgets.control_center.buttons.network"),
           require("widgets.control_center.buttons.do_not_disturb"),
           require("widgets.control_center.buttons.redshift"),
