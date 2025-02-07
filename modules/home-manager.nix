@@ -1,9 +1,7 @@
-# BEGIN DOTGIT-SYNC BLOCK MANAGED
 self: {
   pkgs,
   lib,
   config,
-  # BEGIN DOTGIT-SYNC BLOCK EXCLUDED NIX_HOME_MANAGER_MODULE_CUSTOM
   ...
 }: let
   cfg = config.awesomerc;
@@ -44,6 +42,7 @@ in {
         };
       };
     };
+
     home = {
       file = {
         ".xinitrc" = {
@@ -51,12 +50,13 @@ in {
         };
       };
     };
+
     xsession = {
       windowManager = {
         awesome = {
           enable = true;
           luaModules = with pkgs.luaPackages; [
-            luarocks # is the package manager for Lua modules
+            luarocks
             luajitPackages.lgi
           ];
           package = awesome;
@@ -64,6 +64,4 @@ in {
       };
     };
   };
-  # END DOTGIT-SYNC BLOCK EXCLUDED NIX_HOME_MANAGER_MODULE_CUSTOM
 }
-# END DOTGIT-SYNC BLOCK MANAGED
