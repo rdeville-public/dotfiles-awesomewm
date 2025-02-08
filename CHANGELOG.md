@@ -1,6 +1,21 @@
 <!-- markdownlint-disable-file -->
 # CHANGELOG
 
+## v0.3.8 (2025-02-08)
+
+### 🩹 Patch
+
+  * ➖ Update flake.nix by Romain Deville ([`6d716bc`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/6d716bc14e684ebe27739d48aa37202aa1c045d3)) 🔏
+  * ⬆️ Minor flake.nix update and upgrade flake.lock (!13) by Romain Deville ([`16324a7`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/16324a7aad358c1eb0e9bbfdcde4975271e88ee9))
+  * ⬆️ Upgrade flake.lock by Romain Deville ([`5a1b954`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/5a1b95463d3e5faff596178ddd84482f180b10cf)) 🔏
+  * ⬆️ Update templated files from dotgit-sync (!12) by Romain Deville ([`ed3f54c`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/ed3f54c5ea788b240b2122bb1c142be7bc8f05d8))
+  * ⬆️ Upgrade flake.lock by Romain Deville ([`06b0745`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/06b0745e491eacc2349bcf138483bd4fb2dd3d2e)) 🔏
+  * ⬆️ Update templated files from dotgit-sync by Dotgit Sync [bot] ([`69ce568`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/69ce5682aa7aa09d45219dd90f56ae5c4cffeabe)) 🔏
+
+### 🔊 Others
+
+  * 🔥 Remove useless code and useless flakes inputs by Romain Deville ([`794afc1`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/794afc1d70070bd1b7e30f3c950c6c2a9801e705)) 🔏
+
 ## v0.3.7 (2024-12-14)
 
 ### 🩹 Patch
@@ -15,10 +30,6 @@
   * ⬆️ Update templated files from dotgit-sync (!9) by Romain Deville ([`0c3f7d1`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/0c3f7d1ff2a90fd3531d9eb4969ad568f3ffbd19))
   * ⬆️ Update templated files from dotgit-sync by Romain Deville ([`30de368`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/30de368a6725d2a59a6d4e3fae5d27d352436704)) 🔏
 
-### 🔊 Others
-
-  * 🔖 v0.3.6 (NO-CI) by Python Semantic Release [bot] ([`e76cb6a`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/e76cb6a459fcc30512c4d2e927758233d58b1614))
-
 ## v0.3.5 (2024-09-08)
 
 ### 🩹 Patch
@@ -26,20 +37,12 @@
   * ⬆️ Update flake.lock (!8) by Romain Deville ([`a8ece2e`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/a8ece2e6fad83c7600e0ba2f4fd07d66bdfe1368))
   * ⬆️ Update flake.lock by Romain Deville ([`5d1506b`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/5d1506b2e649f818951cd1fdf55d2c72f4b9f19c))
 
-### 🔊 Others
-
-  * 🔖 v0.3.5 (NO-CI) by Python Semantic Release [bot] ([`607c916`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/607c9169587f5cbee671ce0eedb3e56c837d54b4))
-
 ## v0.3.4 (2024-09-07)
 
 ### 🩹 Patch
 
   * ⬆️ Update templated files from dotgit-sync (!7) by Romain Deville ([`82e1dbf`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/82e1dbfdd22a72fda69ac7cda9f14691a06ff28f))
   * ⬆️ Update templated files from dotgit-sync by Dotgit Sync [bot] ([`62fe699`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/62fe699c43dc1a4ba87ea1126e14b8b68da525b4))
-
-### 🔊 Others
-
-  * 🔖 v0.3.4 (NO-CI) by Python Semantic Release [bot] ([`5bf7979`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/5bf79791fcd2beba99d57d06fcbe033e28d75cd1))
 
 ## v0.3.3 (2024-08-27)
 
@@ -53,7 +56,6 @@
   * 👷 Update Gitlab CI from DGS template by Romain Deville ([`7a6174c`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/7a6174c10ebe7024b76dbade39db0d360b71213b)) 🔏
   * 💚 Fix CI from DGS template (!5) by Romain Deville ([`ce67456`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/ce67456f1a8e2764773a8d816b5fe4fe8d0ed913))
   * 💚 Fix CI from DGS template by Romain Deville ([`b7f4beb`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/b7f4beb2c8141265030f84a6fec613dac77f735b)) 🔏
-  * 🔖 v0.3.3 (NO-CI) by Python Semantic Release [bot] ([`18fd346`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/18fd346087b1328f28441c24fe4bb8f3a6ee248a))
 
 ## v0.3.2 (2024-08-24)
 
@@ -64,10 +66,6 @@
   * 📌 Update flake.lock by Romain Deville ([`daf02cb`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/daf02cb185bb6b5a04f565885035ee8083445c76)) 🔏
   * 🔧 Update slug in dotgit-sync by Romain Deville ([`811a334`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/811a334de6ed981017451d3d4e961562f9c1daed)) 🔏
 
-### 🔊 Others
-
-  * 🔖 v0.3.2 (NO-CI) by Python Semantic Release [bot] ([`b363c4a`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/b363c4a795b61af0a6d8c2e86bfd2a8e0be70aea))
-
 ## v0.3.1 (2024-08-16)
 
 ### 🩹 Patch
@@ -75,10 +73,6 @@
   * 🍱(widgers): Optimize SVG fiels (!3) by Romain Deville ([`0c1e5c8`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/0c1e5c87bfe14b1bd3bdfad21b4dba8cb9cf1909))
   * 🍱(widgets): Optimize basic widgets SVG by Romain Deville ([`657de07`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/657de0755b5822d7ec0c34a11c80a8a9fcc38782)) 🔏
   * 🍱(widget/cc): Optimize SVG of Control Center by Romain Deville ([`9813a2c`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/9813a2c9b7a30d6e6a62cfdd5fc0c59c9deef49b)) 🔏
-
-### 🔊 Others
-
-  * 🔖 v0.3.1 (NO-CI) by Python Semantic Release [bot] ([`f7cbb2c`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/f7cbb2c11d0dc38909053edc5e49e0d5a8f13b9b))
 
 ## v0.3.0 (2024-08-12)
 
@@ -112,7 +106,6 @@
 
 ### 🔊 Others
 
-  * 🔖 v0.3.0 (NO-CI) by Python Semantic Release [bot] ([`c1c2827`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/c1c2827669cc44eecab59a6d086946a6b49acbb7))
   * 🔥(theme): Remove icons from theme as they are in widgets by Romain Deville ([`026d051`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/026d051f9a1e2005c1635a9c825585ce8f47c38f)) 🔏
   * 🔥 Remove unused disk widget by Romain Deville ([`1e07ad5`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/1e07ad5189956989b16c720339fa9d8615fa4326)) 🔏
   * 🔥 Remove titlebars config as I don&#39;t use it by Romain Deville ([`8e51ff4`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/8e51ff43910ab4e85dd723157e8344b266f41215)) 🔏
@@ -150,7 +143,6 @@
   * 📄 Update licenses from DGS by Romain Deville ([`a028db1`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/a028db1f189e4c7a97444a40da6b31a7767ae8f2)) 🔏
   * 📝 Add CODE_OF_CONDUCT from DGS by Romain Deville ([`db812ab`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/db812ab757b7d86918b9622245b7c5a3930b539e)) 🔏
   * 📝 Update README from DGS by Romain Deville ([`091e0a4`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/091e0a40162480b011c499972043c9017339e0d6)) 🔏
-  * 🔖 v0.2.0 (NO-CI) by Python Semantic Release [bot] ([`16aff02`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/16aff02cceb4a14b3a0b3cb962d6d556ea51f97a))
   * 🔥 Remove old files before migrate to DGS by Romain Deville ([`3bbbc3f`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/3bbbc3f1d0039fc81f2a7ecd8a5ef3f90ac188d2)) 🔏
   * 🔨 Add test.sh script to test new awesome config by Romain Deville ([`835cf69`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/835cf6972a1e7231d85a6dba97d29588cdfe3b08)) 🔏
   * 🔨 Add devbox config from DGS template by Romain Deville ([`5b48395`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/5b48395fbe58183af571211090ca83e96e98dbf2)) 🔏
