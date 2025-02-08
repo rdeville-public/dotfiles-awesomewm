@@ -6,14 +6,8 @@
   '';
 
   inputs = {
-    # Stable Nix Packages
     nixpkgs = {
       url = "nixpkgs/nixos-unstable";
-      # url = "github:nixos/nixpkgs/nixos-unstable";
-    };
-    # Flake Utils Lib
-    utils = {
-      url = "github:numtide/flake-utils";
     };
     awesome = {
       url = "github:awesomeWM/awesome/master";
@@ -24,6 +18,7 @@
       flake = false;
     };
   };
+
   outputs = inputs @ {self, ...}: let
     pkgsForSystem = system:
       import inputs.nixpkgs {
@@ -42,23 +37,25 @@
   in {
     # TOOLING
     # ========================================================================
-    # Formatter for your nix files, available through 'nix fmt'
-    # Other options beside 'alejandra' include 'nixpkgs-fmt'
     formatter = forAllSystems (
       system:
         (pkgsForSystem system).alejandra
     );
 
+    # PACKAGES
+    # ========================================================================
+    packages = forAllSystems (system: rec {
+      awesomerc = with (pkgsForSystem system);
+        callPackage ./package.nix {inherit inputs;};
+      default = awesomerc;
+    });
+
+    # HOME MANAGER MODULES
+    # ========================================================================
     homeManagerModules = {
       awesomerc = import ./modules/home-manager.nix self;
     };
     homeManagerModule = self.homeManagerModules.awesomerc;
 
-    packages = forAllSystems (system: rec {
-      awesomerc = with import inputs.nixpkgs {inherit system;};
-        callPackage ./package.nix {inherit inputs;};
-      default = awesomerc;
-    });
   };
 }
-# END DOTGIT-SYNC BLOCK MANAGED
