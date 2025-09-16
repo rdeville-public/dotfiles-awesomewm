@@ -1,6 +1,13 @@
 <!-- markdownlint-disable-file -->
 # CHANGELOG
 
+## v0.3.9 (2025-09-16)
+
+### 🩹 Patch
+
+  * ⬆️ Upgrade devbox.lock (!15) by Romain Deville ([`7281446`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/72814463b6ec9e04b3fb9f1e06b960483fc752de))
+  * ⬆️ Upgrade devbox.lock by Romain Deville ([`0e6e5fa`](https://framagit.org/rdeville-public/dotfiles/awesomewm/-/commit/0e6e5fae4f68bfc23bdc2f8de80d47c2cd7b5073)) 🔏
+
 ## v0.3.8 (2025-02-08)
 
 ### 🩹 Patch
